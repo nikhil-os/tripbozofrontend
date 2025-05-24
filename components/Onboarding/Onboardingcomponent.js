@@ -1,11 +1,14 @@
-"use client";
-
+'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Onboarding() {
+  const router = useRouter();
+
   const [step, setStep] = useState(1);
   const [selectedTraveler, setSelectedTraveler] = useState(null);
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
   const travelerOptions = [
     { id: 'solo', title: 'Solo Adventurer', desc: 'Independent traveler seeking authentic experiences', emoji: '🎒' },
@@ -22,6 +25,14 @@ export default function Onboarding() {
     { code: 'IT', name: 'Italy' },
     { code: 'AU', name: 'Australia' },
   ];
+
+  const handleViewApps = () => {
+    if (selectedCountry) {
+      router.push(`/country/${selectedCountry}`);
+    } else {
+      alert('Please select a destination country first!');
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
@@ -70,7 +81,10 @@ export default function Onboarding() {
             {destinationOptions.map(dest => (
               <div
                 key={dest.code}
-                className="border rounded-xl p-4 text-center hover:bg-teal-50 cursor-pointer"
+                className={`border rounded-xl p-4 text-center cursor-pointer transition-all ${
+                  selectedCountry === dest.code ? 'border-teal-400 bg-teal-50' : 'border-gray-200 hover:bg-teal-50'
+                }`}
+                onClick={() => setSelectedCountry(dest.code)}
               >
                 <h3 className="text-xl font-bold">{dest.code}</h3>
                 <p className="text-gray-500 mt-1">{dest.name}</p>
@@ -78,7 +92,13 @@ export default function Onboarding() {
             ))}
           </div>
           <div className="flex justify-center mt-8">
-            <button className="bg-teal-400 text-white px-6 py-2 rounded-full">View Apps →</button>
+            <button
+              className="bg-teal-400 text-white px-6 py-2 rounded-full disabled:opacity-50"
+              onClick={handleViewApps}
+              disabled={!selectedCountry}
+            >
+              View Apps →
+            </button>
           </div>
         </>
       )}
