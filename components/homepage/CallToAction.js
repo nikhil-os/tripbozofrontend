@@ -12,7 +12,10 @@ const CallToAction = () => {
         <p className="text-lg md:text-xl mb-8">
           Create your personalized travel app bundle in minutes
         </p>
-        <button className="bg-white text-blue-600 font-medium text-sm md:text-base px-6 py-2 rounded-full hover:bg-gray-100   cursor-pointer transition">
+        <button
+          className="bg-white text-blue-600 font-medium text-sm md:text-base px-6 py-2 rounded-full hover:bg-gray-100 cursor-pointer transition"
+          onClick={() => window.location.href = '/Onboarding'}
+        >
           Get Started
         </button>
       </div>

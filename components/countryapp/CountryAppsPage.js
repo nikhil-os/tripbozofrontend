@@ -19,7 +19,7 @@ export default function CountryAppsPage({ countryCode, apps }) {
   
 
 const handleGenerateQR = () => {
-  const selectedAppIds = selectedApps.map(app => app.id).join(",");
+  const selectedAppIds = selectedApps.join(",");
   router.push(`/qr-bundle?apps=${selectedAppIds}`);
 };
 

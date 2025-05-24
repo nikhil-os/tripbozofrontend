@@ -15,8 +15,7 @@ const Navbar = () => {
         {/* Center: Nav Links */}
         <div className="hidden lg:flex gap-12 text-gray-700 text-base font-normal">
           <a href="#" className="hover:text-blue-600 transition">Home</a>
-          <a href="#" className="hover:text-blue-600 transition">Onboarding</a>
-          <a href="#" className="hover:text-blue-600 transition">Essentials</a>
+          <a href="/Onboarding" className="hover:text-blue-600 transition">Onboarding</a>
           <a href="#" className="hover:text-blue-600 transition">About</a>
         </div>
 
@@ -27,7 +26,10 @@ const Navbar = () => {
     placeholder="Search..."
     className="border border-gray-700 rounded-full !text-black px-4 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
-  <button className="bg-blue-600 !text-gray-700 px-4 py-1 rounded-full hover:bg-blue-700 transition">
+  <button
+    className="bg-blue-600 !text-gray-700 px-4 py-1 rounded-full hover:bg-blue-700 transition"
+    onClick={() => window.location.href = '/Onboarding'}
+  >
     Get Started
   </button>
 </div>

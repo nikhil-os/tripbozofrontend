@@ -18,7 +18,7 @@ const HeroSection = () => {
             className="w-full max-w-md px-5 py-3 rounded-full text-black text-base border border-white-700 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow"
           />
         </div>
-          <a href="#" className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full text-lg">Get Started</a>
+          <a href="/Onboarding" className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full text-lg">Get Started</a>
         </div>
       </div>
     </section>

@@ -30,6 +30,9 @@ export async function fetchAppsByCountry(countryCode) {
 }
 
 export async function fetchAppsByIds(appIds) {
-  // sampleApps is an array, not an object
-  return sampleApps.filter(app => appIds.includes(app.id));
+  // Ensure all IDs are numbers and filter
+  const ids = appIds.map(Number);
+    // const ids = appIds.map(String);
+
+  return sampleApps.filter(app => ids.includes(app.id));
 }

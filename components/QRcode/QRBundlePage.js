@@ -13,28 +13,39 @@ export default function QRBundlePage() {
       fetchAppsByIds(appIds).then(setApps);
     }
   }, []);
+  console.log("Selected Apps:", apps);
 
   return (
-    <div className="p-6">
-      <h1 className="text-3xl font-bold mb-6 text-center">QR Codes for Selected Apps</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {apps.map((app) => (
-          <div
-            key={app.id}
-            className="p-4 rounded-xl shadow-md border text-center bg-white"
-          >
-            <h2 className="text-xl font-semibold mb-2">{app.name}</h2>
-            <p className="text-gray-600 mb-4">{app.description}</p>
-            {/* Dummy QR Code */}
-            <Image
-              src="/dummy-qr.png"
-              alt={`Dummy QR for ${app.name}`}
-              width={100}
-              height={100}
-              className="mx-auto"
-            />
-          </div>
-        ))}
+    <div className="p-6 max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6 text-center">QR Code for Your App Bundle</h1>
+      <div className="flex flex-col items-center mb-8">
+        {/* Single QR Code */}
+        <Image
+          src="/dummy-qr.png"
+          alt="QR for app bundle"
+          width={160}
+          height={160}
+          className="mx-auto mb-4 border-2 border-gray-300 rounded-lg bg-white"
+        />
+        <div className="flex gap-4 mt-2">
+          <button className="bg-green-600 hover:bg-green-700 text-black
+           px-4 py-2 rounded-lg font-semibold transition">Copy Link</button>
+          <button className="bg-green-600 hover:bg-green-700 text-black
+           px-4 py-2 rounded-lg font-semibold transition">Share</button>
+          <button className="bg-green-600 hover:bg-green-700 text-black
+           px-4 py-2 rounded-lg font-semibold transition">Download</button>
+        </div>
+      </div>
+      <div className="bg-gray-50 border rounded-xl shadow p-6">
+        <h2 className="text-xl font-semibold mb-4 text-center text-black">Selected Apps</h2>
+        <ul className="divide-y divide-gray-200">
+          {apps.map((app) => (
+            <li key={app.id} className="py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+              <span className="font-medium text-gray-800">{app.name}</span>
+              <span className="text-gray-500 text-sm mt-1 sm:mt-0">{app.description}</span>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
