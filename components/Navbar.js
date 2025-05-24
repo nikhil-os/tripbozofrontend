@@ -14,9 +14,9 @@ const Navbar = () => {
 
         {/* Center: Nav Links */}
         <div className="hidden lg:flex gap-12 text-gray-700 text-base font-normal">
-          <a href="#" className="hover:text-blue-600 transition">Home</a>
+          <a href="/" className="hover:text-blue-600 transition">Home</a>
           <a href="/Onboarding" className="hover:text-blue-600 transition">Onboarding</a>
-          <a href="#" className="hover:text-blue-600 transition">About</a>
+          <a href="/About" className="hover:text-blue-600 transition">About</a>
         </div>
 
         {/* Right: Search + Get Started */}

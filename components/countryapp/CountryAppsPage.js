@@ -16,13 +16,10 @@ export default function CountryAppsPage({ countryCode, apps }) {
     );
   };
 
-  
-
-const handleGenerateQR = () => {
-  const selectedAppIds = selectedApps.join(",");
-  router.push(`/qr-bundle?apps=${selectedAppIds}`);
-};
-
+  const handleGenerateQR = () => {
+    const selectedAppIds = selectedApps.join(",");
+    router.push(`/qr-bundle?apps=${selectedAppIds}`);
+  };
 
   return (
     <div className="p-6 max-w-6xl mx-auto">
@@ -51,7 +48,13 @@ const handleGenerateQR = () => {
         ))}
       </div>
 
-      <div className="mt-10 flex justify-center">
+      <div className="mt-10 flex flex-col items-center">
+        <button
+          className="mb-6 px-8 py-3 rounded-lg font-semibold bg-blue-500 hover:bg-blue-600 text-white transition-colors"
+          onClick={() => router.push(`/country/${countryCode}/Essentials`)}
+        >
+          Essentials
+        </button>
         <button
           disabled={selectedApps.length < 2}
           onClick={handleGenerateQR}
