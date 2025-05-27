@@ -1,3 +1,5 @@
+@import "tailwindcss/preflight";
+@import "tailwindcss/utilities";
 @import "tailwindcss";
 
 :root {
@@ -5,7 +7,7 @@
   --foreground: #171717;
 }
 
-@theme inline {
+:root {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
@@ -28,9 +30,8 @@ body {
 
 
 
-/* 
+/*
 @tailwind utilities;
 @tailwind base; */
 
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+

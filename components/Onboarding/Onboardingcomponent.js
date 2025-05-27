@@ -14,7 +14,7 @@ export default function Onboarding() {
     { id: 'solo', title: 'Solo Adventurer', desc: 'Independent traveler seeking authentic experiences', emoji: '🎒' },
     { id: 'family', title: 'Family Trip', desc: 'Travel with kids and focus on family-friendly activities', emoji: '👨‍👩‍👧‍👦' },
     { id: 'business', title: 'Business Traveler', desc: 'Efficient travel focused on work and productivity', emoji: '💼' },
-    { id: 'adventure', title: 'Adventure Seeker', desc: 'Outdoor experiences and adrenaline-pumping activities', emoji: '⛰️' },
+    { id: 'adventure', title: 'Adventure Seeker', desc: 'Outdoor experiences and adrenaline-pumping activities', emoji: '🏔️' },
   ];
 
   const destinationOptions = [
@@ -35,73 +35,94 @@ export default function Onboarding() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold text-center mb-2">Set Up Your Travel Profile</h1>
-      <p className="text-center text-gray-500 mb-8">Let's personalize your travel app recommendations</p>
+    <section className="bg-white py-16 sm:py-20 flex flex-col items-center justify-center min-h-screen">
+      <div className="container mx-auto px-4 flex flex-col items-center justify-center">
+        <div className="max-w-3xl mx-auto text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-display font-semibold mb-4 text-black">Set Up Your Travel Profile</h2>
+          <p className="text-lg text-black">Let's personalize your travel app recommendations</p>
+        </div>
+        {/* Step Indicator */}
+        <div className="flex justify-center mb-12">
+          <div className="flex items-center">
+            <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold text-white border-2 ${step >= 1 ? 'bg-teal-400 border-blue-500' : 'bg-gray-300 border-gray-300'}`}>1</div>
+            <div className="w-16 h-1 bg-gray-300"></div>
+            <div className={`h-12 w-12 rounded-full flex items-center justify-center font-bold border-2 ${step === 2 ? 'bg-teal-400 text-white border-blue-500' : 'bg-gray-200 text-gray-400 border-gray-300'}`}>2</div>
+          </div>
+        </div>
 
-      {/* Step Indicator */}
-      <div className="flex justify-center items-center mb-10">
-        <div className={`w-8 h-8 flex items-center justify-center rounded-full text-white font-bold ${step > 1 ? 'bg-teal-400' : 'bg-gray-300'}`}>{step > 1 ? '✓' : '1'}</div>
-        <div className="w-8 h-1 bg-teal-400 mx-2" />
-        <div className={`w-8 h-8 flex items-center justify-center rounded-full text-white font-bold ${step === 2 ? 'bg-teal-400' : 'bg-gray-300'}`}>2</div>
-      </div>
-
-      {step === 1 && (
-        <>
-          <h2 className="text-xl font-semibold text-center mb-6">What type of traveler are you?</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-            {travelerOptions.map(opt => (
-              <div
-                key={opt.id}
-                className={`border rounded-xl p-4 cursor-pointer text-center transition-all ${selectedTraveler === opt.id ? 'border-teal-400 bg-teal-50' : 'border-gray-200'}`}
-                onClick={() => setSelectedTraveler(opt.id)}
-              >
-                <div className="text-3xl mb-2">{opt.emoji}</div>
-                <h3 className="font-semibold text-lg">{opt.title}</h3>
-                <p className="text-gray-500 text-sm mt-1">{opt.desc}</p>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center mt-8">
-            <button
-              className="bg-teal-400 text-white px-6 py-2 rounded-full disabled:opacity-50"
-              onClick={() => selectedTraveler && setStep(2)}
-              disabled={!selectedTraveler}
-            >
-              Next Step →
-            </button>
-          </div>
-        </>
-      )}
-
-      {step === 2 && (
-        <>
-          <h2 className="text-xl font-semibold text-center mb-6">Where are you traveling to?</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-            {destinationOptions.map(dest => (
-              <div
-                key={dest.code}
-                className={`border rounded-xl p-4 text-center cursor-pointer transition-all ${
-                  selectedCountry === dest.code ? 'border-teal-400 bg-teal-50' : 'border-gray-200 hover:bg-teal-50'
-                }`}
-                onClick={() => setSelectedCountry(dest.code)}
-              >
-                <h3 className="text-xl font-bold">{dest.code}</h3>
-                <p className="text-gray-500 mt-1">{dest.name}</p>
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-center mt-8">
-            <button
-              className="bg-teal-400 text-white px-6 py-2 rounded-full disabled:opacity-50"
-              onClick={handleViewApps}
-              disabled={!selectedCountry}
-            >
-              View Apps →
-            </button>
-          </div>
-        </>
-      )}
+        
+{step === 1 && (
+  <div className="flex flex-col items-center justify-center w-full">
+    <h3 className="text-2xl font-display font-medium text-center mb-12 text-black">What type of traveler are you?</h3>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 max-w-6xl mx-auto">
+      {travelerOptions.map(opt => (
+        <div
+          key={opt.id}
+          className={`border-2 border-gray-300 p-10 rounded-3xl cursor-pointer transition-all hover:shadow-2xl hover:border-blue-500 flex flex-col items-center justify-center min-h-[220px] min-w-[220px] ${
+            selectedTraveler === opt.id
+              ? 'border-blue-500 bg-teal-50 shadow'
+              : 'bg-white'
+          }`}
+          onClick={() => setSelectedTraveler(opt.id)}
+        >
+          <div className="text-6xl mb-4">{opt.emoji}</div>
+          <h4 className="font-display font-medium text-xl mb-2 text-black">{opt.title}</h4>
+          <p className="text-base text-black text-center">{opt.desc}</p>
+        </div>
+      ))}
     </div>
+    <div className="mt-10 text-center">
+           <button
+        className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-12 rounded-full px-10 bg-teal-400 hover:bg-blue-500 hover:text-white"
+        onClick={() => selectedTraveler && setStep(2)}
+        disabled={!selectedTraveler}
+      >
+        <span className="text-black">Next Step</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4">
+          <path d="M5 12h14"></path>
+          <path d="m12 5 7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+)}
+
+
+        {step === 2 && (
+          <div className="flex flex-col items-center justify-center w-full">
+            <h3 className="text-2xl font-display font-medium text-center mb-8 text-black">Where are you traveling to?</h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-4xl mx-auto">
+              {destinationOptions.map(dest => (
+                <div
+                  key={dest.code}
+                  className={`border-2 border-gray-300 p-10 rounded-3xl cursor-pointer transition-all hover:shadow-2xl hover:border-blue-500 flex flex-col items-center justify-center min-h-[180px] min-w-[180px] ${
+                    selectedCountry === dest.code
+                      ? 'border-blue-500 bg-teal-50 shadow'
+                      : 'bg-white'
+                  }`}
+                  onClick={() => setSelectedCountry(dest.code)}
+                >
+                  <h4 className="text-2xl font-bold text-black">{dest.code}</h4>
+                  <p className="text-lg text-black mt-2">{dest.name}</p>
+                </div>
+              ))}
+            </div>
+            <div className="mt-10 text-center">
+              <button
+  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-12 rounded-full px-10 bg-teal-400 hover:bg-blue-500 hover:text-white"
+  onClick={handleViewApps}
+  disabled={!selectedCountry}
+>
+  <span className="text-black">View Apps</span>
+  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4">
+    <path d="M5 12h14"></path>
+    <path d="m12 5 7 7-7 7"></path>
+  </svg>
+</button>
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
   );
 }
