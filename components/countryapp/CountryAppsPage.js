@@ -177,9 +177,11 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                         )}
                     </div>
                     <button
-                        className="mt-6 w-full py-3 rounded-xl font-semibold bg-white border border-[#e0e0e0] text-gray-500 hover:bg-[#f7fafc] transition btn-animated"
+                        type="button"
+                        className="mt-6 w-full py-3 rounded-xl font-semibold bg-red-100 text-red-600 border border-[#e0e0e0] transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-300 hover:bg-red-500 hover:text-white"
                         onClick={() => setSelectedApps([])}
                         disabled={selectedApps.length === 0}
+                        style={{ backgroundColor: selectedApps.length === 0 ? '' : undefined, color: selectedApps.length === 0 ? '' : undefined }}
                     >
                         Clear All
                     </button>
