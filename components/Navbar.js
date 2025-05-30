@@ -45,9 +45,18 @@ const Navbar = () => {
         {/* Center: Nav Links */}
         <div className="flex-1 flex justify-center">
           <div className="flex gap-12 text-gray-600 text-base font-normal">
-            <a href="/" className="hover:text-teal-300 transition">Home</a>
-            <a href="/Onboarding" className="hover:text-teal-300 transition">Onboarding</a>
-            <a href="/About" className="hover:text-teal-300 transition">About</a>
+            <a href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+              Home
+              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+            </a>
+            <a href="/Onboarding" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+              Onboarding
+              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+            </a>
+            <a href="/About" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+              About
+              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+            </a>
           </div>
         </div>
         {/* Right: Login and Get Started */}
