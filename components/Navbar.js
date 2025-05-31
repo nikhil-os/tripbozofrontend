@@ -37,30 +37,28 @@ const Navbar = () => {
         backgroundSize: '100% 100%',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between relative">
-        {/* Left: Brand */}
-        <div className="text-2xl font-semibold text-black blackspace-nowrap mr-8" style={{ minWidth: '120px' }}>
+      <div className="w-full h-16 flex items-center relative">
+        {/* Left: Brand - with gap */}
+        <div className="text-2xl font-semibold text-black whitespace-nowrap absolute left-8 top-1/2 -translate-y-1/2">
           Trip Bozo
         </div>
-        {/* Center: Nav Links */}
-        <div className="flex-1 flex justify-center">
-          <div className="flex gap-12 text-gray-600 text-base font-normal">
-            <a href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
-              Home
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-            </a>
-            <a href="/Onboarding" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
-              Onboarding
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-            </a>
-            <a href="/About" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
-              About
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-            </a>
-          </div>
+        {/* Center: Nav Links - absolutely centered */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-12 text-gray-600 text-base font-normal">
+          <a href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+            Home
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+          </a>
+          <a href="/Onboarding" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+            Onboarding
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+          </a>
+          <a href="/About" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+            About
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+          </a>
         </div>
-        {/* Right: Login and Get Started */}
-        <div className="flex items-center gap-4 ml-8" style={{ minWidth: '320px', justifyContent: 'flex-end' }}>
+        {/* Right: Login and Get Started - with gap */}
+        <div className="flex items-center gap-2 absolute right-8 top-1/2 -translate-y-1/2" style={{ justifyContent: 'flex-end' }}>
           {isLoggedIn ? (
             <a
               href="/Profile"
