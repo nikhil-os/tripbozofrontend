@@ -7,7 +7,6 @@ export default function AboutPage() {
     <main className="bg-gradient-to-br from-[#e0f7fa] via-[#f5fafd] to-[#e3f2fd] text-gray-800 w-full min-h-screen">
       {/* Hero Section */}
       <section className="w-full bg-gradient-to-r from-[#38bdf8] via-[#2ad2c9] to-[#5eead4] text-white py-24 px-4 flex flex-col items-center justify-center text-center relative overflow-hidden animate-fade-in">
-        <div className="absolute right-0 top-0 w-1/2 h-full bg-[url('/globe.svg')] bg-no-repeat bg-right bg-contain opacity-10 pointer-events-none select-none animate-fade-in" />
         <h1 className="text-6xl font-extrabold mb-6 drop-shadow-lg tracking-tight animate-fade-in-up">Your Essential Travel Companion</h1>
         <p className="text-2xl max-w-3xl mx-auto mb-8 text-white/90 font-medium drop-shadow animate-fade-in-up delay-200">Travel Buddy curates the perfect app bundle for every traveler’s needs, no matter where your journey takes you.</p>
       </section>

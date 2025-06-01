@@ -36,7 +36,7 @@ return (
         <div className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-transform transform hover:scale-105 border border-gray-200 bg-white"> 
           <div className="absolute inset-0">
             <img
-              src="/Images/india.png"
+              src="/Images/Thailand.jpg"
               alt="India"
               className="absolute inset-0 w-full h-full object-cover"
               style={{ objectFit: 'cover', width: '100%', height: '100%' }}
@@ -44,11 +44,14 @@ return (
             <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
           </div>
           <div className="relative z-10 p-4 flex flex-col justify-end h-full text-white">
-            <h3 className="text-xl font-semibold mb-1">IN INDIA</h3>
+            <h3 className="text-xl font-semibold mb-1">TH Thailand</h3>
             <p className="text-xs mb-2">
-              Explore the city of love with apps for navigating the metro, finding the best bistros, and more.
+              Discover Thailand’s vibrant culture, street food, and stunning temples with the best travel apps for your trip.
             </p>
-            <button className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight">
+            <button 
+              className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
+              onClick={() => window.location.href = '/country/TH'}
+            >
               Explore Apps
             </button>
           </div>
@@ -70,7 +73,10 @@ return (
             <p className="text-xs mb-2">
               Navigate the bustling streets of Tokyo with apps for public transit, language translation, and more.
             </p>
-            <button className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight">
+            <button 
+              className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
+              onClick={() => window.location.href = '/country/FR'}
+            >
               Explore Apps
             </button>
           </div>
@@ -93,7 +99,10 @@ return (
             <p className="text-xs mb-2">
               Discover apps to help you explore the Big Apple, from subway maps to event guides.
             </p>
-            <button className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight">
+            <button 
+              className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
+              onClick={() => window.location.href = '/country/US'}
+            >
               Explore Apps
             </button>
           </div>
@@ -114,7 +123,10 @@ return (
             <p className="text-xs mb-2">
               Discover apps to help you explore the Big Apple, from subway maps to event guides.
             </p>
-            <button className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight">
+            <button 
+              className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
+              onClick={() => window.location.href = '/country/JP'}
+            >
               Explore Apps
             </button>
           </div>
@@ -135,7 +147,10 @@ return (
             <p className="text-xs mb-2">
               Discover apps to help you explore the Big Apple, from subway maps to event guides.
             </p>
-            <button className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight">
+            <button 
+              className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
+              onClick={() => window.location.href = '/country/AU'}
+            >
               Explore Apps
             </button>
           </div>
@@ -156,7 +171,10 @@ return (
             <p className="text-xs mb-2">
               Discover apps to help you explore the Big Apple, from subway maps to event guides.
             </p>
-            <button className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight">
+            <button 
+              className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
+              onClick={() => window.location.href = '/country/IT'}
+            >
               Explore Apps
             </button>
           </div>
