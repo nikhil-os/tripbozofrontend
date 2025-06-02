@@ -1,24 +1,13 @@
 // src/app/country/[country]/page.js
-// "use client";
 
-// import { useEffect, useState } from "react";
-import { fetchAppsByCountry } from "/src/utils/fetchApps";
-
-// import CountryAppsPage from "@/components/CountryAppsPage";
-
-
-
-
-// Server Component
-
-// Server Component
-
+import { fetchAppsByCountry } from '@/src/utils/api';
 import CountryAppsPage from '@/components/countryapp/CountryAppsPage';
-// import { fetchAppsByCountry } from '@/utils/fetchApps';
 
-export default async function Page({ params }) {
-    const resolvedParams = await params;
-  const countryCode = resolvedParams.country;
+/**
+ * Server Component for rendering apps by country
+ */
+export default async function CountryPage({ params }) {
+  const countryCode = params.country.toUpperCase(); // Ensure ISO code is uppercase like "FR", "CN"
   const apps = await fetchAppsByCountry(countryCode);
 
   return <CountryAppsPage countryCode={countryCode} apps={apps} />;
