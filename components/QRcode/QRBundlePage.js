@@ -1,36 +1,108 @@
-'use client';
-import { useEffect, useState } from 'react';
+// src/app/qr-bundle/page.jsx
+"use client";
+
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { fetchAppsByIds } from "src/utils/fetchApps"; // create this util or reuse your existing logic
+import {
+  initSession,
+  saveSelectedApps,
+  fetchQRCode,
+  fetchAppsByIds,
+} from "@/utils/api";
 
 export default function QRBundlePage() {
   const [apps, setApps] = useState([]);
+  const [qrBase64, setQrBase64] = useState(null);
+  const [sessionId, setSessionId] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem('selectedAppIds');
-    if (stored) {
-      const appIds = JSON.parse(stored);
-      fetchAppsByIds(appIds).then(setApps);
-    }
+    (async () => {
+      // 1) Pull selected IDs from localStorage
+      const stored = localStorage.getItem("selectedAppIds");
+      let appIds = [];
+      try {
+        appIds = stored ? JSON.parse(stored) : [];
+      } catch {
+        appIds = [];
+      }
+      if (!Array.isArray(appIds) || appIds.length === 0) {
+        setLoading(false);
+        return; // no selected apps → nothing to do
+      }
+
+      // 2) Ensure we have a sessionId
+      let sid = localStorage.getItem("sessionId");
+      if (!sid) {
+        sid = await initSession();
+        if (sid) {
+          localStorage.setItem("sessionId", sid);
+        }
+      }
+
+      if (!sid) {
+        console.error("Could not initialize session.");
+        setLoading(false);
+        return;
+      }
+      setSessionId(sid);
+
+      // 3) POST selected IDs to /personalized-list/ → returns new session_id
+      const saveResp = await saveSelectedApps(appIds);
+      if (saveResp.session_id) {
+        sid = saveResp.session_id;
+        localStorage.setItem("sessionId", sid);
+        setSessionId(sid);
+      }
+
+      // 4) GET /personalized-list/qr/{sid}/
+      const qrResp = await fetchQRCode(sid);
+      if (qrResp.qr_code) {
+        setQrBase64(qrResp.qr_code);
+      }
+
+      // 5) Fetch each app’s full details (name, description, etc.)
+      const detailedApps = await fetchAppsByIds(appIds);
+      setApps(detailedApps);
+
+      setLoading(false);
+    })();
   }, []);
-  console.log("Selected Apps:", apps);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-600">Loading your bundle…</p>
+      </div>
+    );
+  }
+
+  // If no apps were found
+  if (apps.length === 0) {
+    return (
+      <main className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
+        <p className="text-red-500">
+          No apps selected. Please go back and pick some apps first.
+        </p>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-      {/* Header Section (Navigation Bar) */}
+      {/* Header */}
       <header className="bg-white shadow-sm w-full">
         <div className="max-w-4xl mx-auto px-4 py-4 flex items-center space-x-3">
-          {/* Removed search icon below navbar */}
+          {/* You can put a logo or navigation here if desired */}
         </div>
       </header>
 
-      {/* Main Content */}
+      {/* Content */}
       <div className="flex-1 w-full flex flex-col items-center justify-center">
         <div className="max-w-4xl w-full mx-auto px-4 py-12 flex flex-col items-center justify-center">
-          {/* Back to App List Link */}
+          {/* “Back to App List” Link */}
           <button
             onClick={() => {
-              // Do not clear selectedAppIds, just go back
               window.history.back();
             }}
             className="flex items-center text-teal-500 hover:text-teal-600 mb-8 focus:outline-none"
@@ -52,30 +124,42 @@ export default function QRBundlePage() {
             <span className="text-blue-600">Back to App List</span>
           </button>
 
-          {/* QR Code Section */}
+          {/* QR Code Box */}
           <div className="bg-white p-10 rounded-2xl shadow-lg w-full flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">Your Travel Apps Bundle</h1>
-            <p className="text-gray-600 mb-8 text-center">Scan this QR code to access your selected travel apps</p>
+            <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+              Your Travel Apps Bundle
+            </h1>
+            <p className="text-gray-600 mb-8 text-center">
+              Scan this QR code to access your selected travel apps
+            </p>
+
             <div className="flex flex-col md:flex-row items-center justify-center gap-12 w-full">
-              {/* QR Code */}
+              {/* Left: the QR Image + actions */}
               <div className="flex-1 flex flex-col items-center justify-center">
-                <Image
-                  src="/dummy-qr.png"
-                  alt="QR for app bundle"
-                  width={220}
-                  height={220}
-                  className="mx-auto border-8 border-white rounded-lg bg-white"
-                />
+                {qrBase64 ? (
+                  <Image
+                    src={`data:image/png;base64,${qrBase64}`}
+                    alt="QR for app bundle"
+                    width={220}
+                    height={220}
+                    className="mx-auto border-8 border-white rounded-lg bg-white"
+                  />
+                ) : (
+                  <div className="w-[220px] h-[220px] bg-gray-200 flex items-center justify-center text-gray-500">
+                    QR Failed
+                  </div>
+                )}
+
                 <div className="flex justify-center gap-4 mt-8">
+                  {/* Copy Link */}
                   <button
                     className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-semibold transition min-w-[120px] whitespace-nowrap"
-                    style={{minWidth: '120px'}}
                     onClick={async () => {
                       try {
                         await navigator.clipboard.writeText(window.location.href);
-                        alert('Link copied to clipboard!');
+                        alert("Link copied to clipboard!");
                       } catch (err) {
-                        alert('Failed to copy link.');
+                        alert("Failed to copy link.");
                       }
                     }}
                   >
@@ -94,8 +178,10 @@ export default function QRBundlePage() {
                       <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
                       <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
                     </svg>
-                    <span className="inline-block">Copy Link</span>
+                    <span>Copy Link</span>
                   </button>
+
+                  {/* Share */}
                   <button className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-semibold transition">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -115,6 +201,8 @@ export default function QRBundlePage() {
                     </svg>
                     Share
                   </button>
+
+                  {/* Download */}
                   <button className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-semibold transition">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +225,7 @@ export default function QRBundlePage() {
                 </div>
               </div>
 
-              {/* Selected Apps Section */}
+              {/* Right: Display the selected apps with name + description */}
               <div className="flex-1 flex flex-col items-center justify-center w-full">
                 <div className="flex space-x-4 mb-6">
                   <button className="bg-teal-500 text-white px-4 py-2 rounded-full font-semibold">
@@ -149,13 +237,20 @@ export default function QRBundlePage() {
                 </div>
                 <ul className="space-y-6 w-full max-w-md">
                   {apps.map((app) => (
-                    <li key={app.id} className="flex items-start space-x-4 bg-gray-50 rounded-lg p-4">
+                    <li
+                      key={app.id}
+                      className="flex items-start space-x-4 bg-gray-50 rounded-lg p-4"
+                    >
                       <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                        <span className="text-2xl">📱</span> {/* Placeholder for app icon */}
+                        <span className="text-2xl">📱</span>
                       </div>
                       <div>
-                        <span className="font-medium text-gray-800">{app.name}</span>
-                        <p className="text-gray-500 text-sm">{app.description}</p>
+                        <span className="font-medium text-gray-800">
+                          {app.name}
+                        </span>
+                        <p className="text-gray-500 text-sm">
+                          {app.description}
+                        </p>
                       </div>
                     </li>
                   ))}
