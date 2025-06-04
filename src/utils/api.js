@@ -1,9 +1,9 @@
 // src/utils/api.js
 import axios from "axios";
-import { sampleApps } from "@/app/data/sampleApps";
+import { sampleApps } from "@/src/app/data/sampleApps";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000/api";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8099/api";
 const useApi = true;
 
 const apiClient = axios.create({

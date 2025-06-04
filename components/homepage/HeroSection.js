@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { searchCountries } from "@/utils/api";
+import { searchCountries } from "@/src/utils/api";
 
 // Custom hook for scroll‐based animation
 function useScrollReveal(ref, options = {}) {
