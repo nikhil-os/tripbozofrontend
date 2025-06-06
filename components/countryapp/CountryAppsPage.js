@@ -9,6 +9,7 @@ import {
   FaTimes,
   FaQrcode,
   FaGlobe,
+  FaChevronDown,
 } from "react-icons/fa";
 
 // Import the two new API helpers

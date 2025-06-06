@@ -1,4 +1,4 @@
-import { fetchAppsByCountry } from '@/utils/api';
+import { fetchAppsByCountry } from "@/src/utils/api";
 import Image from 'next/image';
 
 export default async function QRDownloadPage({ params }) {
