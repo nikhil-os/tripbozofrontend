@@ -1,4 +1,5 @@
 // src/utils/api.js
+
 import axios from "axios";
 import { sampleApps } from "@/src/app/data/sampleApps";
 
@@ -11,7 +12,7 @@ const apiClient = axios.create({
   timeout: 10000,
 });
 
-/**
+/** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
  * 1) Initialize a new session (stores empty list in Redis, returns session_id)
  */
 export async function initSession() {
@@ -28,10 +29,9 @@ export async function initSession() {
   }
 }
 
-/**
+/** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
  * 2) Save selected apps under a new session ID.
- *    This corresponds to POST /personalized-list/ with { selected_apps: [1,2,3] }
- *    It returns { session_id, message, selected_apps: [...] }
+ *    POST /personalized-list/  { selected_apps: [1,2,3] }
  */
 export async function saveSelectedApps(appIds = []) {
   if (!useApi) {
@@ -49,10 +49,9 @@ export async function saveSelectedApps(appIds = []) {
   }
 }
 
-/**
+/** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
  * 3) Fetch the Base64 QR code payload + serialized app data for a given session.
  *    GET /personalized-list/qr/{sessionId}/
- *    Returns { qr_code: "<base64>", selected_apps: [ {..}, ... ], shareable_url }
  */
 export async function fetchQRCode(sessionId) {
   if (!useApi) {
@@ -72,34 +71,28 @@ export async function fetchQRCode(sessionId) {
   }
 }
 
-/**
- * Fetch details for a list of app IDs.
- * Ideally your backend would expose a bulk‐lookup endpoint, but if not, we fallback:
- *  - fetch all apps for each country (if you can guess the country), then filter by id
- *  - OR just return sampleApps if no real data is found
+/** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ * 4) Fetch details for a list of app IDs.
+ *    (fallback to sampleApps if no real bulk endpoint exists)
  */
 export async function fetchAppsByIds(appIds = []) {
   if (!useApi) {
     return sampleApps.filter((app) => appIds.includes(app.id));
   }
 
-  // If you had a real `/apps/bulk/` endpoint, you could do:
-  // try {
-  //   const res = await apiClient.post(`/apps/bulk/`, { ids: appIds });
-  //   return res.data;
-  // } catch (err) { ... fallback below ... }
+  // If you have a real `/apps/bulk/` endpoint you would do:
+  // const res = await apiClient.post(`/apps/bulk/`, { ids: appIds });
+  // return res.data;
 
-  // Fallback strategy: if we know that all selected apps come from the same country,
-  // you could fetch `/country/{code}/apps/` once and filter. For now, just return sampleApps.
   console.warn(
-    "[TripBozo API] No apps/bulk endpoint—returning sampleApps for selected IDs"
+    "[TripBozo API] No /apps/bulk endpoint—returning sampleApps for selected IDs"
   );
   return sampleApps.filter((app) => appIds.includes(app.id));
 }
 
-/**
- * Fetch a list of countries matching the search query.
- * GET /homepage/search/?query=...
+/** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ * 5) Fetch a list of countries matching the search query:
+ *    GET /homepage/search/?query=...
  */
 export async function searchCountries(query) {
   if (!useApi) {
@@ -114,5 +107,31 @@ export async function searchCountries(query) {
   } catch (err) {
     console.warn("[TripBozo API] Failed to search countries:", err.message);
     return [];
+  }
+}
+
+/** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ * 6) NEW: Fetch apps for a given country code (e.g. “FR”, “CN”).
+ *    GET /country/<countryCode>/apps/
+ *    If no real data, fallback to sampleApps.
+ */
+export async function fetchAppsByCountry(countryCode) {
+  if (!useApi) {
+    console.info("[TripBozo API] Using sample apps for country:", countryCode);
+    return sampleApps;
+  }
+
+  try {
+    // We assume your Django endpoint is: GET /country/<countryCode>/apps/
+    const res = await apiClient.get(`/country/${countryCode}/apps/`);
+    // The endpoint returns an array of TravelApp objects; usage:
+    const apps = res.data;
+    return Array.isArray(apps) && apps.length > 0 ? apps : sampleApps;
+  } catch (err) {
+    console.warn(
+      `[TripBozo API] Failed to fetch apps for country ${countryCode}:`,
+      err.message
+    );
+    return sampleApps;
   }
 }

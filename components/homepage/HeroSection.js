@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { searchCountries } from "@/src/utils/api";
+import { fetchAppsByCountry } from "@/src/utils/api";
 
 // Custom hook for scroll‐based animation
 function useScrollReveal(ref, options = {}) {
@@ -54,23 +54,31 @@ const HeroSection = () => {
   };
 
   const handleSearch = async () => {
-    if (!query.trim()) {
+    const trimmed = query.trim();
+    if (!trimmed) {
       setErrorMsg("Please enter a country name or code.");
       return;
     }
+
     setLoading(true);
     setErrorMsg("");
 
-    const results = await searchCountries(query.trim());
+    // We assume the user typed either a country ISO code (e.g. "FR" or "jp")
+    // or a full country name. We'll just normalize to lowercase and try.
+    const countryCode = trimmed.toLowerCase();
+
+    // 1) Try fetching apps for that country code
+    const apps = await fetchAppsByCountry(countryCode);
     setLoading(false);
 
-    if (!results.length) {
-      setErrorMsg(`No matching country for “${query}”.`);
+    if (!apps.length) {
+      // No apps returned => likely invalid country code (or no apps exist)
+      setErrorMsg(`No travel apps found for “${trimmed}”.`);
       return;
     }
-    // Redirect to the first match’s URL (e.g. "/country/fr")
-    const firstUrl = results[0].url;
-    router.push(firstUrl);
+
+    // 2) Redirect to /country/<countryCode>
+    router.push(`/country/${countryCode}`);
   };
 
   const handleKeyPress = (e) => {

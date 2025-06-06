@@ -8,7 +8,7 @@ import {
   saveSelectedApps,
   fetchQRCode,
   fetchAppsByIds,
-} from "@/utils/api";
+} from "@/src/utils/api";
 
 export default function QRBundlePage() {
   const [apps, setApps] = useState([]);
