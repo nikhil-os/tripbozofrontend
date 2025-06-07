@@ -10,6 +10,7 @@ const useApi = true;
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
+  responseType: "blob",  
 });
 
 /** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
@@ -135,3 +136,19 @@ export async function fetchAppsByCountry(countryCode) {
     return sampleApps;
   }
 }
+
+export async function downloadAppList(sessionId) {
+    // GET /personalized-list/download-text/:sessionId/
+    const res = await apiClient.get(
+      `/personalized-list/download-text/${sessionId}/`
+    );
+    return res.data; // this is a Blob
+  }
+  
+  export async function downloadQRCode(sessionId) {
+    // GET /personalized-list/download-qr/:sessionId/
+    const res = await apiClient.get(
+      `/personalized-list/download-qr/${sessionId}/`
+    );
+    return res.data; // Blob
+  }

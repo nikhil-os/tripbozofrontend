@@ -1,13 +1,18 @@
+// src/app/qr-bundle/page.jsx
 "use client";
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { FiCopy, FiDownload, FiShare2, FiLink } from "react-icons/fi";
+import { saveAs } from "file-saver";
+
 import {
   initSession,
   saveSelectedApps,
   fetchQRCode,
+  downloadAppList,
+  downloadQRCode,
 } from "@/src/utils/api";
-import { FiCopy, FiDownload, FiShare2, FiLink } from "react-icons/fi";
 
 export default function QRBundlePage() {
   const [apps, setApps] = useState([]);
@@ -18,54 +23,74 @@ export default function QRBundlePage() {
 
   useEffect(() => {
     (async () => {
+      // 1) Pull selected IDs
       const stored = localStorage.getItem("selectedAppIds");
-      let appIds = [];
-      try {
-        appIds = stored ? JSON.parse(stored) : [];
-      } catch {}
-      if (!appIds.length) { setLoading(false); return; }
-
-      let sid = localStorage.getItem("sessionId");
-      if (!sid) {
-        sid = await initSession();
-        sid && localStorage.setItem("sessionId", sid);
+      const appIds = stored ? JSON.parse(stored) : [];
+      if (!appIds.length) {
+        setLoading(false);
+        return;
       }
-      if (!sid) { setLoading(false); return; }
+
+      // 2) Ensure session exists
+      let sid = localStorage.getItem("sessionId") || (await initSession());
+      if (!sid) {
+        setLoading(false);
+        return;
+      }
+      localStorage.setItem("sessionId", sid);
       setSessionId(sid);
 
+      // 3) Save selection server‐side
       const saveResp = await saveSelectedApps(appIds);
-      if (saveResp.session_id) {
-        sid = saveResp.session_id;
-        localStorage.setItem("sessionId", sid);
-        setSessionId(sid);
-      }
+      sid = saveResp.session_id || sid;
+      localStorage.setItem("sessionId", sid);
+      setSessionId(sid);
 
+      // 4) Fetch QR payload + selected apps
       const qrResp = await fetchQRCode(sid);
-      qrResp.qr_code && setQrBase64(qrResp.qr_code);
-      qrResp.shareable_url && setShareUrl(qrResp.shareable_url);
+      setQrBase64(qrResp.qr_code);
+      setShareUrl(qrResp.shareable_url);
       setApps(qrResp.selected_apps || []);
       setLoading(false);
     })();
   }, []);
 
+  // Embed‐code copy
   const handleEmbedCopy = () => {
     const code = `<iframe src="${shareUrl}" width="360" height="480" frameborder="0" style="border:none;"></iframe>`;
     navigator.clipboard.writeText(code);
     alert("Embed code copied!");
   };
 
+  // Download handlers
+  const handleDownloadList = async () => {
+    try {
+      const blob = await downloadAppList(sessionId);
+      saveAs(blob, `${sessionId}-app-list.txt`);
+    } catch {
+      alert("Failed to download app list.");
+    }
+  };
+  const handleDownloadQR = async () => {
+    try {
+      const blob = await downloadQRCode(sessionId);
+      saveAs(blob, `${sessionId}-qr.png`);
+    } catch {
+      alert("Failed to download QR code.");
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-500">Loading your bundle…</p>
+        <p className="text-gray-600">Loading your bundle…</p>
       </div>
     );
   }
-
   if (!apps.length) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-gray-100">
-        <p className="text-red-500">No apps selected. Please go back.</p>
+        <p className="text-red-500">No apps selected—please go back.</p>
       </div>
     );
   }
@@ -89,8 +114,8 @@ export default function QRBundlePage() {
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* QR & Actions */}
-          <div className="bg-white p-8 rounded-xl shadow flex flex-col items-center justify-between">
+          {/* QR + Actions */}
+          <div className="bg-white p-8 rounded-xl shadow flex flex-col items-center">
             {qrBase64 ? (
               <Image
                 src={`data:image/png;base64,${qrBase64}`}
@@ -111,36 +136,37 @@ export default function QRBundlePage() {
                   navigator.clipboard.writeText(shareUrl);
                   alert("Link copied!");
                 }}
-                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black"
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-black"
               >
                 <FiCopy /> Copy Link
               </button>
+
               <button
                 onClick={() =>
                   navigator.share?.({ url: shareUrl }).catch(() => {})
                 }
-                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black"
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-black"
               >
                 <FiShare2 /> Share
               </button>
-              <a
-                href={`/api/personalized-list/download-text/${sessionId}/`}
-                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black"
-                download
+
+              <button
+                onClick={handleDownloadList}
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-black"
               >
-                <FiDownload /> List
-              </a>
-              <a
-                href={`/api/personalized-list/download-qr/${sessionId}/`}
-                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black "
-                download
+                <FiDownload /> Download List
+              </button>
+
+              <button
+                onClick={handleDownloadQR}
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg text-black"
               >
-                <FiDownload /> QR
-              </a>
+                <FiDownload /> Download QR
+              </button>
             </div>
           </div>
 
-          {/* Embed + Apps */}
+          {/* Embed + Selected Apps */}
           <div className="space-y-6">
             {/* Embed Code */}
             <div className="bg-white p-4 rounded-xl shadow">
@@ -174,6 +200,7 @@ export default function QRBundlePage() {
                     key={app.id}
                     className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition"
                   >
+                    {/* Icon */}
                     <div className="w-10 h-10 relative">
                       <Image
                         src={app.icon_url || "/file.svg"}
@@ -182,6 +209,7 @@ export default function QRBundlePage() {
                         className="object-cover rounded"
                       />
                     </div>
+                    {/* Name & Category */}
                     <div>
                       <p className="font-medium text-gray-800">{app.name}</p>
                       <p className="text-gray-500 text-sm">{app.category}</p>
