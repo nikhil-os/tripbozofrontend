@@ -62,8 +62,7 @@ export default function QRBundlePage() {
       }
 
       // 5) Fetch each app’s full details (name, description, etc.)
-      const detailedApps = await fetchAppsByIds(appIds);
-      setApps(detailedApps);
+      setApps(qrResp.selected_apps || []);
 
       setLoading(false);
     })();
@@ -249,7 +248,7 @@ export default function QRBundlePage() {
                           {app.name}
                         </span>
                         <p className="text-gray-500 text-sm">
-                          {app.description}
+                          {app.category}
                         </p>
                       </div>
                     </li>
