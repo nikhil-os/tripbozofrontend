@@ -1,4 +1,3 @@
-// src/app/qr-bundle/page.jsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -7,47 +6,33 @@ import {
   initSession,
   saveSelectedApps,
   fetchQRCode,
-  fetchAppsByIds,
 } from "@/src/utils/api";
+import { FiCopy, FiDownload, FiShare2, FiLink } from "react-icons/fi";
 
 export default function QRBundlePage() {
   const [apps, setApps] = useState([]);
   const [qrBase64, setQrBase64] = useState(null);
+  const [shareUrl, setShareUrl] = useState("");
   const [sessionId, setSessionId] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
-      // 1) Pull selected IDs from localStorage
       const stored = localStorage.getItem("selectedAppIds");
       let appIds = [];
       try {
         appIds = stored ? JSON.parse(stored) : [];
-      } catch {
-        appIds = [];
-      }
-      if (!Array.isArray(appIds) || appIds.length === 0) {
-        setLoading(false);
-        return; // no selected apps → nothing to do
-      }
+      } catch {}
+      if (!appIds.length) { setLoading(false); return; }
 
-      // 2) Ensure we have a sessionId
       let sid = localStorage.getItem("sessionId");
       if (!sid) {
         sid = await initSession();
-        if (sid) {
-          localStorage.setItem("sessionId", sid);
-        }
+        sid && localStorage.setItem("sessionId", sid);
       }
-
-      if (!sid) {
-        console.error("Could not initialize session.");
-        setLoading(false);
-        return;
-      }
+      if (!sid) { setLoading(false); return; }
       setSessionId(sid);
 
-      // 3) POST selected IDs to /personalized-list/ → returns new session_id
       const saveResp = await saveSelectedApps(appIds);
       if (saveResp.session_id) {
         sid = saveResp.session_id;
@@ -55,206 +40,155 @@ export default function QRBundlePage() {
         setSessionId(sid);
       }
 
-      // 4) GET /personalized-list/qr/{sid}/
       const qrResp = await fetchQRCode(sid);
-      if (qrResp.qr_code) {
-        setQrBase64(qrResp.qr_code);
-      }
-
-      // 5) Fetch each app’s full details (name, description, etc.)
+      qrResp.qr_code && setQrBase64(qrResp.qr_code);
+      qrResp.shareable_url && setShareUrl(qrResp.shareable_url);
       setApps(qrResp.selected_apps || []);
-
       setLoading(false);
     })();
   }, []);
 
+  const handleEmbedCopy = () => {
+    const code = `<iframe src="${shareUrl}" width="360" height="480" frameborder="0" style="border:none;"></iframe>`;
+    navigator.clipboard.writeText(code);
+    alert("Embed code copied!");
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-600">Loading your bundle…</p>
+        <p className="text-gray-500">Loading your bundle…</p>
       </div>
     );
   }
 
-  // If no apps were found
-  if (apps.length === 0) {
+  if (!apps.length) {
     return (
-      <main className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-        <p className="text-red-500">
-          No apps selected. Please go back and pick some apps first.
-        </p>
-      </main>
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <p className="text-red-500">No apps selected. Please go back.</p>
+      </div>
     );
   }
 
   return (
-    <main className="bg-gray-100 min-h-screen flex flex-col items-center justify-center">
-      {/* Header */}
-      <header className="bg-white shadow-sm w-full">
-        <div className="max-w-4xl mx-auto px-4 py-4 flex items-center space-x-3">
-          {/* You can put a logo or navigation here if desired */}
-        </div>
-      </header>
+    <main className="bg-gray-50 min-h-screen py-8 px-4">
+      <div className="max-w-4xl mx-auto">
+        {/* Back */}
+        <button
+          onClick={() => history.back()}
+          className="text-teal-600 hover:underline mb-6 flex items-center gap-2"
+        >
+          ← Back to Apps
+        </button>
 
-      {/* Content */}
-      <div className="flex-1 w-full flex flex-col items-center justify-center">
-        <div className="max-w-4xl w-full mx-auto px-4 py-12 flex flex-col items-center justify-center">
-          {/* “Back to App List” Link */}
-          <button
-            onClick={() => {
-              window.history.back();
-            }}
-            className="flex items-center text-teal-500 hover:text-teal-600 mb-8 focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className="mr-2 h-5 w-5"
-            >
-              <path d="M15 18l-6-6 6-6"></path>
-            </svg>
-            <span className="text-blue-600">Back to App List</span>
-          </button>
+        <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+          Your Travel Apps Bundle
+        </h1>
+        <p className="text-gray-600 text-center mb-8">
+          Scan the QR or copy/share your bundle below.
+        </p>
 
-          {/* QR Code Box */}
-          <div className="bg-white p-10 rounded-2xl shadow-lg w-full flex flex-col items-center justify-center">
-            <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">
-              Your Travel Apps Bundle
-            </h1>
-            <p className="text-gray-600 mb-8 text-center">
-              Scan this QR code to access your selected travel apps
-            </p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* QR & Actions */}
+          <div className="bg-white p-8 rounded-xl shadow flex flex-col items-center justify-between">
+            {qrBase64 ? (
+              <Image
+                src={`data:image/png;base64,${qrBase64}`}
+                alt="Bundle QR"
+                width={280}
+                height={280}
+                className="rounded-lg border mb-6"
+              />
+            ) : (
+              <div className="w-72 h-72 bg-gray-200 rounded-lg flex items-center justify-center mb-6">
+                <span className="text-gray-400">QR failed</span>
+              </div>
+            )}
 
-            <div className="flex flex-col md:flex-row items-center justify-center gap-12 w-full">
-              {/* Left: the QR Image + actions */}
-              <div className="flex-1 flex flex-col items-center justify-center">
-                {qrBase64 ? (
-                  <Image
-                    src={`data:image/png;base64,${qrBase64}`}
-                    alt="QR for app bundle"
-                    width={220}
-                    height={220}
-                    className="mx-auto border-8 border-white rounded-lg bg-white"
-                  />
-                ) : (
-                  <div className="w-[220px] h-[220px] bg-gray-200 flex items-center justify-center text-gray-500">
-                    QR Failed
-                  </div>
-                )}
+            <div className="grid grid-cols-2 gap-4 w-full">
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(shareUrl);
+                  alert("Link copied!");
+                }}
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black"
+              >
+                <FiCopy /> Copy Link
+              </button>
+              <button
+                onClick={() =>
+                  navigator.share?.({ url: shareUrl }).catch(() => {})
+                }
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black"
+              >
+                <FiShare2 /> Share
+              </button>
+              <a
+                href={`/api/personalized-list/download-text/${sessionId}/`}
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black"
+                download
+              >
+                <FiDownload /> List
+              </a>
+              <a
+                href={`/api/personalized-list/download-qr/${sessionId}/`}
+                className="flex items-center justify-center gap-2 py-2 bg-gray-200 hover:bg-gray-400 rounded-lg  text-black "
+                download
+              >
+                <FiDownload /> QR
+              </a>
+            </div>
+          </div>
 
-                <div className="flex justify-center gap-4 mt-8">
-                  {/* Copy Link */}
-                  <button
-                    className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-semibold transition min-w-[120px] whitespace-nowrap"
-                    onClick={async () => {
-                      try {
-                        await navigator.clipboard.writeText(window.location.href);
-                        alert("Link copied to clipboard!");
-                      } catch (err) {
-                        alert("Failed to copy link.");
-                      }
-                    }}
+          {/* Embed + Apps */}
+          <div className="space-y-6">
+            {/* Embed Code */}
+            <div className="bg-white p-4 rounded-xl shadow">
+              <div className="flex items-center justify-between mb-2">
+                <label className="flex items-center gap-2 text-gray-700 font-medium">
+                  <FiLink /> Embed Code
+                </label>
+                <button
+                  onClick={handleEmbedCopy}
+                  className="text-gray-600 hover:text-gray-800 flex items-center gap-1"
+                >
+                  <FiCopy /> Copy
+                </button>
+              </div>
+              <textarea
+                readOnly
+                rows={3}
+                value={`<iframe src="${shareUrl}" width="360" height="480" frameborder="0" style="border:none;"></iframe>`}
+                className="w-full rounded-lg border border-gray-300 p-2 font-mono text-sm text-gray-800 bg-gray-50"
+              />
+            </div>
+
+            {/* App List */}
+            <div className="bg-white p-4 rounded-xl shadow">
+              <h2 className="text-lg font-semibold text-gray-800 mb-3">
+                Selected Apps
+              </h2>
+              <ul className="space-y-3 max-h-72 overflow-y-auto">
+                {apps.map((app) => (
+                  <li
+                    key={app.id}
+                    className="flex items-center gap-3 p-2 hover:bg-gray-50 rounded-lg transition"
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="mr-2 h-5 w-5 flex-shrink-0"
-                    >
-                      <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
-                      <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
-                    </svg>
-                    <span>Copy Link</span>
-                  </button>
-
-                  {/* Share */}
-                  <button className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-semibold transition">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="mr-2 h-5 w-5"
-                    >
-                      <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path>
-                      <polyline points="16 6 12 2 8 6"></polyline>
-                      <line x1="12" y1="2" x2="12" y2="15"></line>
-                    </svg>
-                    Share
-                  </button>
-
-                  {/* Download */}
-                  <button className="flex items-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2 rounded-full font-semibold transition">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="mr-2 h-5 w-5"
-                    >
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                      <polyline points="7 10 12 15 17 10"></polyline>
-                      <line x1="12" y1="15" x2="12" y2="3"></line>
-                    </svg>
-                    Download
-                  </button>
-                </div>
-              </div>
-
-              {/* Right: Display the selected apps with name + description */}
-              <div className="flex-1 flex flex-col items-center justify-center w-full">
-                <div className="flex space-x-4 mb-6">
-                  <button className="bg-teal-500 text-white px-4 py-2 rounded-full font-semibold">
-                    Selected Apps
-                  </button>
-                  <button className="bg-gray-100 text-gray-700 px-4 py-2 rounded-full font-semibold hover:bg-gray-200 transition">
-                    Embed Code
-                  </button>
-                </div>
-                <ul className="space-y-6 w-full max-w-md">
-                  {apps.map((app) => (
-                    <li
-                      key={app.id}
-                      className="flex items-start space-x-4 bg-gray-50 rounded-lg p-4"
-                    >
-                      <div className="w-12 h-12 bg-gray-200 rounded-full flex items-center justify-center">
-                        <span className="text-2xl">📱</span>
-                      </div>
-                      <div>
-                        <span className="font-medium text-gray-800">
-                          {app.name}
-                        </span>
-                        <p className="text-gray-500 text-sm">
-                          {app.category}
-                        </p>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+                    <div className="w-10 h-10 relative">
+                      <Image
+                        src={app.icon_url || "/file.svg"}
+                        alt={app.name}
+                        fill
+                        className="object-cover rounded"
+                      />
+                    </div>
+                    <div>
+                      <p className="font-medium text-gray-800">{app.name}</p>
+                      <p className="text-gray-500 text-sm">{app.category}</p>
+                    </div>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </div>
