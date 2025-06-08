@@ -10,6 +10,8 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     const [selectedApps, setSelectedApps] = useState([]);
     const [search, setSearch] = useState("");
     const [activeCategory, setActiveCategory] = useState("ALL");
+    const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
+    const [filterType, setFilterType] = useState(null); // 'topRated', 'paid', 'free' or null
     const router = useRouter();
 
     // Load selected apps from localStorage on mount
@@ -42,11 +44,21 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
         router.push(`/qr-bundle?apps=${selectedAppIds}`);
     };
 
-    // Filtered apps
-    const filteredApps = apps.filter(app =>
-        (activeCategory === 'ALL' || app.category === activeCategory) &&
-        (app.name.toLowerCase().includes(search.toLowerCase()) || app.description.toLowerCase().includes(search.toLowerCase()))
-    );
+    // Enhanced filtered apps logic
+    const filteredApps = apps
+        .filter(app =>
+            (activeCategory === 'ALL' || app.category === activeCategory) &&
+            (app.name.toLowerCase().includes(search.toLowerCase()) || app.description.toLowerCase().includes(search.toLowerCase()))
+        )
+        .filter(app => {
+            if (filterType === 'paid') return !!app.price && app.price > 0;
+            if (filterType === 'free') return !app.price || app.price === 0;
+            return true;
+        })
+        .sort((a, b) => {
+            if (filterType === 'topRated') return (b.rating || 0) - (a.rating || 0);
+            return 0;
+        });
 
     // Country image slideshow logic
     const countryImageFolder = countryCode && countryCode.length === 2 ? countryCode.toUpperCase() : countryCode;
@@ -140,10 +152,45 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                         onChange={e => setSearch(e.target.value)}
                     />
                 </div>
-                <button className="flex items-center gap-2 px-7 h-16 rounded-2xl border border-[#e0e0e0] bg-white text-gray-700 font-semibold shadow hover:bg-gray-50 text-lg">
+                <div className="relative">
+                  <button
+                    className="flex items-center gap-2 px-7 h-16 rounded-2xl border border-[#e0e0e0] bg-white text-gray-700 font-semibold shadow hover:bg-gray-50 text-lg focus:outline-none"
+                    onClick={() => setFilterDropdownOpen(v => !v)}
+                    type="button"
+                  >
                     <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18" /></svg>
                     Filter
-                </button>
+                    <FaChevronDown className={`ml-2 transition-transform ${filterDropdownOpen ? 'rotate-180' : ''}`} />
+                  </button>
+                  {filterDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-[#e0e0e0] rounded-xl shadow-lg z-20 animate-fade-in-up">
+                      <button
+                        className={`w-full text-left px-5 py-3 hover:bg-[#f3f6f7] text-gray-700 font-medium rounded-t-xl ${filterType === 'topRated' ? 'bg-[#e0ecec] text-[#2ad2c9]' : ''}`}
+                        onClick={() => { setFilterType('topRated'); setFilterDropdownOpen(false); }}
+                      >
+                        Top Rated
+                      </button>
+                      <button
+                        className={`w-full text-left px-5 py-3 hover:bg-[#f3f6f7] text-gray-700 font-medium ${filterType === 'paid' ? 'bg-[#e0ecec] text-[#2ad2c9]' : ''}`}
+                        onClick={() => { setFilterType('paid'); setFilterDropdownOpen(false); }}
+                      >
+                        Paid
+                      </button>
+                      <button
+                        className={`w-full text-left px-5 py-3 hover:bg-[#f3f6f7] text-gray-700 font-medium rounded-b-xl ${filterType === 'free' ? 'bg-[#e0ecec] text-[#2ad2c9]' : ''}`}
+                        onClick={() => { setFilterType('free'); setFilterDropdownOpen(false); }}
+                      >
+                        Free
+                      </button>
+                      <button
+                        className="w-full text-left px-5 py-2 text-gray-400 hover:bg-[#f3f6f7] font-normal rounded-b-xl border-t border-[#e0e0e0]"
+                        onClick={() => { setFilterType(null); setFilterDropdownOpen(false); }}
+                      >
+                        Clear Filter
+                      </button>
+                    </div>
+                  )}
+                </div>
             </div>
 
             {/* Category Tabs */}
