@@ -9,9 +9,15 @@ const useApi = true;
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000,
-  responseType: "blob",  
+  timeout: 10000 
 });
+
+// Blob client only for downloading files
+const apiBlob = axios.create({
+    baseURL: API_BASE_URL,
+    timeout: 10_000,
+    responseType: "blob",
+  });
 
 /** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
  * 1) Initialize a new session (stores empty list in Redis, returns session_id)
@@ -139,7 +145,7 @@ export async function fetchAppsByCountry(countryCode) {
 
 export async function downloadAppList(sessionId) {
     // GET /personalized-list/download-text/:sessionId/
-    const res = await apiClient.get(
+    const res = await apiBlob.get(
       `/personalized-list/download-text/${sessionId}/`
     );
     return res.data; // this is a Blob
@@ -147,7 +153,7 @@ export async function downloadAppList(sessionId) {
   
   export async function downloadQRCode(sessionId) {
     // GET /personalized-list/download-qr/:sessionId/
-    const res = await apiClient.get(
+    const res = await apiBlob.get(
       `/personalized-list/download-qr/${sessionId}/`
     );
     return res.data; // Blob

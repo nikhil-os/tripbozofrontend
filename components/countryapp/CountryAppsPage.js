@@ -16,7 +16,17 @@ import {
 import { initSession, saveSelectedApps } from "@/src/utils/api";
 
 export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
-  const [selectedApps, setSelectedApps] = useState([]);
+  
+    // hydrate from localStorage synchronously:
+  const [selectedApps, setSelectedApps] = useState(() => {
+   try {
+     const stored = localStorage.getItem("selectedAppIds");
+     return stored ? JSON.parse(stored) : [];
+   } catch {
+     return [];
+   }
+ });
+
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("ALL");
   const router = useRouter();
