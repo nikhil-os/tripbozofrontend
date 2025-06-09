@@ -158,3 +158,28 @@ export async function downloadAppList(sessionId) {
     );
     return res.data; // Blob
   }
+
+
+
+  export async function fetchEssentials(countryCode) {
+    if (!useApi) {
+      console.info("[TripBozo API] fetchEssentials disabled → returning dummy data");
+      return {
+        emergencies: [],
+        phrases: [],
+        tips: [],
+      };
+    }
+  
+    try {
+      const res = await apiClient.get(`/country/${countryCode}/essentials/`);
+      return res.data;
+    } catch (err) {
+      console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
+      return {
+        emergencies: [],
+        phrases: [],
+        tips: [],
+      };
+    }
+  }
