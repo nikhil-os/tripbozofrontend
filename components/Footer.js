@@ -42,10 +42,10 @@ const Footer = () => {
                 <div className="flex flex-col items-start md:col-start-3 md:col-end-4 md:justify-self-end w-full md:w-1/2 ml-auto">
                     <h4 className="font-display text-lg font-semibold mb-4">Popular Destinations</h4>
                     <ul className="space-y-2">
-                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/countries/jp">Japan 🇯🇵</AppLink></li>
-                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/countries/fr">France 🇫🇷</AppLink></li>
-                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/countries/us">United States 🇺🇸</AppLink></li>
-                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/countries/th">Thailand 🇹🇭</AppLink></li>
+                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/JP">Japan 🇯🇵</AppLink></li>
+                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/FR">France 🇫🇷</AppLink></li>
+                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/US">United States 🇺🇸</AppLink></li>
+                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/TH">Thailand 🇹🇭</AppLink></li>
                     </ul>
                 </div>
             </div>
