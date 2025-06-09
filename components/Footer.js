@@ -34,9 +34,8 @@ const Footer = () => {
                     <h4 className="font-display text-lg font-semibold mb-4 self-start md:self-start pl-36">Quick Links</h4>
                     <ul className="space-y-2">
                         <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/">Home</AppLink></li>
-                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/onboarding">Onboarding</AppLink></li>
-                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/about">About Us</AppLink></li>
-                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</AppLink></li>
+                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/Onboarding">Onboarding</AppLink></li>
+                        <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/About">About Us</AppLink></li>
                     </ul>
                 </div>
                 {/* Popular Destinations - right side */}

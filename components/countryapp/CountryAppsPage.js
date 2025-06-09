@@ -5,6 +5,7 @@
 import { useEffect, useState, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { FaPlus, FaCheck, FaTimes, FaQrcode, FaGlobe, FaChevronDown } from 'react-icons/fa';
+import { useLoader } from '../LoaderContext';
 
 export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     const [selectedApps, setSelectedApps] = useState([]);
@@ -13,6 +14,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
     const [filterType, setFilterType] = useState(null); // 'topRated', 'paid', 'free' or null
     const router = useRouter();
+    const { setShow } = useLoader();
 
     // Load selected apps from localStorage on mount
     useEffect(() => {
@@ -40,6 +42,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     };
 
     const handleGenerateQR = () => {
+        setShow(true);
         const selectedAppIds = selectedApps.join(",");
         router.push(`/qr-bundle?apps=${selectedAppIds}`);
     };
@@ -297,7 +300,10 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                     </button>
                     <button
                         className="mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all text-white text-xl bg-[#38bdf8] hover:bg-[#0ea5e9] font-semibold shadow btn-animated"
-                        onClick={() => router.push(`/country/${countryCode}/Essentials`)}
+                        onClick={() => {
+                            setShow(true);
+                            router.push(`/country/${countryCode}/Essentials`);
+                        }}
                     >
                         <FaGlobe className="mr-2" /> Essentials
                     </button>
