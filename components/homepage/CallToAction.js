@@ -1,8 +1,16 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useLoader } from '../LoaderContext';
 
 const CallToAction = () => {
+  const router = useRouter();
+  const { setShow } = useLoader();
+  const handleGetStarted = () => {
+    setShow(true);
+    router.push('/Onboarding');
+  };
   return (
     <section
       className="min-h-screen py-16 sm:py-20 text-center flex items-center justify-center bg-gradient-to-br from-white via-teal-50 to-blue-50"
@@ -31,17 +39,16 @@ const CallToAction = () => {
             Download your bundle as a QR code
           </span>
         </div>
-        <a href="/Onboarding">
-          <button
-            className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-11 bg-teal-400 hover:bg-teal-500 rounded-full px-8"
-          >
-            Get Started
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4">
-              <path d="M5 12h14"></path>
-              <path d="m12 5 7 7-7 7"></path>
-            </svg>
-          </button>
-        </a>
+        <button
+          className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-400 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-white h-11 bg-teal-400 hover:bg-teal-500 rounded-full px-8"
+          onClick={handleGetStarted}
+        >
+          Get Started
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4">
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+        </button>
       </div>
     </section>
   );
