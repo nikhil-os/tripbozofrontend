@@ -39,15 +39,11 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
   const [filterType, setFilterType] = useState("ALL");
   const [isFilterOpen, setIsFilterOpen] = useState(false); // State for filter dropdown
 
-  const categories = [
-    "ALL",
-    "Communication",
-    "Dining",
-    "Navigation",
-    "Finance",
-    "Safety",
-    "Accommodation",
-  ];
+   // 1) Dynamically derive the list of categories from your apps:
+   const categories = useMemo(() => {
+     const cats = new Set(apps.map((a) => a.category || "Uncategorized"));
+     return ["ALL", ...Array.from(cats)];
+   }, [apps]);
 
   const filterOptions = [
     { value: "ALL", label: "All Filters" },
@@ -80,7 +76,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
   const filteredApps = apps
     .filter(
       (app) =>
-        (activeCategory === "ALL" || app.category?.name === activeCategory) &&
+        (activeCategory === "ALL" || (app.category || "Uncategorized") === activeCategory) &&
         (app.name.toLowerCase().includes(search.toLowerCase()) ||
           (app.description || "")
             .toLowerCase()
@@ -274,24 +270,25 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
       {/* Apps & Sidebar */}
       <div className="w-[92vw] max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-8 px-14 pb-16">
         {/* Grid */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10">
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10 items-stretch">
           {filteredApps.map((app) => (
             <div
             key={app.id}
-            className="relative bg-white rounded-3xl border border-[#e0e0e0] p-5 flex gap-4 shadow-md transition-all min-h-[180px] md:min-h-[200px]"
+            className="relative h-[240px] bg-white rounded-3xl border border-[#e0e0e0] p-5 flex flex-col justify-between shadow-md transition-all"
           >
-            {/* Icon */}
-            <img
-              src={app.icon_url || "/file.svg"}
-              alt={app.name}
-              className="w-16 h-16 rounded-xl object-cover bg-gray-100 border border-[#e0e0e0] flex-shrink-0"
-            />
+            
           
             {/* Content */}
             <div className="flex-1 flex flex-col justify-between">
               {/* Header row: name + sponsored + select */}
               <div className="flex items-center justify-between mb-2">
                 <div className="flex items-center gap-2 min-w-0">
+                    {/* Icon */}
+            <img
+              src={app.icon_url || "/file.svg"}
+              alt={app.name}
+              className="w-16 h-16 rounded-xl object-cover bg-gray-100 border border-[#e0e0e0] flex-shrink-0"
+            />
                   <h2 className="text-lg font-bold text-[#222] truncate">
                     {app.name}
                   </h2>
@@ -365,7 +362,8 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
 
     {/* Right: Category pill */}
     <span className="px-2 py-0.5 rounded-full bg-[#e0ecec] text-xs font-medium text-[#222] whitespace-nowrap">
-    {app.category?.name || "—"}
+    {app.category || "Uncategorized"}
+
     </span>
   </div>
             </div>
