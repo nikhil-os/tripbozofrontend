@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: 'Travel Buddy',
+  title: 'tripbozo',
   description: 'Personalized travel experiences tailored just for you.',
 };
 
