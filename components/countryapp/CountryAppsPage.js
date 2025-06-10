@@ -1,4 +1,4 @@
-// src/components/countryapp/CountryAppsPage.jsx
+
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
@@ -9,44 +9,35 @@ import {
   FaTimes,
   FaQrcode,
   FaGlobe,
-  FaChevronDown,
+  FaCaretDown, // Added for dropdown icon
 } from "react-icons/fa";
-
-// Import the two new API helpers
 import { initSession, saveSelectedApps } from "@/src/utils/api";
 
 export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
-  
-    // hydrate from localStorage synchronously:
+  const router = useRouter();
+  const storageKey = `selectedAppIds_${countryCode}`;
   const [selectedApps, setSelectedApps] = useState(() => {
-   try {
-     const stored = localStorage.getItem("selectedAppIds");
-     return stored ? JSON.parse(stored) : [];
-   } catch {
-     return [];
-   }
- });
+    try {
+      const raw = localStorage.getItem(storageKey);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(selectedApps));
+  }, [selectedApps, storageKey]);
 
+  const clearAll = () => {
+    setSelectedApps([]);
+    localStorage.removeItem(storageKey);
+  };
+
+  // Search + category + filter
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("ALL");
-  const router = useRouter();
-
-  // Load previously selected apps (if any) from localStorage
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("selectedAppIds");
-      if (stored) {
-        setSelectedApps(JSON.parse(stored));
-      }
-    } catch {
-      setSelectedApps([]);
-    }
-  }, []);
-
-  // Persist selected apps to localStorage whenever they change
-  useEffect(() => {
-    localStorage.setItem("selectedAppIds", JSON.stringify(selectedApps));
-  }, [selectedApps]);
+  const [filterType, setFilterType] = useState("ALL");
+  const [isFilterOpen, setIsFilterOpen] = useState(false); // State for filter dropdown
 
   const categories = [
     "ALL",
@@ -58,6 +49,13 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     "Accommodation",
   ];
 
+  const filterOptions = [
+    { value: "ALL", label: "All Filters" },
+    { value: "FREE", label: "Free Apps" },
+    { value: "PAID", label: "Paid Apps" },
+    { value: "TOP_RATED", label: "Top Rated" },
+  ];
+
   const toggleSelect = (appId) => {
     setSelectedApps((prev) =>
       prev.includes(appId)
@@ -66,76 +64,63 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     );
   };
 
-  // When “Generate QR Code” is clicked:
-  // 1) Initialize a new session (POST /personalized-list/init-session/) → returns session_id
-  // 2) POST /personalized-list/ { selected_apps: [...IDs...] } → returns a fresh session_id
-  // 3) Store sessionId in localStorage, then navigate to /qr-bundle
   const handleGenerateQR = async () => {
-    if (selectedApps.length < 1) {
-      alert("Please select at least one app before generating a QR code.");
+    if (!selectedApps.length) {
+      alert("Please select at least one app.");
       return;
     }
-
-    // 1) Get or recreate a session
-    let sid = localStorage.getItem("sessionId");
-    if (!sid) {
-      sid = await initSession();
-      if (!sid) {
-        alert("Could not initialize session. Please try again.");
-        return;
-      }
-    }
-
-    // 2) Save the selected app IDs on the server
-    const saveResp = await saveSelectedApps(selectedApps);
-    if (!saveResp.session_id) {
-      alert("Failed to save your app selection. Please try again.");
-      return;
-    }
-
-    // Overwrite our sessionId with whatever the server returned
-    sid = saveResp.session_id;
+    let sid = localStorage.getItem("sessionId") || (await initSession());
+    if (!sid) return alert("Could not initialize session.");
+    const { session_id } = await saveSelectedApps(selectedApps);
+    sid = session_id || sid;
     localStorage.setItem("sessionId", sid);
-
-    // 3) Navigate to the QR bundle page
     router.push("/qr-bundle");
   };
 
-  // Filter apps by category + search string
-  const filteredApps = apps.filter(
-    (app) =>
-      (activeCategory === "ALL" || app.category === activeCategory) &&
-      (app.name.toLowerCase().includes(search.toLowerCase()) ||
-        (app.description || "").toLowerCase().includes(search.toLowerCase()))
-  );
+  const filteredApps = apps
+    .filter(
+      (app) =>
+        (activeCategory === "ALL" || app.category?.name === activeCategory) &&
+        (app.name.toLowerCase().includes(search.toLowerCase()) ||
+          (app.description || "")
+            .toLowerCase()
+            .includes(search.toLowerCase()))
+    )
+    .filter((app) => {
+      if (filterType === "FREE") return !app.price || app.price === 0;
+      if (filterType === "PAID") return app.price && app.price > 0;
+      return true;
+    })
+    .sort((a, b) => {
+      if (filterType === "TOP_RATED") {
+        return (b.rating || 0) - (a.rating || 0);
+      }
+      return 0;
+    });
 
-  // Preload a rotating set of “hero” images for this country
+  // Hero images rotation
   const countryImageFolder =
-    countryCode && countryCode.length === 2
-      ? countryCode.toUpperCase()
-      : countryCode;
-  const countryImages = useMemo(() => {
-    const arr = [];
-    for (let i = 1; i <= 10; i++) {
-      const num = i.toString().padStart(2, "0");
-      arr.push(`/${countryImageFolder}/IMG${num}.jpg`);
-    }
-    return arr;
-  }, [countryImageFolder]);
-
-  // Rotate which image is visible every 4s
+    countryCode.length === 2 ? countryCode.toUpperCase() : countryCode;
+  const countryImages = useMemo(
+    () =>
+      Array.from({ length: 10 }, (_, i) =>
+        `/${countryImageFolder}/IMG${String(i + 1).padStart(2, "0")}.jpg`
+      ),
+    [countryImageFolder]
+  );
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveImageIdx((idx) => (idx + 1) % countryImages.length);
-    }, 4000);
-    return () => clearInterval(interval);
+    const iv = setInterval(
+      () => setActiveImageIdx((i) => (i + 1) % countryImages.length),
+      4000
+    );
+    return () => clearInterval(iv);
   }, [countryImages.length]);
 
   return (
-    <main className="min-h-screen bg-[#f7fafc] animate-fade-in">
-      {/* Header Section */}
-      <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden animate-fade-in-up">
+    <main className="bg-[#f7fafc] animate-fade-in">
+     {/* Header Section */}
+     <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden animate-fade-in-up">
         <div className="absolute inset-0 w-full h-full z-0">
           {countryImages.map((img, i) => (
             <img
@@ -212,152 +197,186 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           ></div>
         </div>
       </div>
+      {/* Search & Filter (overlapping hero) */}
+      <div className="relative z-20 -mt-8 w-[92vw] max-w-[1920px] mx-auto px-14">
+        <div className="flex flex-wrap gap-4 items-center justify-between">
+          {/* Search Input */}
+          <div className="flex-1 flex items-center h-16 px-6 bg-white rounded-2xl shadow-md border border-[#e0e0e0] focus-within:ring-2 focus-within:ring-[#2ad2c9] transition min-w-[300px]">
+            <svg
+              className="w-6 h-6 text-gray-400 mr-3"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+            <input
+              type="text"
+              placeholder="Search apps..."
+              className="flex-1 text-gray-800 text-lg bg-transparent focus:outline-none placeholder-gray-400"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
 
-      {/* Search & Filter Bar */}
-      <div className="w-[92vw] max-w-[1920px] mx-auto flex items-center gap-6 px-14 mt-[-32px] z-10 relative animate-fade-in-up">
-        <div className="flex-1 flex items-center bg-white rounded-2xl shadow border border-[#e0e0e0] px-6 h-16">
-          <svg
-            className="w-6 h-6 text-gray-400 mr-3"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-          <input
-            type="text"
-            className="flex-1 bg-transparent outline-none text-gray-700 text-lg placeholder-gray-400"
-            placeholder="Search apps..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+          {/* Filter Dropdown - made more compact */}
+          <div className="relative h-16 w-40">
+            <button
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              className="h-full rounded-2xl border border-[#e0e0e0] bg-white px-6 pr-10 text-lg font-semibold text-gray-700 shadow-md flex items-center gap-2 focus:ring-2 focus:ring-[#2ad2c9] transition "
+            >
+              <span className="truncate">{filterOptions.find(opt => opt.value === filterType)?.label}</span>
+              <FaCaretDown className={`transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {isFilterOpen && (
+              <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-[#e0e0e0] py-2 z-30">
+                {filterOptions.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => {
+                      setFilterType(option.value);
+                      setIsFilterOpen(false);
+                    }}
+                    className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 ${
+                      filterType === option.value ? 'font-bold bg-gray-50' : ''
+                    }`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
-        <button className="flex items-center gap-2 px-7 h-16 rounded-2xl border border-[#e0e0e0] bg-white text-gray-700 font-semibold shadow hover:bg-gray-50 text-lg">
-          <FaChevronDown className="text-gray-400" />
-          Filter
-        </button>
+
+        {/* Categories */}
+        <div className="flex flex-wrap gap-3 px-0 mt-8 mb-3">
+          {categories.map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              className={`px-7 py-3 rounded-full font-semibold text-lg transition-all ${
+                activeCategory === cat
+                  ? "bg-[#e0ecec] text-[#222] shadow border border-[#d0e6e6]"
+                  : "bg-[#f3f6f7] text-gray-500 border border-transparent hover:bg-gray-100"
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
       </div>
 
-      {/* Category Tabs */}
-      <div className="w-[92vw] max-w-[1920px] mx-auto flex gap-3 px-14 mt-8 mb-3 animate-fade-in-up">
-        {categories.map((category) => (
-          <button
-            key={category}
-            onClick={() => setActiveCategory(category)}
-            className={`px-7 py-3 rounded-full font-semibold text-lg transition-all ${
-              activeCategory === category
-                ? "bg-[#e0ecec] text-[#222] shadow border border-[#d0e6e6]"
-                : "bg-[#f3f6f7] text-gray-500 border border-transparent"
-            }`}
-          >
-            {category.charAt(0) + category.slice(1).toLowerCase()}
-          </button>
-        ))}
-      </div>
-
-      {/* Main Content */}
-      <div className="w-[92vw] max-w-[1920px] mx-auto flex gap-8 px-14 pb-16 animate-fade-in stagger-children">
-        {/* Apps Grid */}
-        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10 mt-2">
+      {/* Apps & Sidebar */}
+      <div className="w-[92vw] max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-8 px-14 pb-16">
+        {/* Grid */}
+        <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-10">
           {filteredApps.map((app) => (
             <div
-              key={app.id}
-              className={`relative bg-white rounded-3xl border-2 p-6 flex gap-6 shadow-md transition-all card-hover ${
-                selectedApps.includes(app.id)
-                  ? "border-[#2ad2c9] shadow-lg"
-                  : app.is_sponsored
-                  ? "border-[#ffe9b3] shadow-lg"
-                  : "border-[#e0e0e0]"
-              } min-h-[160px] md:min-h-[180px]`}
-              style={{ minWidth: 0 }}
-            >
-              <img
-                src={app.icon_url || "/file.svg"}
-                alt={app.name}
-                className="w-16 h-16 rounded-xl object-cover bg-gray-100 border border-[#e0e0e0]"
-              />
-              <div className="flex-1 min-w-0 flex flex-col justify-between">
-                {/* App Card Header: Name, Sponsored Tag, Toggle Button */}
-                <div className="flex items-start justify-between gap-3 mb-1">
-                  <div className="flex items-center gap-2 min-w-0">
-                    <h2
-                      className="text-lg text-[#222] font-bold whitespace-normal break-words leading-tight"
-                      style={{ wordBreak: "break-word" }}
-                    >
-                      {app.name}
-                    </h2>
-                    {app.is_sponsored && (
-                      <span className="px-2 py-0.5 rounded-full bg-[#fff6d6] text-[#e6b800] text-xs font-semibold ml-1">
-                        Sponsored
-                      </span>
-                    )}
-                  </div>
-                  <button
-                    onClick={() => toggleSelect(app.id)}
-                    className={`ml-2 w-8 h-8 flex items-center justify-center rounded-full border-2 transition-all ${
-                      selectedApps.includes(app.id)
-                        ? "bg-[#e6fcf7] border-[#2ad2c9] text-[#2ad2c9]"
-                        : app.is_sponsored
-                        ? "bg-[#fffbe6] border-[#ffe9b3] text-[#e6b800]"
-                        : "bg-white border-[#e0e0e0] text-[#2ad2c9]"
-                    } shadow`}
-                    title={
-                      selectedApps.includes(app.id)
-                        ? "Remove from selection"
-                        : "Add to selection"
-                    }
-                  >
-                    {selectedApps.includes(app.id) ? <FaCheck /> : <FaPlus />}
-                  </button>
-                </div>
-
-                <div className="text-gray-500 text-sm mt-0.5 truncate">
-                  {app.description}
-                </div>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className="text-[#f7b500] text-base">★</span>
-                  <span className="text-[#222] font-semibold text-sm">
-                    {app.rating || "4.5"}
-                  </span>
-                  <span className="text-gray-400 text-sm">
-                    {app.price
-                      ? `$${app.price}`
-                      : app.premium
-                      ? "Free / Premium"
-                      : "Free"}
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {app.ios_link && (
-                    <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
-                      iOS
+            key={app.id}
+            className="relative bg-white rounded-3xl border border-[#e0e0e0] p-5 flex gap-4 shadow-md transition-all min-h-[180px] md:min-h-[200px]"
+          >
+            {/* Icon */}
+            <img
+              src={app.icon_url || "/file.svg"}
+              alt={app.name}
+              className="w-16 h-16 rounded-xl object-cover bg-gray-100 border border-[#e0e0e0] flex-shrink-0"
+            />
+          
+            {/* Content */}
+            <div className="flex-1 flex flex-col justify-between">
+              {/* Header row: name + sponsored + select */}
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <h2 className="text-lg font-bold text-[#222] truncate">
+                    {app.name}
+                  </h2>
+                  {app.is_sponsored && (
+                    <span className="px-2 py-0.5 rounded-full bg-[#fff6d6] text-[#e6b800] text-xs font-semibold whitespace-nowrap">
+                      Sponsored
                     </span>
                   )}
-                  {app.android_link && (
-                    <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
-                      Android
-                    </span>
-                  )}
-                  {app.website_link && (
-                    <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
-                      Web
-                    </span>
-                  )}
-                  <span className="ml-auto text-xs text-gray-400 font-medium">
-                    {app.category}
-                  </span>
                 </div>
+                <button
+                  onClick={() => toggleSelect(app.id)}
+                  className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition-all ${
+                    selectedApps.includes(app.id)
+                      ? "bg-[#e6fcf7] border-[#2ad2c9] text-[#2ad2c9]"
+                      : app.is_sponsored
+                      ? "bg-[#fffbe6] border-[#ffe9b3] text-[#e6b800]"
+                      : "bg-white border-[#e0e0e0] text-[#2ad2c9]"
+                  }`}
+                >
+                  {selectedApps.includes(app.id) ? <FaCheck /> : <FaPlus />}
+                </button>
               </div>
+          
+              {/* Description row (2 lines max) */}
+              <p
+                className="text-gray-700 text-sm mb-3"
+                style={{
+                  display: "-webkit-box",
+                  WebkitLineClamp: 2,
+                  WebkitBoxOrient: "vertical",
+                  overflow: "hidden",
+                }}
+              >
+                {app.description || "No description available."}
+              </p>
+          
+              
+                {/* Bottom row: rating | platform tags | category */}
+  <div className="flex items-center justify-between mt-3">
+    {/* Left: Rating & Price */}
+    <div className="flex items-center gap-3">
+      <span className="text-[#f7b500] text-lg leading-none">★</span>
+      <span className="font-semibold text-gray-800">{app.rating || "4.5"}</span>
+      <span
+        className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+          app.price ? "bg-gray-200 text-gray-800" : "bg-green-100 text-green-800"
+        }`}
+      >
+        {app.price ? `$${app.price}` : "Free"}
+      </span>
+    </div>
+
+    {/* Middle: Platform tags */}
+    <div className="flex items-center gap-2">
+      {app.ios_link && (
+        <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
+          iOS
+        </span>
+      )}
+      {app.android_link && (
+        <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
+          Android
+        </span>
+      )}
+      {app.website_link && (
+        <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
+          Web
+        </span>
+      )}
+    </div>
+
+    {/* Right: Category pill */}
+    <span className="px-2 py-0.5 rounded-full bg-[#e0ecec] text-xs font-medium text-[#222] whitespace-nowrap">
+    {app.category?.name || "—"}
+    </span>
+  </div>
             </div>
+          </div>
           ))}
         </div>
 
-        {/* Sidebar: Selected Apps */}
-        <div className="w-[320px] min-w-[260px] max-w-[340px] bg-white rounded-3xl shadow-lg border border-[#e0e0e0] p-6 mt-2 animate-slide-in-left relative flex-shrink-0">
+        {/* Sidebar */}
+        <div className="w-full lg:w-[320px] bg-white rounded-3xl shadow-lg border border-[#e0e0e0] p-6 self-start">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl  text-[#222]">
+            <h3 className="text-2xl text-[#222] whitespace-nowrap">
               Selected Apps{" "}
               <span className="text-[#2ad2c9]">({selectedApps.length})</span>
             </h3>
@@ -378,7 +397,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                   >
                     <img
                       src={app.icon_url || "/file.svg"}
-                      alt={app.name}
+                      alt=""
                       className="w-10 h-10 rounded object-cover bg-gray-100 border border-[#e0e0e0]"
                     />
                     <div className="flex-1 min-w-0">
@@ -391,7 +410,6 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                     </div>
                     <button
                       className="ml-2 p-2 rounded-full hover:bg-[#ffeaea] hover:text-red-500 text-gray-400 transition"
-                      title="Remove"
                       onClick={() =>
                         setSelectedApps((prev) =>
                           prev.filter((id) => id !== app.id)
@@ -408,18 +426,18 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
 
           <button
             type="button"
-            className="mt-8 w-full py-4 rounded-xl font-semibold bg-red-100 text-red-600 border border-[#e0e0e0] transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-300 hover:bg-red-500 hover:text-white text-lg"
-            onClick={() => setSelectedApps([])}
-            disabled={selectedApps.length === 0}
+            className="mt-8 w-full py-4 rounded-xl bg-red-100 text-red-600 font-semibold hover:bg-red-500 hover:text-white"
+            onClick={clearAll}
+            disabled={!selectedApps.length}
           >
             Clear All
           </button>
 
           <button
-            disabled={selectedApps.length < 1}
+            disabled={!selectedApps.length}
             onClick={handleGenerateQR}
-            className={`mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all text-white text-xl btn-animated ${
-              selectedApps.length >= 1
+            className={`mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 text-white text-xl ${
+              selectedApps.length
                 ? "bg-[#2ad2c9] hover:bg-[#1bb3a7]"
                 : "bg-[#e0e0e0] text-gray-400 cursor-not-allowed"
             }`}
@@ -428,7 +446,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           </button>
 
           <button
-            className="mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all text-white text-xl bg-[#38bdf8] hover:bg-[#0ea5e9] font-semibold shadow btn-animated"
+            className="mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 bg-[#38bdf8] hover:bg-[#0ea5e9] text-white text-xl"
             onClick={() => router.push(`/country/${countryCode}/essentials`)}
           >
             <FaGlobe className="mr-2" /> Essentials
@@ -438,3 +456,40 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     </main>
   );
 }
+
+
+
+// <main className="bg-[#f7fafc] animate-fade-in">
+//       {/* Hero */}
+//       <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden">
+//         <div className="absolute inset-0">
+//           {countryImages.map((img, i) => (
+//             <img
+//               key={img}
+//               src={img}
+//               alt=""
+//               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+//                 i === activeImageIdx ? "opacity-40" : "opacity-0"
+//               }`}
+//             />
+//           ))}
+//           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,20,20,0.55)_0%,rgba(20,20,20,0.25)_40%,rgba(20,20,20,0.05)_70%,rgba(20,20,20,0)_100%)]" />
+//         </div>
+//         <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-10">
+//           <div className="flex items-center gap-6 mb-2 mt-8">
+//             <span className="text-4xl font-bold text-white/90">
+//               {countryCode}
+//             </span>
+//             <span className="text-6xl font-black text-white drop-shadow-lg">
+//               {countryInfo?.country || countryCode}
+//             </span>
+//           </div>
+//           <p className="text-2xl max-w-4xl text-white/90 drop-shadow-sm">
+//             {countryInfo?.shortDescription ||
+//               `Explore ${countryCode} with the best travel apps.`}
+//           </p>
+//           <div className="h-1 w-28 bg-[#2ad2c9] rounded mt-4" />
+//         </div>
+//       </div>
+
+//make filter small , and add ,rating and free on one side and ios,android on other
