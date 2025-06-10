@@ -220,33 +220,34 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           </div>
 
           {/* Filter Dropdown - made more compact */}
-          <div className="relative h-16 w-40">
-            <button
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="h-full rounded-2xl border border-[#e0e0e0] bg-white px-6 pr-10 text-lg font-semibold text-gray-700 shadow-md flex items-center gap-2 focus:ring-2 focus:ring-[#2ad2c9] transition "
-            >
-              <span className="truncate">{filterOptions.find(opt => opt.value === filterType)?.label}</span>
-              <FaCaretDown className={`transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
-            </button>
-            {isFilterOpen && (
-              <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-[#e0e0e0] py-2 z-30">
-                {filterOptions.map((option) => (
-                  <button
-                    key={option.value}
-                    onClick={() => {
-                      setFilterType(option.value);
-                      setIsFilterOpen(false);
-                    }}
-                    className={`block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100 ${
-                      filterType === option.value ? 'font-bold bg-gray-50' : ''
-                    }`}
-                  >
-                    {option.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
+           {/* Filter Dropdown */}
+        <div className="relative h-16">
+          <button
+            onClick={() => setIsFilterOpen(!isFilterOpen)}
+            className="h-full w-36 rounded-2xl border border-gray-300 bg-white px-4 flex items-center justify-between text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-[#2ad2c9] transition"
+          >
+            {filterOptions.find((opt) => opt.value === filterType)?.label}
+            <FaCaretDown className={`ml-2 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
+          </button>
+          {isFilterOpen && (
+            <div className="absolute top-full left-0 mt-1 w-36 bg-white rounded-xl shadow-lg border border-gray-300 py-2 z-30">
+              {filterOptions.map((option) => (
+                <button
+                  key={option.value}
+                  onClick={() => {
+                    setFilterType(option.value);
+                    setIsFilterOpen(false);
+                  }}
+                  className={`block w-full text-left px-3 py-2 text-gray-700  hover:bg-gray-100 ${
+                    filterType === option.value ? 'font-bold bg-gray-50' : ''
+                  }`}
+                >
+                  {option.label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
         </div>
 
         {/* Categories */}
@@ -266,7 +267,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           ))}
         </div>
       </div>
-
+<br></br>
       {/* Apps & Sidebar */}
       <div className="w-[92vw] max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-8 px-14 pb-16">
         {/* Grid */}
