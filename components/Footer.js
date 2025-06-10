@@ -1,27 +1,34 @@
 import React from 'react';
+import Image from 'next/image';
 
 const Footer = () => {
   return (
     <footer className="bg-gray-900 text-white pt-16 pb-16 w-full">
       <div className="w-[92vw] max-w-[1800px] mx-auto px-6">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start text-left">
-          {/* Logo and Description */}
+        {/* Changed grid-cols-3 to use custom column widths and added md:justify-between */}
+        <div className="grid grid-cols-1 md:grid-cols-[auto_1fr_auto] gap-y-12 md:gap-x-12 items-start text-left md:justify-between">
+          {/* Logo and Description - remains the first item, takes 'auto' width */}
           <div className="flex flex-col items-start space-y-4">
             <div className="flex items-center space-x-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-8 w-8">
-                <circle cx="12" cy="12" r="10"></circle>
-                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path>
-                <path d="M2 12h20"></path>
-              </svg>
+            {/* <Image
+                src="/logo.png" // Path to your logo in the public directory
+                alt="Trip Bozo Logo"
+                width={40}  // Adjust width as needed
+                height={40} // Adjust height as needed
+                className="rounded-full" // Optional: if your logo is circular
+              /> */}
               <span className="font-display text-xl font-bold">Trip Bozo</span>
             </div>
+            <p className="text-gray-400 text-sm italic -mt-2">Less googling, more going.</p>
             <p className="text-gray-300 text-sm">Your essential companion for seamless travel experiences worldwide.</p>
             <div className="flex space-x-4">
               {/* Social icons here */}
             </div>
           </div>
-          {/* Quick Links */}
-          <div className="flex flex-col items-start">
+
+          {/* Quick Links - now explicitly in the middle, using 1fr to take remaining space */}
+          {/* Removed md:col-start-2 as it's not needed with md:grid-cols-[auto_1fr_auto] */}
+          <div className="flex flex-col items-start md:justify-self-center"> {/* Added md:justify-self-center */}
             <h4 className="font-display text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li><a className="text-gray-300 hover:text-white transition-colors" href="/">Home</a></li>
@@ -30,8 +37,10 @@ const Footer = () => {
               <li><a className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</a></li>
             </ul>
           </div>
-          {/* Popular Destinations */}
-          <div className="flex flex-col items-start">
+
+          {/* Popular Destinations - remains the last item, takes 'auto' width */}
+          {/* Removed md:col-start-3 */}
+          <div className="flex flex-col items-start md:justify-self-end"> {/* Added md:justify-self-end */}
             <h4 className="font-display text-lg font-semibold mb-4">Popular Destinations</h4>
             <ul className="space-y-2">
               <li><a className="text-gray-300 hover:text-white transition-colors" href="/countries/jp">Japan 🇯🇵</a></li>

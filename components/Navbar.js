@@ -1,5 +1,5 @@
 'use client';
-
+import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 
 const Navbar = () => {
@@ -39,8 +39,17 @@ const Navbar = () => {
     >
       <div className="w-full h-16 flex items-center relative">
         {/* Left: Brand - with gap */}
-        <div className="text-2xl font-semibold text-black whitespace-nowrap absolute left-8 top-1/2 -translate-y-1/2">
-          Trip Bozo
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
+          <Image
+            src="/logo.png" // Path to your logo in the public directory
+            alt="Trip Bozo Logo"
+            width={150}  // Adjust width as needed
+            height={150} // Adjust height as needed
+            priority // Optional: for images above the fold
+            className="rounded-full" // Optional: if your logo is circular
+          />
+          {/* You can keep "Trip Bozo" as text next to the logo if desired, or remove it */}
+          {/* <span className="text-2xl font-semibold text-black whitespace-nowrap ml-2">Trip Bozo</span> */}
         </div>
         {/* Center: Nav Links - absolutely centered */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-12 text-gray-600 text-base font-normal">
