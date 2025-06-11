@@ -39,7 +39,7 @@ export default function Onboarding() {
       <div className="container mx-auto px-4 flex flex-col items-center justify-center">
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-display font-semibold mb-4 text-black">Set Up Your Travel Profile</h2>
-          <p className="text-lg text-black">Let's personalize your travel app recommendations</p>
+          <p className="text-lg text-black">Let&apos;s personalize your travel app recommendations</p>
         </div>
         {/* Step Indicator */}
         <div className="flex justify-center mb-12">
