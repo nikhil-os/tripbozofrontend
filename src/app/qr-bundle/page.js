@@ -2,5 +2,5 @@
 import QRBundlePage from "@/components/QRcode/QRBundlePage";
 
 export default function Page() {
-  return <QRBundlePage />;
+  return(<Suspense fallback={<p>Loading…</p>}><QRBundlePage /></Suspense> );
 }
