@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Footer = () => {
   return (
@@ -31,10 +32,10 @@ const Footer = () => {
           <div className="flex flex-col items-start md:justify-self-center"> {/* Added md:justify-self-center */}
             <h4 className="font-display text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><a className="text-gray-300 hover:text-white transition-colors" href="/">Home</a></li>
-              <li><a className="text-gray-300 hover:text-white transition-colors" href="/onboarding">Onboarding</a></li>
-              <li><a className="text-gray-300 hover:text-white transition-colors" href="/about">About Us</a></li>
-              <li><a className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</a></li>
+              <li><Link className="text-gray-300 hover:text-white transition-colors" href="/">Home</Link></li>
+              <li><Link className="text-gray-300 hover:text-white transition-colors" href="/onboarding">Onboarding</Link></li>
+              <li><Link className="text-gray-300 hover:text-white transition-colors" href="/about">About Us</Link></li>
+              <li><Link className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</Link></li>
             </ul>
           </div>
 
