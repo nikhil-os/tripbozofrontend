@@ -15,6 +15,12 @@ import {
 } from "@/src/utils/api";
 
 export default function QRBundlePage() {
+
+  const params = useSearchParams();
+  const country = params.get("country") || "";             // e.g. "FR"
+  const storageKey = `selectedAppIds_${country}`;  
+
+
   const [apps, setApps] = useState([]);
   const [qrBase64, setQrBase64] = useState(null);
   const [shareUrl, setShareUrl] = useState("");
@@ -24,8 +30,8 @@ export default function QRBundlePage() {
   useEffect(() => {
     (async () => {
       // 1) Pull selected IDs
-      const stored = localStorage.getItem("selectedAppIds");
-      const appIds = stored ? JSON.parse(stored) : [];
+      const raw = localStorage.getItem(storageKey);
+      const appIds = raw ? JSON.parse(raw) : [];
       if (!appIds.length) {
         setLoading(false);
         return;
