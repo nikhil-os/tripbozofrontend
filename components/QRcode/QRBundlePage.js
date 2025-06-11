@@ -2,6 +2,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { FiCopy, FiDownload, FiShare2, FiLink } from "react-icons/fi";
 import { saveAs } from "file-saver";
