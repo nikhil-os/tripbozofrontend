@@ -70,7 +70,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     const { session_id } = await saveSelectedApps(selectedApps);
     sid = session_id || sid;
     localStorage.setItem("sessionId", sid);
-    router.push("/qr-bundle");
+    router.push(`/qr-bundle?country=${countryCode}`);
   };
 
   const filteredApps = apps
