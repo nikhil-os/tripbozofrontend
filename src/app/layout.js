@@ -2,6 +2,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import "./globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({ children }) {
         <div className="h-16 w-full" /> {/* Spacer for fixed navbar, 64px tall */}
         <main className="min-h-[calc(100vh-64px-200px)] pb-32">{/* 64px navbar, 200px footer, adjust as needed */}
           {children}
+          <Analytics />
         </main>
         <Footer />
       </body>
