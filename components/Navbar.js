@@ -1,5 +1,6 @@
 'use client';
-
+import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 
 const Navbar = () => {
@@ -37,57 +38,66 @@ const Navbar = () => {
         backgroundSize: '100% 100%',
       }}
     >
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between relative">
-        {/* Left: Brand */}
-        <div className="text-2xl font-semibold text-black blackspace-nowrap mr-8" style={{ minWidth: '120px' }}>
-          Trip Bozo
+      <div className="w-full h-16 flex items-center relative">
+        {/* Left: Brand - with gap */}
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 flex items-center">
+          <Image
+            src="/logo.png" // Path to your logo in the public directory
+            alt="Trip Bozo Logo"
+            width={150}  // Adjust width as needed
+            height={150} // Adjust height as needed
+            priority // Optional: for images above the fold
+            className="rounded-full" // Optional: if your logo is circular
+          />
+          {/* You can keep "Trip Bozo" as text next to the logo if desired, or remove it */}
+          {/* <span className="text-2xl font-semibold text-black whitespace-nowrap ml-2">Trip Bozo</span> */}
         </div>
-        {/* Center: Nav Links */}
-        <div className="flex-1 flex justify-center">
-          <div className="flex gap-12 text-gray-600 text-base font-normal">
-            <a href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
-              Home
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-            </a>
-            <a href="/Onboarding" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
-              Onboarding
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-            </a>
-            <a href="/About" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
-              About
-              <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-            </a>
-          </div>
+        {/* Center: Nav Links - absolutely centered */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-12 text-gray-600 text-base font-normal">
+          <Link href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+            Home
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+          </Link>
+          <Link href="/Onboarding" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+            Onboarding
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+          </Link>
+          <Link href="/About" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+            About
+            <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
+          </Link>
         </div>
-        {/* Right: Login and Get Started */}
-        <div className="flex items-center gap-4 ml-8" style={{ minWidth: '320px', justifyContent: 'flex-end' }}>
+        {/* Right: Login and Get Started - with gap */}
+        <div className="flex items-center gap-2 absolute right-8 top-1/2 -translate-y-1/2" style={{ justifyContent: 'flex-end' }}>
           {isLoggedIn ? (
-            <a
+            <Link
               href="/Profile"
               className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
               style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
             >
               <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7.5 7.5 0 0 1 13 0"/></svg>
               Profile
-            </a>
+            </Link>
           ) : (
-            <a
+            <Link
               href="/Login"
-              className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
+              className="inline-flex items-center gap-2 bg-gray-200 border-2 border-gray-300 text-gray-400 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all opacity-60 cursor-not-allowed pointer-events-none select-none"
               style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
+              tabIndex={-1}
+              aria-disabled="true"
             >
-              <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
+              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
               Login
-            </a>
+            </Link>
           )}
-          <a
+          <Link
             href="/Onboarding"
             className="inline-block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-full text-base font-semibold shadow-md transition-colors border border-teal-500"
             style={{ minWidth: '100px', textAlign: 'center' }}
             onClick={() => (window.location.href = '/Onboarding')}
           >
             Get Started
-          </a>
+          </Link>
         </div>
       </div>
     </nav>
