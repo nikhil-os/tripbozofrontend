@@ -10,12 +10,12 @@ export default function BundleRedirectPage({ params }) {
   const [urls, setUrls]       = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-
+ 
   useEffect(() => {
     (async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/bundle-urls/${sessionId}/`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/personalized-list/bundle-urls/${sessionId}/`
         );
         if (!res.ok) throw new Error();
         const json = await res.json();
