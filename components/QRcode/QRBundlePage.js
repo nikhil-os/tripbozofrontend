@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { FiCopy, FiDownload, FiShare2, FiLink } from "react-icons/fi";
 import { saveAs } from "file-saver";
+import { useLoader } from "@/components/LoaderContext";
 
 import {
   initSession,
@@ -16,7 +17,7 @@ import {
 } from "@/src/utils/api";
 
 export default function QRBundlePage() {
-
+  const { setShow } = useLoader();
   const params = useSearchParams();
   const country = params.get("country") || "";             // e.g. "FR"
   const storageKey = `selectedAppIds_${country}`;  
@@ -30,11 +31,14 @@ export default function QRBundlePage() {
 
   useEffect(() => {
     (async () => {
+      setShow(true); // Show the loader
+      
       // 1) Pull selected IDs
       const raw = localStorage.getItem(storageKey);
       const appIds = raw ? JSON.parse(raw) : [];
       if (!appIds.length) {
         setLoading(false);
+        setShow(false); // Hide the loader
         return;
       }
 
@@ -42,6 +46,7 @@ export default function QRBundlePage() {
       let sid = localStorage.getItem("sessionId") || (await initSession());
       if (!sid) {
         setLoading(false);
+        setShow(false); // Hide the loader
         return;
       }
       localStorage.setItem("sessionId", sid);
@@ -59,8 +64,9 @@ export default function QRBundlePage() {
       setShareUrl(qrResp.shareable_url);
       setApps(qrResp.selected_apps || []);
       setLoading(false);
+      setShow(false); // Hide the loader
     })();
-  }, []);
+  }, [storageKey, setShow]);
 
   // Embed‐code copy
   const handleEmbedCopy = () => {

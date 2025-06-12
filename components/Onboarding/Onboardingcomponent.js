@@ -2,9 +2,11 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useLoader } from '@/components/LoaderContext';
 
 export default function Onboarding() {
   const router = useRouter();
+  const { setShow } = useLoader();
 
   const [step, setStep] = useState(1);
   const [selectedTraveler, setSelectedTraveler] = useState(null);
@@ -28,7 +30,9 @@ export default function Onboarding() {
 
   const handleViewApps = () => {
     if (selectedCountry) {
+      setShow(true); // Show loader before navigation
       router.push(`/country/${selectedCountry}`);
+      // Loader will be hidden by LoaderRouteListener
     } else {
       alert('Please select a destination country first!');
     }
