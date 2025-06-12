@@ -153,27 +153,30 @@ const HeroSection = () => {
         <div className="w-full max-w-5xl mx-auto text-center flex flex-col items-center justify-center">
           {/* Content */}
           <div className="relative z-10 text-white w-full">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in-up transition-all duration-700 leading-tight">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold mb-8 animate-fade-in-up transition-all duration-700 leading-tight drop-shadow-xl">
               Discover the Perfect Apps for Your Journey
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl mb-10 animate-fade-in-up delay-200 transition-all duration-700">
+            <p className="text-2xl sm:text-3xl md:text-4xl mb-12 animate-fade-in-up delay-200 transition-all duration-700 font-semibold drop-shadow-lg">
               Find essential travel apps curated for your destination
             </p>
 
             {/* ――― Search Bar Start ――― */}
-            <div className="w-full max-w-2xl mx-auto flex flex-col sm:flex-row items-center bg-white rounded-full shadow-lg overflow-visible group transition-all duration-300 hover:shadow-2xl">
+            <div className="w-2/3 sm:w-full max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center bg-white rounded-lg shadow-xl border border-gray-200 overflow-visible group transition-all duration-300 hover:shadow-2xl py-2 px-2
+              sm:py-2 sm:px-2
+              md:py-2 md:px-2
+              ">
               <div className="relative flex-grow w-full">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="25"
+                  height="25"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6"
+                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6 sm:h-7 sm:w-7"
                 >
                   <circle cx="11" cy="11" r="8"></circle>
                   <path d="m21 21-4.3-4.3"></path>
@@ -181,28 +184,28 @@ const HeroSection = () => {
                 <input
                   type="text"
                   aria-label="Search country"
-                  placeholder="e.g. France or FR"
+                  placeholder="Eg. France or FR"
                   value={query}
                   onChange={handleInputChange}
                   onKeyPress={handleKeyPress}
-                  className="h-14 w-full pl-14 pr-6 rounded-full sm:rounded-l-full sm:rounded-r-none text-gray-800 text-lg placeholder-gray-400 focus:outline-none transition-all duration-300 group-hover:shadow-md group-hover:scale-105"
+                  className="h-12 w-full pl-14 pr-4 rounded-lg text-gray-800 text-base font-medium placeholder-gray-400 focus:outline-none transition-all duration-300 group-hover:shadow-md group-hover:scale-105 bg-transparent
+                    sm:h-14 sm:pl-16 sm:pr-6 sm:text-xl"
                 />
               </div>
               <button
                 onClick={handleSearch}
                 disabled={loading}
-                className={`bg-teal-500 text-white px-8 py-4 rounded-full sm:rounded-l-none sm:rounded-r-full font-semibold hover:bg-teal-600 transition-all duration-300 whitespace-nowrap flex-shrink-0 min-w-fit mt-3 sm:mt-0 w-full sm:w-auto text-lg ${
-                  loading
-                    ? "opacity-50 cursor-not-allowed"
-                    : "group-hover:scale-105 group-hover:shadow-xl"
-                }`}
+                className={`bg-teal-500 text-white px-6 py-3 rounded-lg font-bold text-base hover:bg-teal-600 transition-all duration-300 whitespace-nowrap flex-shrink-0 min-w-fit mt-3 sm:mt-0 w-full sm:w-auto shadow-lg
+                  sm:px-8 sm:py-4 sm:text-xl
+                  ${loading ? "opacity-50 cursor-not-allowed" : "group-hover:scale-105 group-hover:shadow-xl"}
+                `}
               >
                 {loading ? "Searching…" : "Search"}
               </button>
             </div>
 
             {errorMsg && (
-              <p className="mt-4 text-red-200 font-medium text-lg">{errorMsg}</p>
+              <p className="mt-4 text-red-500 font-bold text-lg drop-shadow-lg">{errorMsg}</p>
             )}
             {/* ――― Search Bar End ――― */}
           </div>
