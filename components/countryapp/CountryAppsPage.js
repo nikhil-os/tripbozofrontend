@@ -1,8 +1,8 @@
-
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
+import { useLoader } from "@/components/LoaderContext";
 import {
   FaPlus,
   FaCheck,
@@ -15,6 +15,7 @@ import { initSession, saveSelectedApps } from "@/src/utils/api";
 
 export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
   const router = useRouter();
+  const { setShow } = useLoader();
   const storageKey = `selectedAppIds_${countryCode}`;
   const [selectedApps, setSelectedApps] = useState(() => {
     try {
@@ -65,12 +66,27 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
       alert("Please select at least one app.");
       return;
     }
+    
+    setShow(true); // Show loader before navigation
+    
     let sid = localStorage.getItem("sessionId") || (await initSession());
-    if (!sid) return alert("Could not initialize session.");
+    if (!sid) {
+      setShow(false);
+      return alert("Could not initialize session.");
+    }
+    
     const { session_id } = await saveSelectedApps(selectedApps);
     sid = session_id || sid;
     localStorage.setItem("sessionId", sid);
+    
     router.push(`/qr-bundle?country=${countryCode}`);
+    // Loader will be hidden by LoaderRouteListener
+  };
+
+  const handleEssentialsClick = () => {
+    setShow(true); // Show loader before navigation
+    router.push(`/country/${countryCode}/Essentials`);
+    // Loader will be hidden by LoaderRouteListener
   };
 
   const filteredApps = apps
@@ -174,17 +190,17 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           <p className="text-2xl max-w-4xl text-white/90 font-normal mb-4 mt-1 drop-shadow">
             {countryInfo?.shortDescription ||
               (countryCode === "AU"
-                ? "Discover Australia’s vibrant cities, stunning beaches, and unique wildlife with the best travel apps."
+                ? "Discover Australia's vibrant cities, stunning beaches, and unique wildlife with the best travel apps."
                 : countryCode === "IN"
                 ? "Experience the colors, culture, and diversity of India—find the perfect apps for your journey."
                 : countryCode === "FR"
-                ? "Explore France’s art, cuisine, and romance—your essential travel apps for every region."
+                ? "Explore France's art, cuisine, and romance—your essential travel apps for every region."
                 : countryCode === "IT"
-                ? "Uncover Italy’s history, food, and beauty—travel smarter with curated apps."
+                ? "Uncover Italy's history, food, and beauty—travel smarter with curated apps."
                 : countryCode === "JP"
-                ? "Navigate Japan’s traditions and technology—apps to enhance your adventure."
+                ? "Navigate Japan's traditions and technology—apps to enhance your adventure."
                 : countryCode === "US"
-                ? "From coast to coast, discover the USA’s wonders with top travel apps."
+                ? "From coast to coast, discover the USA's wonders with top travel apps."
                 : "Find the best travel apps for your next destination.")}
           </p>
           <div
@@ -446,7 +462,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
 
           <button
             className="mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 bg-[#38bdf8] hover:bg-[#0ea5e9] text-white text-xl"
-            onClick={() => router.push(`/country/${countryCode}/essentials`)}
+            onClick={handleEssentialsClick}
           >
             <FaGlobe className="mr-2" /> Essentials
           </button>

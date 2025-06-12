@@ -4,9 +4,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { fetchEssentials } from "@/src/utils/api";
+import { useLoader } from "@/components/LoaderContext";
 
 export default function EssentialsPage() {
   const { country } = useParams();
+  const { setShow } = useLoader();
 
   const FALLBACK = {
     emergencies: [
@@ -47,6 +49,7 @@ export default function EssentialsPage() {
 
   useEffect(() => {
     (async () => {
+      setShow(true); // Show the loader
       const json = await fetchEssentials(country.toUpperCase());
       setData({
         emergencies:
@@ -58,8 +61,9 @@ export default function EssentialsPage() {
         tips: json.tips?.length > 0 ? json.tips : FALLBACK.tips,
       });
       setLoading(false);
+      setShow(false); // Hide the loader
     })();
-  }, [country]);
+  }, [country, setShow]);
 
   if (loading) {
     return <p className="p-8 text-center text-gray-600">Loading…</p>;

@@ -4,7 +4,7 @@ import axios from "axios";
 import { sampleApps } from "@/src/app/data/sampleApps";
 
 const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8099/api";
+  process.env.NEXT_PUBLIC_API_BASE_URL || "https://tripbozo.onrender.com/api";
 const useApi = true;
 
 const apiClient = axios.create({
