@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useLoader } from "@/components/LoaderContext";
+import Image from "next/image";
 import {
   FaPlus,
   FaCheck,
@@ -135,25 +136,35 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
      <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden animate-fade-in-up">
         <div className="absolute inset-0 w-full h-full z-0">
           {countryImages.map((img, i) => (
-            <img
+            <div 
               key={img}
-              src={img}
-              alt="country bg"
-              className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-1000 ${
+              className={`absolute inset-0 transition-opacity duration-1000 ${
                 i === activeImageIdx ? "opacity-40" : "opacity-0"
               }`}
               style={{
-                pointerEvents: "none",
                 zIndex: 0,
-                transition: "opacity 1s",
-                imageRendering: "auto",
-                objectFit: "cover",
-                objectPosition: "center",
               }}
-              onError={(e) => {
-                e.target.style.display = "none";
-              }}
-            />
+            >
+              <Image
+                src={img}
+                alt="country bg"
+                fill
+                sizes="100vw"
+                className="object-cover object-top"
+                style={{
+                  pointerEvents: "none",
+                  transition: "opacity 1s",
+                  objectPosition: "center",
+                }}
+                onError={(e) => {
+                  // Handle image load error
+                  const target = e.target;
+                  if (target.parentNode) {
+                    target.parentNode.style.display = 'none';
+                  }
+                }}
+              />
+            </div>
           ))}
           <div
             className="absolute inset-0 w-full h-full"
@@ -211,9 +222,9 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
       </div>
       {/* Search & Filter (overlapping hero) */}
       <div className="relative z-20 -mt-8 w-full max-w-[1920px] mx-auto px-2 sm:px-6 md:px-14">
-        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center justify-between">
+        <div className="flex flex-row gap-3 items-center justify-between">
           {/* Search Input */}
-          <div className="flex-1 flex items-center h-12 sm:h-16 px-3 sm:px-6 bg-white rounded-xl sm:rounded-2xl shadow-md border border-[#e0e0e0] focus-within:ring-2 focus-within:ring-[#2ad2c9] transition min-w-[180px] sm:min-w-[300px] mb-2 sm:mb-0">
+          <div className="flex-1 flex items-center h-12 sm:h-16 px-3 sm:px-6 bg-white rounded-xl sm:rounded-2xl shadow-md border border-[#e0e0e0] focus-within:ring-2 focus-within:ring-[#2ad2c9] transition min-w-[180px] sm:min-w-[300px]">
             <svg
               className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400 mr-2 sm:mr-3"
               viewBox="0 0 24 24"
@@ -236,16 +247,16 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           </div>
 
           {/* Filter Dropdown */}
-          <div className="relative h-12 sm:h-16 w-full sm:w-36">
+          <div className="relative h-12 sm:h-16 w-32 sm:w-36">
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
-              className="h-full w-full sm:w-36 rounded-xl sm:rounded-2xl border border-gray-300 bg-white px-3 sm:px-4 flex items-center justify-between text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-[#2ad2c9] transition"
+              className="h-full w-full rounded-xl sm:rounded-2xl border border-gray-300 bg-white px-3 sm:px-4 flex items-center justify-between text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:ring-2 focus:ring-[#2ad2c9] transition"
             >
               {filterOptions.find((opt) => opt.value === filterType)?.label}
               <FaCaretDown className={`ml-2 transition-transform ${isFilterOpen ? 'rotate-180' : ''}`} />
             </button>
             {isFilterOpen && (
-              <div className="absolute top-full left-0 mt-1 w-full sm:w-36 bg-white rounded-xl shadow-lg border border-gray-300 py-2 z-30">
+              <div className="absolute top-full right-0 mt-1 w-full bg-white rounded-xl shadow-lg border border-gray-300 py-2 z-30">
                 {filterOptions.map((option) => (
                   <button
                     key={option.value}
@@ -290,7 +301,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           {filteredApps.map((app) => (
             <div
               key={app.id}
-              className="relative h-[220px] sm:h-[240px] bg-white rounded-2xl sm:rounded-3xl border border-[#e0e0e0] p-4 sm:p-5 flex flex-col justify-between shadow-md transition-all"
+              className="relative w-[75%] mx-auto sm:w-full h-[220px] sm:h-[240px] bg-white rounded-2xl sm:rounded-3xl border border-[#e0e0e0] p-4 sm:p-5 flex flex-col justify-between shadow-md transition-all"
             >
               {/* Content */}
               <div className="flex-1 flex flex-col justify-between">
@@ -298,11 +309,15 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 min-w-0">
                     {/* Icon */}
-                    <img
-                      src={app.icon_url || "/file.svg"}
-                      alt={app.name}
-                      className="w-12 h-12 sm:w-16 sm:h-16 rounded-xl object-cover bg-gray-100 border border-[#e0e0e0] flex-shrink-0"
-                    />
+                    <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gray-100 border border-[#e0e0e0] flex-shrink-0 overflow-hidden">
+                      <Image
+                        src={app.icon_url || "/file.svg"}
+                        alt={app.name || "App icon"}
+                        fill
+                        sizes="(max-width: 640px) 48px, 64px"
+                        className="object-cover"
+                      />
+                    </div>
                     <h2 className="text-base sm:text-lg font-bold text-[#222] truncate">
                       {app.name}
                     </h2>
@@ -338,21 +353,21 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                   {app.description || "No description available."}
                 </p>
                 {/* Bottom row: rating | platform tags | category */}
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mt-3 gap-2 sm:gap-0">
+                <div className="flex flex-row items-center justify-between mt-3 w-full">
                   {/* Left: Rating & Price */}
-                  <div className="flex items-center gap-2 sm:gap-3">
+                  <div className="flex items-center sm:gap-3 w-1/3 min-w-0 justify-start">
                     <span className="text-[#f7b500] text-base sm:text-lg leading-none">★</span>
                     <span className="font-semibold text-gray-800 text-sm sm:text-base">{app.rating || "4.5"}</span>
                     <span
-                      className={`px-2 py-0.5 rounded-full text-xs font-semibold ${
+                      className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
                         app.price ? "bg-gray-200 text-gray-800" : "bg-green-100 text-green-800"
                       }`}
                     >
                       {app.price ? `$${app.price}` : "Free"}
                     </span>
                   </div>
-                  {/* Middle: Platform tags */}
-                  <div className="flex items-center gap-2">
+                  {/* Center: Platform tags */}
+                  <div className="flex items-center gap-2 justify-center w-1/3 min-w-0">
                     {app.ios_link && (
                       <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
                         iOS
@@ -370,9 +385,11 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                     )}
                   </div>
                   {/* Right: Category pill */}
-                  <span className="px-2 py-0.5 rounded-full bg-[#e0ecec] text-xs font-medium text-[#222] whitespace-nowrap mt-1 sm:mt-0">
-                    {app.category || "Uncategorized"}
-                  </span>
+                  <div className="flex justify-end w-1/3 min-w-0">
+                    <span className="px-2 py-0.5 rounded-full bg-[#e0ecec] text-xs font-medium text-[#222] whitespace-nowrap mt-1 sm:mt-0">
+                      {app.category || "Uncategorized"}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -399,11 +416,15 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                     key={app.id}
                     className="flex items-center gap-3 sm:gap-4 bg-white border border-[#e0e0e0] rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 shadow-sm"
                   >
-                    <img
-                      src={app.icon_url || "/file.svg"}
-                      alt=""
-                      className="w-8 h-8 sm:w-10 sm:h-10 rounded object-cover bg-gray-100 border border-[#e0e0e0]"
-                    />
+                    <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded overflow-hidden bg-gray-100 border border-[#e0e0e0]">
+                      <Image
+                        src={app.icon_url || "/file.svg"}
+                        alt=""
+                        fill
+                        sizes="(max-width: 640px) 32px, 40px"
+                        className="object-cover"
+                      />
+                    </div>
                     <div className="flex-1 min-w-0">
                       <div className="font-semibold text-[#222] truncate text-sm sm:text-base">
                         {app.name}

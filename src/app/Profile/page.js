@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
+import Image from "next/image";
 
 export default function ProfilePage() {
   // Simulate fetching user data from localStorage or use sample data if none exists
@@ -92,7 +93,15 @@ export default function ProfilePage() {
             title={editMode ? 'Change profile picture' : ''}
           >
             {dpPreview ? (
-              <img src={dpPreview} alt="Profile" className="w-full h-full object-cover" />
+              <div className="w-full h-full relative">
+                <Image 
+                  src={dpPreview} 
+                  alt="Profile" 
+                  fill 
+                  sizes="112px"
+                  className="object-cover" 
+                />
+              </div>
             ) : (
               <span className="text-4xl text-gray-400">👤</span>
             )}

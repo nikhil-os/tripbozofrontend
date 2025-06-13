@@ -18,29 +18,31 @@ const Footer = () => {
                 height={40} // Adjust height as needed
                 className="rounded-full" // Optional: if your logo is circular
               /> */}
-              <span className="font-display text-xl font-bold">Trip Bozo</span>
+              <span className="font-display text-2xl sm:text-xl font-bold">Trip Bozo</span>
             </div>
             <p className="text-gray-400 text-sm italic -mt-2">Less googling, more going.</p>
             <p className="text-gray-300 text-sm">Your essential companion for seamless travel experiences worldwide.</p>
             <div className="flex space-x-4">
               {/* Social icons here */}
             </div>
+            <div className="w-[70%] h-px bg-white/30 mt-4 md:hidden"></div>
           </div>
 
           {/* Quick Links - centered on mobile */}
           <div className="flex flex-col items-center md:items-start">
-            <h4 className="font-display text-lg font-semibold mb-4">Quick Links</h4>
+            <h4 className="font-display text-xl sm:text-lg font-bold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/">Home</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/onboarding">Onboarding</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/about">About Us</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</AppLink></li>
             </ul>
+            <div className="w-[70%] h-px bg-white/30 mt-6 md:hidden"></div>
           </div>
 
           {/* Popular Destinations - centered on mobile */}
           <div className="flex flex-col items-center md:items-start md:justify-self-end">
-            <h4 className="font-display text-lg font-semibold mb-4">Popular Destinations</h4>
+            <h4 className="font-display text-xl sm:text-lg font-bold mb-4">Popular Destinations</h4>
             <ul className="space-y-2">
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/jp">Japan 🇯🇵</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/fr">France 🇫🇷</AppLink></li>
@@ -50,8 +52,11 @@ const Footer = () => {
           </div>
         </div>
         
+        {/* Border line moved up with reduced margin */}
+        <div className="border-t border-gray-800 mt-8"></div>
+        
         {/* Copyright and Legal - centered on mobile */}
-        <div className="mt-16 pt-8 border-t border-gray-800 text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center">
+        <div className="pt-6 text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center">
           <p className="mb-4 md:mb-0">© {new Date().getFullYear()} Trip Bozo. All rights reserved.</p>
           <div className="flex space-x-8">
             <AppLink href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</AppLink>

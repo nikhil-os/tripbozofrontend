@@ -10,6 +10,59 @@ body {
   width: 100%;
 }
 
+/* Global click animation for all interactive elements */
+.btn,
+button,
+[type="button"],
+[type="submit"],
+.clickable,
+a.active,
+.interactive {
+  position: relative;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:active,
+button:active,
+[type="button"]:active,
+[type="submit"]:active,
+.clickable:active,
+a.active:active,
+.interactive:active {
+  transform: scale(0.96);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Button click ripple effect */
+.btn-ripple {
+  position: relative;
+  overflow: hidden;
+  transform: translate3d(0, 0, 0);
+}
+
+.btn-ripple:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+  background-repeat: no-repeat;
+  background-position: 50%;
+  transform: scale(10, 10);
+  opacity: 0;
+  transition: transform .5s, opacity 1s;
+}
+
+.btn-ripple:active:after {
+  transform: scale(0, 0);
+  opacity: .3;
+  transition: 0s;
+}
+
 /* Small devices (phones, 640px and down) */
 @media (max-width: 640px) {
   html {
