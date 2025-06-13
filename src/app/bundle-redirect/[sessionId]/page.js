@@ -3,13 +3,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { FiHome } from "react-icons/fi";
 
 export const dynamic = "force-dynamic";
 
 export default function BundleRedirectPage({ params }) {
   const { sessionId } = params;
-  const [items, setItems]     = useState([]); // now {name,url}[]
+  const [items, setItems]     = useState([]);       // [{ name, url }]
   const [loading, setLoading] = useState(true);
   const [nextIdx, setNextIdx] = useState(0);
   const [popupMsg, setPopupMsg] = useState("");
@@ -18,7 +19,7 @@ export default function BundleRedirectPage({ params }) {
     (async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/personalized-list/bundle-urls/${sessionId}/`
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/personalized-list/bundle-urls/${sessionId}/`
         );
         if (!res.ok) throw new Error();
         const json = await res.json();
@@ -31,8 +32,7 @@ export default function BundleRedirectPage({ params }) {
     })();
   }, [sessionId]);
 
-  const openAll = () =>
-    items.forEach((it) => window.open(it.url, "_blank"));
+  const openAll = () => items.forEach((it) => window.open(it.url, "_blank"));
 
   const openNext = () => {
     if (nextIdx < items.length) {
@@ -46,7 +46,7 @@ export default function BundleRedirectPage({ params }) {
     const w = window.open("", "_blank", "width=100,height=100");
     if (!w) {
       setPopupMsg(
-        "🔒 Pop‑ups are blocked. Please allow pop‑ups for this site in your browser."
+        "🔒 Pop‑ups are blocked. Please enable pop‑ups for this site in your browser settings."
       );
     } else {
       w.close();
@@ -71,16 +71,20 @@ export default function BundleRedirectPage({ params }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-white">
-      {/* --- mini header */}
-      <header className="w-full py-3 px-4 bg-white border-b flex items-center justify-between">
+      {/* — Mini Header — */}
+      <header className="w-full py-4 px-6 bg-white shadow-sm flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Image src="/logo.png" alt="tripbozo" width={32} height={32} />
+          <span className="text-2xl font-bold text-teal-600">tripbozo</span>
+        </div>
         <Link href="/">
-          <a className="flex items-center gap-2 text-teal-600 hover:text-teal-800">
-            <FiHome size={20} /> <span className="text-lg font-semibold">Home</span>
+          <a className="flex items-center gap-1 text-gray-700 hover:text-gray-900">
+            <FiHome /> Home
           </a>
         </Link>
       </header>
 
-      {/* --- main */}
+      {/* — Content */}
       <main className="flex-grow flex flex-col items-center p-8 space-y-12">
         <h1 className="text-3xl font-bold text-gray-900">Your Travel App Bundle</h1>
 
@@ -126,14 +130,14 @@ export default function BundleRedirectPage({ params }) {
         {/* Manual Links */}
         <section className="w-full max-w-md text-center space-y-3">
           <h2 className="text-2xl font-semibold text-gray-800">Manual Links</h2>
-          <ul className="space-y-2">
-            {items.map((it, i) => (
+          <ul className="grid gap-2">
+            {items.map((it) => (
               <li key={it.url}>
                 <a
                   href={it.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full py-2 px-4 border rounded hover:bg-gray-50 text-teal-700 text-left"
+                  className="block w-full py-2 px-4 border-2 border-teal-500 rounded-lg text-teal-600 font-medium hover:bg-teal-50 transition"
                 >
                   {it.name}
                 </a>
@@ -143,8 +147,8 @@ export default function BundleRedirectPage({ params }) {
         </section>
       </main>
 
-      {/* --- mini footer */}
-      <footer className="w-full py-4 px-4 bg-white border-t text-center text-sm text-gray-500">
+      {/* — Mini Footer — */}
+      <footer className="w-full py-4 px-6 bg-white border-t text-center text-sm text-gray-500">
         © {new Date().getFullYear()} TripBozo
       </footer>
     </div>
