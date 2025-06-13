@@ -13,7 +13,10 @@ export default function BundleRedirectPage({ params }) {
   const [items, setItems]     = useState([]);       // [{ name, url }]
   const [loading, setLoading] = useState(true);
   const [nextIdx, setNextIdx] = useState(0);
-  const [popupMsg, setPopupMsg] = useState("");
+  // default message before any test:
+  const [popupMsg, setPopupMsg] = useState(
+    "🔒 Please enable pop‑ups for this site so Quick Launch can open all apps at once."
+  );
 
   useEffect(() => {
     (async () => {
@@ -42,7 +45,7 @@ export default function BundleRedirectPage({ params }) {
   };
 
   const testPopups = () => {
-    setPopupMsg("");
+     // Try to open a tiny window to see if it's blocked:
     const w = window.open("", "_blank", "width=100,height=100");
     if (!w) {
       setPopupMsg(
@@ -72,7 +75,7 @@ export default function BundleRedirectPage({ params }) {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* — Mini Header — */}
-      <header className="w-full py-4 px-6 bg-white shadow-sm flex items-center justify-between">
+      <header className="w-full py-3 px-5 bg-white shadow-sm flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Image src="/logo.png" alt="tripbozo" width={80} height={80} />
           {/* <span className="text-2xl font-bold text-teal-600">tripbozo</span> */}
