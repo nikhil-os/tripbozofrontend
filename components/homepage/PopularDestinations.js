@@ -3,6 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { useLoader } from '@/components/LoaderContext';
+import Image from 'next/image';
 
 const destinations = [
 { name: 'India', image: '/flags/Agra.png' },
@@ -39,38 +40,42 @@ const PopularDestinations = () => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Destination Card 1 */}
-          <div className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-transform transform hover:scale-105 border border-gray-200 bg-white"> 
+          <button 
+            className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-all hover:scale-105 hover:shadow-lg border border-gray-200 bg-white text-left active:scale-95 cursor-pointer"
+            onClick={() => handleExploreClick('TH')}
+            aria-label="Explore Thailand Apps"
+          > 
             <div className="absolute inset-0">
-              <img
+              <Image
                 src="/Images/Thailand.jpg"
                 alt="Thailand"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                className="absolute inset-0 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
             </div>
             <div className="relative z-10 p-4 flex flex-col justify-end h-full text-white">
               <h3 className="text-xl font-semibold mb-1">TH Thailand</h3>
               <p className="text-xs mb-2">
-                Discover Thailand's vibrant culture, street food, and stunning temples with the best travel apps for your trip.
+                Discover Thailand&apos;s vibrant culture, street food, and stunning temples with the best travel apps for your trip.
               </p>
-              <button 
-                className="text-teal-500 hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-                onClick={() => handleExploreClick('TH')}
-              >
-                Explore Apps
-              </button>
             </div>
-          </div>
+          </button>
 
           {/* Destination Card 2 */}
-          <div className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-transform transform hover:scale-105 border border-gray-200 bg-white">
+          <button
+            className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-all hover:scale-105 hover:shadow-lg border border-gray-200 bg-white text-left active:scale-95 cursor-pointer"
+            onClick={() => handleExploreClick('FR')}
+            aria-label="Explore France Apps"
+          >
             <div className="absolute inset-0">
-              <img
+              <Image
                 src="/Images/france.png"
                 alt="France"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                className="absolute inset-0 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
             </div>
@@ -79,23 +84,22 @@ const PopularDestinations = () => {
               <p className="text-xs mb-2">
                 Navigate the romantic streets of Paris with apps for public transit, language translation, and more.
               </p>
-              <button 
-                className="text-teal-500 hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-                onClick={() => handleExploreClick('FR')}
-              >
-                Explore Apps
-              </button>
             </div>
-          </div>
+          </button>
 
           {/* Destination Card 3 */}
-          <div className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-transform transform hover:scale-105 border border-gray-200 bg-white">
+          <button
+            className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-all hover:scale-105 hover:shadow-lg border border-gray-200 bg-white text-left active:scale-95 cursor-pointer"
+            onClick={() => handleExploreClick('US')}
+            aria-label="Explore USA Apps"
+          >
             <div className="absolute inset-0">
-              <img
+              <Image
                 src="/Images/usa.png"
                 alt="USA"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                className="absolute inset-0 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
             </div>
@@ -104,89 +108,80 @@ const PopularDestinations = () => {
               <p className="text-xs mb-2">
                 Discover apps to help you explore the United States, from subway maps to event guides.
               </p>
-              <button 
-                className="text-teal-500 hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-                onClick={() => handleExploreClick('US')}
-              >
-                Explore Apps
-              </button>
             </div>
-          </div>
+          </button>
           
           {/* Destination Card 4 */}
-          <div className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-transform transform hover:scale-105 border border-gray-200 bg-white">
+          <button
+            className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-all hover:scale-105 hover:shadow-lg border border-gray-200 bg-white text-left active:scale-95 cursor-pointer"
+            onClick={() => handleExploreClick('JP')}
+            aria-label="Explore Japan Apps"
+          >
             <div className="absolute inset-0">
-              <img
+              <Image
                 src="/Images/japan.png"
                 alt="Japan"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                className="absolute inset-0 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
             </div>
             <div className="relative z-10 p-4 flex flex-col justify-end h-full text-white">
               <h3 className="text-xl font-semibold mb-1">JP Japan</h3>
               <p className="text-xs mb-2">
-                Navigate Japan's blend of tradition and technology with the perfect travel apps.
+                Navigate Japan&apos;s blend of tradition and technology with the perfect travel apps.
               </p>
-              <button 
-                className="text-teal-500 hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-                onClick={() => handleExploreClick('JP')}
-              >
-                Explore Apps
-              </button>
             </div>
-          </div>
+          </button>
           
           {/* Destination Card 5 */}
-          <div className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-transform transform hover:scale-105 border border-gray-200 bg-white">
+          <button
+            className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-all hover:scale-105 hover:shadow-lg border border-gray-200 bg-white text-left active:scale-95 cursor-pointer"
+            onClick={() => handleExploreClick('AU')}
+            aria-label="Explore Australia Apps"
+          >
             <div className="absolute inset-0">
-              <img
+              <Image
                 src="/Images/australia.png"
                 alt="Australia"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                className="absolute inset-0 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
             </div>
             <div className="relative z-10 p-4 flex flex-col justify-end h-full text-white">
               <h3 className="text-xl font-semibold mb-1">AU Australia</h3>
               <p className="text-xs mb-2">
-                Explore Australia's vast landscapes and vibrant cities with essential travel apps.
+                Explore Australia&apos;s vast landscapes and vibrant cities with essential travel apps.
               </p>
-              <button 
-                className="text-teal-500 hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-                onClick={() => handleExploreClick('AU')}
-              >
-                Explore Apps
-              </button>
             </div>
-          </div>
+          </button>
           
           {/* Destination Card 6 */}
-          <div className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-transform transform hover:scale-105 border border-gray-200 bg-white">
+          <button
+            className="relative rounded-3xl shadow-md overflow-hidden h-44 transition-all hover:scale-105 hover:shadow-lg border border-gray-200 bg-white text-left active:scale-95 cursor-pointer"
+            onClick={() => handleExploreClick('IT')}
+            aria-label="Explore Italy Apps"
+          >
             <div className="absolute inset-0">
-              <img
+              <Image
                 src="/Images/italy.png"
                 alt="Italy"
-                className="absolute inset-0 w-full h-full object-cover"
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                className="absolute inset-0 object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900/70 to-transparent"></div>
             </div>
             <div className="relative z-10 p-4 flex flex-col justify-end h-full text-white">
               <h3 className="text-xl font-semibold mb-1">IT Italy</h3>
               <p className="text-xs mb-2">
-                Discover the best apps for exploring Italy's rich history, art, and cuisine.
+                Discover the best apps for exploring Italy&apos;s rich history, art, and cuisine.
               </p>
-              <button 
-                className="text-teal-500 hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-                onClick={() => handleExploreClick('IT')}
-              >
-                Explore Apps
-              </button>
             </div>
-          </div>
+          </button>
         </div>
       </div>
     </section>

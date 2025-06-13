@@ -28,14 +28,22 @@ export default function Onboarding() {
     { code: 'AU', name: 'Australia' },
   ];
 
-  const handleViewApps = () => {
-    if (selectedCountry) {
+  const handleViewApps = (countryCode) => {
+    if (countryCode) {
       setShow(true); // Show loader before navigation
-      router.push(`/country/${selectedCountry}`);
+      router.push(`/country/${countryCode}`);
       // Loader will be hidden by LoaderRouteListener
     } else {
       alert('Please select a destination country first!');
     }
+  };
+
+  const handleTravelerSelect = (travelerId) => {
+    setSelectedTraveler(travelerId);
+    // Add a small delay to provide visual feedback before navigating
+    setTimeout(() => {
+      setStep(2);
+    }, 200);
   };
 
   return (
@@ -60,33 +68,21 @@ export default function Onboarding() {
     <h3 className="text-2xl font-display font-medium text-center mb-12 text-black">What type of traveler are you?</h3>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12 max-w-6xl mx-auto">
       {travelerOptions.map(opt => (
-        <div
+        <button
           key={opt.id}
-          className={`border-2 border-gray-300 p-10 rounded-3xl cursor-pointer transition-all hover:shadow-2xl hover:border-blue-500 flex flex-col items-center justify-center min-h-[220px] min-w-[220px] ${
+          className={`border-2 border-gray-300 p-10 rounded-3xl cursor-pointer transition-all hover:shadow-2xl hover:border-blue-500 flex flex-col items-center justify-center min-h-[220px] min-w-[220px] text-left active:scale-95 ${
             selectedTraveler === opt.id
               ? 'border-blue-500 bg-teal-50 shadow'
               : 'bg-white'
           }`}
-          onClick={() => setSelectedTraveler(opt.id)}
+          onClick={() => handleTravelerSelect(opt.id)}
+          aria-label={`Select ${opt.title}`}
         >
           <div className="text-6xl mb-4">{opt.emoji}</div>
           <h4 className="font-display font-medium text-xl mb-2 text-black">{opt.title}</h4>
           <p className="text-base text-black text-center">{opt.desc}</p>
-        </div>
+        </button>
       ))}
-    </div>
-    <div className="mt-10 text-center">
-           <button
-        className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-12 rounded-full px-10 bg-teal-400 hover:bg-blue-500 hover:text-white"
-        onClick={() => selectedTraveler && setStep(2)}
-        disabled={!selectedTraveler}
-      >
-        <span className="text-black">Next Step</span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4">
-          <path d="M5 12h14"></path>
-          <path d="m12 5 7 7-7 7"></path>
-        </svg>
-      </button>
     </div>
   </div>
 )}
@@ -97,32 +93,25 @@ export default function Onboarding() {
             <h3 className="text-2xl font-display font-medium text-center mb-8 text-black">Where are you traveling to?</h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 max-w-4xl mx-auto">
               {destinationOptions.map(dest => (
-                <div
+                <button
                   key={dest.code}
-                  className={`border-2 border-gray-300 p-10 rounded-3xl cursor-pointer transition-all hover:shadow-2xl hover:border-blue-500 flex flex-col items-center justify-center min-h-[180px] min-w-[180px] ${
+                  className={`border-2 border-gray-300 p-10 rounded-3xl cursor-pointer transition-all hover:shadow-2xl hover:border-blue-500 flex flex-col items-center justify-center min-h-[180px] min-w-[180px] active:scale-95 ${
                     selectedCountry === dest.code
                       ? 'border-blue-500 bg-teal-50 shadow'
                       : 'bg-white'
                   }`}
-                  onClick={() => setSelectedCountry(dest.code)}
+                  onClick={() => {
+                    setSelectedCountry(dest.code);
+                    setTimeout(() => {
+                      handleViewApps(dest.code);
+                    }, 200);
+                  }}
+                  aria-label={`Select ${dest.name}`}
                 >
                   <h4 className="text-2xl font-bold text-black">{dest.code}</h4>
                   <p className="text-lg text-black mt-2">{dest.name}</p>
-                </div>
+                </button>
               ))}
-            </div>
-            <div className="mt-10 text-center">
-              <button
-  className="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-black h-12 rounded-full px-10 bg-teal-400 hover:bg-blue-500 hover:text-white"
-  onClick={handleViewApps}
-  disabled={!selectedCountry}
->
-  <span className="text-black">View Apps</span>
-  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="ml-2 h-4 w-4">
-    <path d="M5 12h14"></path>
-    <path d="m12 5 7 7-7 7"></path>
-  </svg>
-</button>
             </div>
           </div>
         )}

@@ -5,6 +5,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { fetchAppsByCountry } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
+import Image from "next/image";
 
 // Custom hook for scroll‐based animation
 function useScrollReveal(ref, options = {}) {
@@ -26,19 +27,20 @@ function useScrollReveal(ref, options = {}) {
   return isVisible;
 }
 
+// Hero images with descriptive alt text for better SEO
 const heroImages = [
-  "/IMG1.jpg",
-  "/IMG2.avif",
-  "/IMG3.jpg",
-  "/IMG4.jpg",
-  "/IMG5.jpg",
-  "/IMG6.jpg",
-  "/IMG7.avif",
-  "/IMG8.webp",
-  "/IMG9.jpg",
-  "/IMG10.jpg",
-  "/IMG11.jpg",
-  "/IMG12.jpg",
+  { src: "/IMG1.jpg", alt: "Beautiful beach destination for travelers" },
+  { src: "/IMG2.avif", alt: "Scenic mountain landscape for adventure travelers" },
+  { src: "/IMG3.jpg", alt: "Historic European city architecture" },
+  { src: "/IMG4.jpg", alt: "Tropical island paradise destination" },
+  { src: "/IMG5.jpg", alt: "Urban cityscape with iconic landmarks" },
+  { src: "/IMG6.jpg", alt: "Cultural heritage site for tourists" },
+  { src: "/IMG7.avif", alt: "Serene natural landscape for nature lovers" },
+  { src: "/IMG8.webp", alt: "Remote wilderness destination for explorers" },
+  { src: "/IMG9.jpg", alt: "Local cuisine and dining experience" },
+  { src: "/IMG10.jpg", alt: "Family-friendly travel destination" },
+  { src: "/IMG11.jpg", alt: "Ancient historical monument for history enthusiasts" },
+  { src: "/IMG12.jpg", alt: "Breathtaking waterfall in exotic location" },
 ];
 
 const HeroSection = () => {
@@ -109,32 +111,32 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pb-16 scroll-smooth homepage-scroll">
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden pb-16 scroll-smooth homepage-scroll" id="hero-section">
       {/* Background slideshow with parallax effect */}
       <div className="absolute inset-0 z-0">
         {heroImages.map((img, idx) => (
-          <img
-            key={img}
-            src={img}
-            alt="Travel destination"
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-              bgIndex === idx ? "opacity-100 scale-105" : "opacity-0 scale-100"
-            } z-0 will-change-transform`}
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "cover",
-              imageRendering: "auto",
-              willChange: "opacity, transform",
-              filter:
-                bgIndex === idx
-                  ? "contrast(1.12) saturate(1.12) brightness(0.97)"
-                  : "blur(0px)",
-            }}
-            draggable={false}
-            loading="eager"
-            decoding="async"
-          />
+          <div 
+            key={img.src}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              bgIndex === idx ? "opacity-100" : "opacity-0"
+            }`}
+          >
+            <Image
+              src={img.src}
+              alt={img.alt}
+              className={`transition-transform duration-1000 ${
+                bgIndex === idx ? "scale-105" : "scale-100"
+              } z-0 will-change-transform`}
+              fill
+              sizes="100vw"
+              priority={idx < 2}
+              style={{
+                objectFit: "cover",
+                filter: bgIndex === idx ? "contrast(1.12) saturate(1.12) brightness(0.97)" : "blur(0px)",
+              }}
+              draggable={false}
+            />
+          </div>
         ))}
         {/* Subtle dark overlay for contrast */}
         <div className="absolute inset-0 bg-black/30 z-10 pointer-events-none" />
@@ -161,47 +163,44 @@ const HeroSection = () => {
             </p>
 
             {/* ――― Search Bar Start ――― */}
-            <div className="w-2/3 sm:w-full max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-center bg-white rounded-lg shadow-xl border border-gray-200 overflow-visible group transition-all duration-300 hover:shadow-2xl py-2 px-2
-              sm:py-2 sm:px-2
-              md:py-2 md:px-2
-              ">
-              <div className="relative flex-grow w-full">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-6 w-6 sm:h-7 sm:w-7"
+            <div className="w-2/3 sm:w-full max-w-2xl mx-auto relative rounded-full sm:rounded-xl shadow-xl transition-all duration-300 hover:shadow-2xl">
+              <div className="flex items-center w-full bg-white border border-gray-300 rounded-full sm:rounded-xl overflow-hidden p-1 sm:p-2">
+                <div className="flex-grow flex items-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="ml-4 text-gray-500 h-5 w-5 sm:h-6 sm:w-6"
+                    aria-hidden="true"
+                  >
+                    <circle cx="14" cy="14" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                  </svg>
+                  <input
+                    type="text"
+                    aria-label="Search country"
+                    placeholder="Eg. France or FR"
+                    value={query}
+                    onChange={handleInputChange}
+                    onKeyPress={handleKeyPress}
+                    className="h-10 sm:h-12 w-full pl-3 pr-4 text-gray-800 text-base sm:text-lg font-medium placeholder-gray-400 focus:outline-none bg-transparent"
+                  />
+                </div>
+                <button
+                  onClick={handleSearch}
+                  disabled={loading}
+                  className="bg-teal-500 hover:bg-teal-600 text-white px-1 sm:px-3 py-6 font-semibold text-sm sm:text-base h-10 sm:h-12 flex items-center justify-center transition-colors duration-300 rounded-full sm:rounded-xl w-[12%] min-w-[60px] mx-1 active:scale-95 active:shadow-inner transform transition-transform"
+                  aria-label="Search for travel apps by country"
                 >
-                  <circle cx="11" cy="11" r="8"></circle>
-                  <path d="m21 21-4.3-4.3"></path>
-                </svg>
-                <input
-                  type="text"
-                  aria-label="Search country"
-                  placeholder="Eg. France or FR"
-                  value={query}
-                  onChange={handleInputChange}
-                  onKeyPress={handleKeyPress}
-                  className="h-12 w-full pl-14 pr-4 rounded-lg text-gray-800 text-base font-medium placeholder-gray-400 focus:outline-none transition-all duration-300 group-hover:shadow-md group-hover:scale-105 bg-transparent
-                    sm:h-14 sm:pl-16 sm:pr-6 sm:text-xl"
-                />
+                  {loading ? "..." : "Search"}
+                </button>
               </div>
-              <button
-                onClick={handleSearch}
-                disabled={loading}
-                className={`bg-teal-500 text-white px-6 py-3 rounded-lg font-bold text-base hover:bg-teal-600 transition-all duration-300 whitespace-nowrap flex-shrink-0 min-w-fit mt-3 sm:mt-0 w-full sm:w-auto shadow-lg
-                  sm:px-8 sm:py-4 sm:text-xl
-                  ${loading ? "opacity-50 cursor-not-allowed" : "group-hover:scale-105 group-hover:shadow-xl"}
-                `}
-              >
-                {loading ? "Searching…" : "Search"}
-              </button>
             </div>
 
             {errorMsg && (

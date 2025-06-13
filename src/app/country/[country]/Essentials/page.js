@@ -63,7 +63,7 @@ export default function EssentialsPage() {
       setLoading(false);
       setShow(false); // Hide the loader
     })();
-  }, [country, setShow]);
+  }, [country, setShow, FALLBACK.emergencies, FALLBACK.phrases, FALLBACK.tips]);
 
   if (loading) {
     return <p className="p-8 text-center text-gray-600">Loading…</p>;

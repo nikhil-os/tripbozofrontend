@@ -3,12 +3,14 @@ import Image from 'next/image';
 import AppLink from './AppLink';
 import React, { useEffect, useState, useRef } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,29 +51,20 @@ const Navbar = () => {
   };
 
   return (
-    <nav
-      className={`fixed w-full top-0 left-0 z-50 shadow-sm transition-colors duration-300 ${
-        scrolled ? 'bg-white' : 'bg-transparent'
-      }`}
-      style={{
-        backgroundImage: !scrolled
-          ? 'linear-gradient(to bottom, rgba(255,255,255,0) 70%, #fff 100%)'
-          : 'none',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: '100% 100%',
-      }}
-    >
+    <nav className="fixed w-full top-0 left-0 z-50 bg-white shadow-sm">
       <div className="container mx-auto px-6 py-4 flex justify-between items-center relative">
         {/* Left: Brand - with gap */}
         <div className="flex items-center z-20">
-          <Image
-            src="/logo.png" // Path to your logo in the public directory
-            alt="Trip Bozo Logo"
-            width={150}  // Adjust width as needed
-            height={150} // Adjust height as needed
-            priority // Optional: for images above the fold
-            className="rounded-full" // Optional: if your logo is circular
-          />
+          <AppLink href="/">
+            <Image
+              src="/logo.png" // Path to your logo in the public directory
+              alt="Trip Bozo Logo"
+              width={150}  // Adjust width as needed
+              height={150} // Adjust height as needed
+              priority // Optional: for images above the fold
+              className="rounded-full cursor-pointer" // Optional: if your logo is circular
+            />
+          </AppLink>
         </div>
 
         {/* Hamburger Menu Button (Mobile Only) */}

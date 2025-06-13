@@ -101,7 +101,7 @@ const OnboardingComponent = () => {
         {/* No results */}
         {filteredCountries.length === 0 && (
           <div className="text-center py-8">
-            <p className="text-gray-500">No countries found matching "{searchQuery}"</p>
+            <p className="text-gray-500">No countries found matching &quot;{searchQuery}&quot;</p>
           </div>
         )}
 
