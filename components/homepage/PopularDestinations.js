@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useLoader } from '../LoaderContext';
 
 const destinations = [
 { name: 'India', image: '/flags/Agra.png' },
@@ -15,6 +16,11 @@ const destinations = [
 ];
 
 const PopularDestinations = () => {
+  const { setShow } = useLoader();
+  const handleExplore = (countryCode) => {
+    setShow(true);
+    window.location.href = `/country/${countryCode}`;
+  };
 return (
 <main className="min-h-screen bg-gray-100 flex items-center justify-center">
   
@@ -50,7 +56,7 @@ return (
             </p>
             <button 
               className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-              onClick={() => window.location.href = '/country/TH'}
+              onClick={() => handleExplore('TH')}
             >
               Explore Apps
             </button>
@@ -75,7 +81,7 @@ return (
             </p>
             <button 
               className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-              onClick={() => window.location.href = '/country/FR'}
+              onClick={() => handleExplore('FR')}
             >
               Explore Apps
             </button>
@@ -101,7 +107,7 @@ return (
             </p>
             <button 
               className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-              onClick={() => window.location.href = '/country/US'}
+              onClick={() => handleExplore('US')}
             >
               Explore Apps
             </button>
@@ -125,7 +131,7 @@ return (
             </p>
             <button 
               className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-              onClick={() => window.location.href = '/country/JP'}
+              onClick={() => handleExplore('JP')}
             >
               Explore Apps
             </button>
@@ -149,7 +155,7 @@ return (
             </p>
             <button 
               className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-              onClick={() => window.location.href = '/country/AU'}
+              onClick={() => handleExplore('AU')}
             >
               Explore Apps
             </button>
@@ -173,7 +179,7 @@ return (
             </p>
             <button 
               className="text-teal-500  hover:text-teal-700 transition self-start bg-transparent px-0 py-0 rounded-none shadow-none border-none text-xs font-normal tracking-tight"
-              onClick={() => window.location.href = '/country/IT'}
+              onClick={() => handleExplore('IT')}
             >
               Explore Apps
             </button>

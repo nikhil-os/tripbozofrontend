@@ -3,9 +3,13 @@
 "use client";
 
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation';
+import { useLoader } from '../../../components/LoaderContext';
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const { setShow } = useLoader();
 
   return (
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900/80 via-blue-900/40 to-teal-400/20">
@@ -96,7 +100,10 @@ export default function LoginPage() {
           <button
             type="button"
             className="mt-3 w-full py-2 rounded-full bg-gray-100 text-teal-600 font-semibold text-base hover:bg-teal-50 transition"
-            onClick={() => (window.location.href = "/Register")}
+            onClick={() => {
+              setShow(true);
+              router.push('/Register');
+            }}
           >
             Register here
           </button>

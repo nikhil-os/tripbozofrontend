@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import AppLink from './AppLink';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -54,50 +55,48 @@ const Navbar = () => {
         </div>
         {/* Center: Nav Links - absolutely centered */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-12 text-gray-600 text-base font-normal">
-          <Link href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+          <AppLink href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
             Home
             <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-          </Link>
-          <Link href="/Onboarding" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+          </AppLink>
+          <AppLink href="/Onboarding" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
             Onboarding
             <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-          </Link>
-          <Link href="/About" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
+          </AppLink>
+          <AppLink href="/About" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
             About
             <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
-          </Link>
+          </AppLink>
         </div>
         {/* Right: Login and Get Started - with gap */}
         <div className="flex items-center gap-2 absolute right-8 top-1/2 -translate-y-1/2" style={{ justifyContent: 'flex-end' }}>
           {isLoggedIn ? (
-            <Link
+            <AppLink
               href="/Profile"
               className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
               style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
             >
               <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7.5 7.5 0 0 1 13 0"/></svg>
               Profile
-            </Link>
+            </AppLink>
           ) : (
-            <Link
-              href="/Login"
-              className="inline-flex items-center gap-2 bg-gray-200 border-2 border-gray-300 text-gray-400 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all opacity-60 cursor-not-allowed pointer-events-none select-none"
+            <span
+              className="inline-flex items-center gap-2 bg-gray-200 border-2 border-gray-300 text-gray-400 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all opacity-60 cursor-not-allowed select-none"
               style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
               tabIndex={-1}
               aria-disabled="true"
             >
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
               Login
-            </Link>
+            </span>
           )}
-          <Link
+          <AppLink
             href="/Onboarding"
             className="inline-block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-full text-base font-semibold shadow-md transition-colors border border-teal-500"
             style={{ minWidth: '100px', textAlign: 'center' }}
-            onClick={() => (window.location.href = '/Onboarding')}
           >
             Get Started
-          </Link>
+          </AppLink>
         </div>
       </div>
     </nav>
