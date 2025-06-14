@@ -3,24 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLoader } from './LoaderContext';
-
-const countries = [
-  { code: 'US', name: 'United States', flag: '🇺🇸' },
-  { code: 'JP', name: 'Japan', flag: '🇯🇵' },
-  { code: 'FR', name: 'France', flag: '🇫🇷' },
-  { code: 'TH', name: 'Thailand', flag: '🇹🇭' },
-  { code: 'IT', name: 'Italy', flag: '🇮🇹' },
-  { code: 'AU', name: 'Australia', flag: '🇦🇺' },
-  { code: 'UK', name: 'United Kingdom', flag: '🇬🇧' },
-  { code: 'DE', name: 'Germany', flag: '🇩🇪' },
-  { code: 'ES', name: 'Spain', flag: '🇪🇸' },
-  { code: 'CA', name: 'Canada', flag: '🇨🇦' },
-  { code: 'MX', name: 'Mexico', flag: '🇲🇽' },
-  { code: 'BR', name: 'Brazil', flag: '🇧🇷' },
-  { code: 'IN', name: 'India', flag: '🇮🇳' },
-  { code: 'CN', name: 'China', flag: '🇨🇳' },
-  { code: 'SG', name: 'Singapore', flag: '🇸🇬' },
-];
+import { supportedCountries } from '@/src/utils/countryUtils';
 
 const OnboardingComponent = () => {
   const [selectedCountry, setSelectedCountry] = useState('');
@@ -28,7 +11,7 @@ const OnboardingComponent = () => {
   const router = useRouter();
   const { setShow } = useLoader();
 
-  const filteredCountries = countries.filter(country => 
+  const filteredCountries = supportedCountries.filter(country => 
     country.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     country.code.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -36,7 +19,7 @@ const OnboardingComponent = () => {
   const handleViewApps = () => {
     if (selectedCountry) {
       setShow(true); // Show loader before navigation
-      router.push(`/country/${selectedCountry}`);
+      router.push(`/country/${selectedCountry.toLowerCase()}`);
       // Loader will be hidden by LoaderRouteListener
     }
   };
@@ -54,33 +37,31 @@ const OnboardingComponent = () => {
         </div>
 
         {/* Search input */}
-        <div className="mb-8">
-          <div className="relative max-w-md mx-auto">
-            <input
-              type="text"
-              placeholder="Search countries..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full px-4 py-3 pl-10 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:outline-none"
+        <div className="relative max-w-md mx-auto">
+          <input
+            type="text"
+            placeholder="Search countries..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full px-4 py-3 pl-10 rounded-full border border-gray-300 shadow-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 focus:outline-none"
+          />
+          <svg
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
-            <svg
-              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-          </div>
+          </svg>
         </div>
 
         {/* Country grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-8">
           {filteredCountries.map((country) => (
             <div
               key={country.code}
