@@ -1,14 +1,16 @@
 // src/app/country/[country]/essentials/page.jsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { fetchEssentials } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
+import { getCountryName } from "@/src/utils/countryUtils";
 
 export default function EssentialsPage() {
   const { country } = useParams();
   const { setShow } = useLoader();
+  const countryName = getCountryName(country);
 
   const FALLBACK = {
     emergencies: [
@@ -47,53 +49,58 @@ export default function EssentialsPage() {
   });
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    let isMounted = true; // Flag to track if component is mounted
+  // Use a memoized loadData function to avoid recreating it on every render
+  const loadData = useCallback(async () => {
+    let isMounted = true;
+    setShow(true); // Show the loader
     
-    async function loadData() {
-      setShow(true); // Show the loader
+    try {
+      // No need to convert to uppercase as the API function handles it
+      const json = await fetchEssentials(country);
       
-      try {
-        const json = await fetchEssentials(country.toUpperCase());
-        
-        if (isMounted) {
-          setData({
-            emergencies:
-              json.emergencies?.length > 0
-                ? json.emergencies
-                : FALLBACK.emergencies,
-            phrases:
-              json.phrases?.length > 0 ? json.phrases : FALLBACK.phrases,
-            tips: json.tips?.length > 0 ? json.tips : FALLBACK.tips,
-          });
-        }
-      } catch (error) {
-        console.error("Error fetching essentials:", error);
-        if (isMounted) {
-          // Use fallback data on error
-          setData({
-            emergencies: FALLBACK.emergencies,
-            phrases: FALLBACK.phrases,
-            tips: FALLBACK.tips,
-          });
-        }
-      } finally {
-        // Always hide the loader and set loading to false, regardless of success or failure
-        if (isMounted) {
-          setLoading(false);
-          setShow(false); // Hide the loader
-        }
+      if (isMounted) {
+        setData({
+          emergencies:
+            json.emergencies?.length > 0
+              ? json.emergencies
+              : FALLBACK.emergencies,
+          phrases:
+            json.phrases?.length > 0 ? json.phrases : FALLBACK.phrases,
+          tips: json.tips?.length > 0 ? json.tips : FALLBACK.tips,
+        });
+      }
+    } catch (error) {
+      console.error("Error fetching essentials:", error);
+      if (isMounted) {
+        // Use fallback data on error
+        setData({
+          emergencies: FALLBACK.emergencies,
+          phrases: FALLBACK.phrases,
+          tips: FALLBACK.tips,
+        });
+      }
+    } finally {
+      // Always hide the loader and set loading to false, regardless of success or failure
+      if (isMounted) {
+        setLoading(false);
+        setShow(false); // Hide the loader
       }
     }
     
-    loadData();
+    return () => {
+      isMounted = false;
+    };
+  }, [country, setShow, FALLBACK.emergencies, FALLBACK.phrases, FALLBACK.tips]);
+
+  useEffect(() => {
+    const cleanup = loadData();
     
     // Cleanup function to handle component unmounting
     return () => {
-      isMounted = false;
+      cleanup();
       setShow(false); // Ensure loader is hidden if component unmounts during fetch
     };
-  }, [country, setShow]);
+  }, [loadData, setShow]);
 
   if (loading) {
     return <p className="p-8 text-center text-gray-600">Loading…</p>;
@@ -115,7 +122,7 @@ export default function EssentialsPage() {
           <p className="text-white/90 max-w-2xl text-lg font-medium drop-shadow-sm text-center">
             Offline emergency info, key phrases & safety tips for{" "}
             <span className="capitalize font-bold underline underline-offset-4">
-              {country}
+              {countryName}
             </span>
             .
           </p>
