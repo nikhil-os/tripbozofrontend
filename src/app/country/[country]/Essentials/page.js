@@ -48,22 +48,52 @@ export default function EssentialsPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    (async () => {
+    let isMounted = true; // Flag to track if component is mounted
+    
+    async function loadData() {
       setShow(true); // Show the loader
-      const json = await fetchEssentials(country.toUpperCase());
-      setData({
-        emergencies:
-          json.emergencies?.length > 0
-            ? json.emergencies
-            : FALLBACK.emergencies,
-        phrases:
-          json.phrases?.length > 0 ? json.phrases : FALLBACK.phrases,
-        tips: json.tips?.length > 0 ? json.tips : FALLBACK.tips,
-      });
-      setLoading(false);
-      setShow(false); // Hide the loader
-    })();
-  }, [country, setShow, FALLBACK.emergencies, FALLBACK.phrases, FALLBACK.tips]);
+      
+      try {
+        const json = await fetchEssentials(country.toUpperCase());
+        
+        if (isMounted) {
+          setData({
+            emergencies:
+              json.emergencies?.length > 0
+                ? json.emergencies
+                : FALLBACK.emergencies,
+            phrases:
+              json.phrases?.length > 0 ? json.phrases : FALLBACK.phrases,
+            tips: json.tips?.length > 0 ? json.tips : FALLBACK.tips,
+          });
+        }
+      } catch (error) {
+        console.error("Error fetching essentials:", error);
+        if (isMounted) {
+          // Use fallback data on error
+          setData({
+            emergencies: FALLBACK.emergencies,
+            phrases: FALLBACK.phrases,
+            tips: FALLBACK.tips,
+          });
+        }
+      } finally {
+        // Always hide the loader and set loading to false, regardless of success or failure
+        if (isMounted) {
+          setLoading(false);
+          setShow(false); // Hide the loader
+        }
+      }
+    }
+    
+    loadData();
+    
+    // Cleanup function to handle component unmounting
+    return () => {
+      isMounted = false;
+      setShow(false); // Ensure loader is hidden if component unmounts during fetch
+    };
+  }, [country, setShow]);
 
   if (loading) {
     return <p className="p-8 text-center text-gray-600">Loading…</p>;

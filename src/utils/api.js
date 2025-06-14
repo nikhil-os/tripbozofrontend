@@ -118,7 +118,7 @@ export async function searchCountries(query) {
 }
 
 /** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
- * 6) NEW: Fetch apps for a given country code (e.g. “FR”, “CN”).
+ * 6) NEW: Fetch apps for a given country code (e.g. "FR", "CN").
  *    GET /country/<countryCode>/apps/
  *    If no real data, fallback to sampleApps.
  */
@@ -159,27 +159,44 @@ export async function downloadAppList(sessionId) {
     return res.data; // Blob
   }
 
-
-
-  export async function fetchEssentials(countryCode) {
-    if (!useApi) {
-      console.info("[TripBozo API] fetchEssentials disabled → returning dummy data");
-      return {
-        emergencies: [],
-        phrases: [],
-        tips: [],
-      };
-    }
-  
-    try {
-      const res = await apiClient.get(`/country/${countryCode}/essentials/`);
-      return res.data;
-    } catch (err) {
-      console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
-      return {
-        emergencies: [],
-        phrases: [],
-        tips: [],
-      };
-    }
+/** ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+ * 7) Fetch essentials data for a given country code with improved error handling
+ *    GET /country/<countryCode>/essentials/
+ */
+export async function fetchEssentials(countryCode) {
+  if (!useApi) {
+    console.info("[TripBozo API] fetchEssentials disabled → returning dummy data");
+    return {
+      emergencies: [],
+      phrases: [],
+      tips: [],
+    };
   }
+
+  try {
+    // Create a promise that rejects after 5 seconds
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Request timed out')), 5000);
+    });
+
+    // Race the actual request against the timeout
+    const res = await Promise.race([
+      apiClient.get(`/country/${countryCode}/essentials/`),
+      timeoutPromise
+    ]);
+
+    return res.data || {
+      emergencies: [],
+      phrases: [],
+      tips: [],
+    };
+  } catch (err) {
+    console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
+    // Return an empty object instead of throwing, so the component can handle it
+    return {
+      emergencies: [],
+      phrases: [],
+      tips: [],
+    };
+  }
+}
