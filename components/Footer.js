@@ -28,10 +28,10 @@ const Footer = () => {
             <div className="w-[70%] h-px bg-white/30 mt-4 md:hidden"></div>
           </div>
 
-          {/* Quick Links - centered on mobile */}
-          <div className="flex flex-col items-center md:items-start">
-            <h4 className="font-display text-xl sm:text-lg font-bold mb-4">Quick Links</h4>
-            <ul className="space-y-2">
+          {/* Quick Links - centered on mobile and desktop */}
+          <div className="flex flex-col items-center md:flex md:justify-center md:items-center">
+            <h4 className="font-display text-xl sm:text-lg font-bold mb-4 text-center">Quick Links</h4>
+            <ul className="space-y-2 text-center">
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/">Home</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/onboarding">Onboarding</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/about">About Us</AppLink></li>
@@ -49,14 +49,12 @@ const Footer = () => {
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/us">United States 🇺🇸</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/th">Thailand 🇹🇭</AppLink></li>
             </ul>
+            <div className="w-[70%] h-px bg-white/30 mt-6 md:hidden"></div>
           </div>
         </div>
         
-        {/* Border line moved up with reduced margin */}
-        <div className="border-t border-gray-800 mt-8"></div>
-        
         {/* Copyright and Legal - centered on mobile */}
-        <div className="pt-6 text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center">
+        <div className="mt-16 pt-8 border-t border-gray-800 text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center">
           <p className="mb-4 md:mb-0">© {new Date().getFullYear()} Trip Bozo. All rights reserved.</p>
           <div className="flex space-x-8">
             <AppLink href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</AppLink>

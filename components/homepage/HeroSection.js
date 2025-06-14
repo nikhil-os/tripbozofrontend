@@ -155,10 +155,10 @@ const HeroSection = () => {
         <div className="w-full max-w-5xl mx-auto text-center flex flex-col items-center justify-center">
           {/* Content */}
           <div className="relative z-10 text-white w-full">
-            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold mb-8 animate-fade-in-up transition-all duration-700 leading-tight drop-shadow-xl">
+            <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-extrabold mb-8 animate-fade-in-up transition-all duration-700 leading-tight drop-shadow-xl">
               Discover the Perfect Apps for Your Journey
             </h1>
-            <p className="text-2xl sm:text-3xl md:text-4xl mb-12 animate-fade-in-up delay-200 transition-all duration-700 font-semibold drop-shadow-lg">
+            <p className="text-2xl sm:text-3xl md:text-2xl mb-12 animate-fade-in-up delay-200 transition-all duration-700 font-semibold drop-shadow-lg">
               Find essential travel apps curated for your destination
             </p>
 

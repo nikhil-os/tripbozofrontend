@@ -52,9 +52,9 @@ const Navbar = () => {
 
   return (
     <nav className="fixed w-full top-0 left-0 z-50 bg-white shadow-sm">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center relative">
-        {/* Left: Brand - with gap */}
-        <div className="flex items-center z-20">
+      <div className="w-[98%] mx-auto py-4 flex justify-between items-center relative">
+        {/* Left: Brand - pushed to extreme left */}
+        <div className="flex items-center z-20 pl-1">
           <AppLink href="/">
             <Image
               src="/logo.png" // Path to your logo in the public directory
@@ -68,7 +68,7 @@ const Navbar = () => {
         </div>
 
         {/* Hamburger Menu Button (Mobile Only) */}
-        <div className="lg:hidden z-20 relative">
+        <div className="lg:hidden z-20 relative pr-1">
           <button 
             className="text-gray-700 hover:text-teal-500 focus:outline-none"
             onClick={toggleMobileMenu}
@@ -160,8 +160,8 @@ const Navbar = () => {
           </AppLink>
         </div>
 
-        {/* Right: Login and Get Started - with gap (Desktop Only) */}
-        <div className="hidden lg:flex absolute right-4 top-1/2 -translate-y-1/2 items-center space-x-4">
+        {/* Right: Login and Get Started - pushed to extreme right (Desktop Only) */}
+        <div className="hidden lg:flex items-center space-x-4 pr-1">
           {isLoggedIn ? (
             <AppLink
               href="/Profile"
