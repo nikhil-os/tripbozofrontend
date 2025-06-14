@@ -1,56 +1,37 @@
+'use client';
 
-"use client";
-import Image from "next/image";
-import { useEffect, useState, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import {
-  FaPlus,
-  FaCheck,
-  FaTimes,
-  FaQrcode,
-  FaGlobe,
-  FaCaretDown, // Added for dropdown icon
-} from "react-icons/fa";
-import { initSession, saveSelectedApps } from "@/src/utils/api";
+
+
+import { useEffect, useState, useMemo } from 'react';
+import { useRouter } from 'next/navigation';
+import { FaPlus, FaCheck, FaTimes, FaQrcode, FaGlobe, FaChevronDown } from 'react-icons/fa';
+import { useLoader } from '../LoaderContext';
 
 export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
-  const router = useRouter();
-  const storageKey = `selectedAppIds_${countryCode}`;
-  const [selectedApps, setSelectedApps] = useState(() => {
-    try {
-      const raw = localStorage.getItem(storageKey);
-      return raw ? JSON.parse(raw) : [];
-    } catch {
-      return [];
-    }
-  });
-  useEffect(() => {
-    localStorage.setItem(storageKey, JSON.stringify(selectedApps));
-  }, [selectedApps, storageKey]);
+    const [selectedApps, setSelectedApps] = useState([]);
+    const [search, setSearch] = useState("");
+    const [activeCategory, setActiveCategory] = useState("ALL");
+    const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
+    const [filterType, setFilterType] = useState(null); // 'topRated', 'paid', 'free' or null
+    const router = useRouter();
+    const { setShow } = useLoader();
 
-  const clearAll = () => {
-    setSelectedApps([]);
-    localStorage.removeItem(storageKey);
-  };
+    // Load selected apps from localStorage on mount
+    useEffect(() => {
+        const stored = localStorage.getItem('selectedAppIds');
+        if (stored) {
+            setSelectedApps(JSON.parse(stored));
+        }
+    }, []);
 
-  // Search + category + filter
-  const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("ALL");
-  const [filterType, setFilterType] = useState("ALL");
-  const [isFilterOpen, setIsFilterOpen] = useState(false); // State for filter dropdown
+    // Persist selected apps to localStorage whenever they change
+    useEffect(() => {
+        localStorage.setItem('selectedAppIds', JSON.stringify(selectedApps));
+    }, [selectedApps]);
 
-   // 1) Dynamically derive the list of categories from your apps:
-   const categories = useMemo(() => {
-     const cats = new Set(apps.map((a) => a.category || "Uncategorized"));
-     return ["ALL", ...Array.from(cats)];
-   }, [apps]);
-
-  const filterOptions = [
-    { value: "ALL", label: "All Filters" },
-    { value: "FREE", label: "Free Apps" },
-    { value: "PAID", label: "Paid Apps" },
-    { value: "TOP_RATED", label: "Top Rated" },
-  ];
+    const categories = [
+        'ALL', 'Communication', 'Dining', 'Navigation', 'Finance', 'Safety', 'Accommodation'
+    ];
 
   const toggleSelect = (appId) => {
     setSelectedApps((prev) =>
@@ -60,39 +41,27 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     );
   };
 
-  const handleGenerateQR = async () => {
-    if (!selectedApps.length) {
-      alert("Please select at least one app.");
-      return;
-    }
-    let sid = localStorage.getItem("sessionId") || (await initSession());
-    if (!sid) return alert("Could not initialize session.");
-    const { session_id } = await saveSelectedApps(selectedApps);
-    sid = session_id || sid;
-    localStorage.setItem("sessionId", sid);
-    router.push(`/qr-bundle?country=${countryCode}`);
-  };
+    const handleGenerateQR = () => {
+        setShow(true);
+        const selectedAppIds = selectedApps.join(",");
+        router.push(`/qr-bundle?apps=${selectedAppIds}`);
+    };
 
-  const filteredApps = apps
-    .filter(
-      (app) =>
-        (activeCategory === "ALL" || (app.category || "Uncategorized") === activeCategory) &&
-        (app.name.toLowerCase().includes(search.toLowerCase()) ||
-          (app.description || "")
-            .toLowerCase()
-            .includes(search.toLowerCase()))
-    )
-    .filter((app) => {
-      if (filterType === "FREE") return !app.price || app.price === 0;
-      if (filterType === "PAID") return app.price && app.price > 0;
-      return true;
-    })
-    .sort((a, b) => {
-      if (filterType === "TOP_RATED") {
-        return (b.rating || 0) - (a.rating || 0);
-      }
-      return 0;
-    });
+    // Enhanced filtered apps logic
+    const filteredApps = apps
+        .filter(app =>
+            (activeCategory === 'ALL' || app.category === activeCategory) &&
+            (app.name.toLowerCase().includes(search.toLowerCase()) || app.description.toLowerCase().includes(search.toLowerCase()))
+        )
+        .filter(app => {
+            if (filterType === 'paid') return !!app.price && app.price > 0;
+            if (filterType === 'free') return !app.price || app.price === 0;
+            return true;
+        })
+        .sort((a, b) => {
+            if (filterType === 'topRated') return (b.rating || 0) - (a.rating || 0);
+            return 0;
+        });
 
   // Hero images rotation
   const countryImageFolder =
@@ -372,88 +341,65 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           ))}
         </div>
 
-        {/* Sidebar */}
-        <div className="w-full lg:w-[320px] bg-white rounded-3xl shadow-lg border border-[#e0e0e0] p-6 self-start">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-2xl text-[#222] whitespace-nowrap">
-              Selected Apps{" "}
-              <span className="text-[#2ad2c9]">({selectedApps.length})</span>
-            </h3>
-          </div>
-          <div className="space-y-4">
-            {selectedApps.length === 0 ? (
-              <div className="text-center py-12 text-gray-400 text-lg">
-                No apps selected yet
-              </div>
-            ) : (
-              selectedApps.map((appId) => {
-                const app = apps.find((a) => a.id === appId);
-                if (!app) return null;
-                return (
-                  <div
-                    key={app.id}
-                    className="flex items-center gap-4 bg-white border border-[#e0e0e0] rounded-xl px-4 py-3 shadow-sm"
-                  >
-                    <img
-                      src={app.icon_url || "/file.svg"}
-                      alt=""
-                      className="w-10 h-10 rounded object-cover bg-gray-100 border border-[#e0e0e0]"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-[#222] truncate">
-                        {app.name}
-                      </div>
-                      <div className="text-sm text-gray-400 truncate">
-                        {app.category}
-                      </div>
+                {/* Sidebar for Selected Apps */}
+                <div className="w-[320px] min-w-[260px] max-w-[340px] bg-white rounded-3xl shadow-lg border border-[#e0e0e0] p-6 mt-2 animate-slide-in-left relative flex-shrink-0">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-2xl  text-[#222]">Selected Apps <span className="text-[#2ad2c9]">({selectedApps.length})</span></h3>
+                    </div>
+                    <div className="space-y-4">
+                        {selectedApps.length === 0 ? (
+                            <div className="text-center py-12 text-gray-400 text-lg">No apps selected yet</div>
+                        ) : (
+                            selectedApps.map((appId) => {
+                                const app = apps.find((a) => a.id === appId);
+                                return (
+                                    <div key={app.id} className="flex items-center gap-4 bg-white border border-[#e0e0e0] rounded-xl px-4 py-3 shadow-sm">
+                                        <img src={app.icon || '/file.svg'} alt={app.name} className="w-10 h-10 rounded object-cover bg-gray-100 border border-[#e0e0e0]" />
+                                        <div className="flex-1 min-w-0">
+                                            <div className="font-semibold text-[#222] truncate">{app.name}</div>
+                                            <div className="text-sm text-gray-400 truncate">{app.category}</div>
+                                        </div>
+                                        <button
+                                            className="ml-2 p-2 rounded-full hover:bg-[#ffeaea] hover:text-red-500 text-gray-400 transition"
+                                            title="Remove"
+                                            onClick={() => setSelectedApps(selectedApps.filter(id => id !== app.id))}
+                                        >
+                                            <FaTimes />
+                                        </button>
+                                    </div>
+                                );
+                            })
+                        )}
                     </div>
                     <button
-                      className="ml-2 p-2 rounded-full hover:bg-[#ffeaea] hover:text-red-500 text-gray-400 transition"
-                      onClick={() =>
-                        setSelectedApps((prev) =>
-                          prev.filter((id) => id !== app.id)
-                        )
-                      }
+                        type="button"
+                        className="mt-8 w-full py-4 rounded-xl font-semibold bg-red-100 text-red-600 border border-[#e0e0e0] transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-300 hover:bg-red-500 hover:text-white text-lg"
+                        onClick={() => setSelectedApps([])}
+                        disabled={selectedApps.length === 0}
+                        style={{ backgroundColor: selectedApps.length === 0 ? '' : undefined, color: selectedApps.length === 0 ? '' : undefined }}
                     >
-                      <FaTimes />
+                        Clear All
                     </button>
-                  </div>
-                );
-              })
-            )}
-          </div>
-
-          <button
-            type="button"
-            className="mt-8 w-full py-4 rounded-xl bg-red-100 text-red-600 font-semibold hover:bg-red-500 hover:text-white"
-            onClick={clearAll}
-            disabled={!selectedApps.length}
-          >
-            Clear All
-          </button>
-
-          <button
-            disabled={!selectedApps.length}
-            onClick={handleGenerateQR}
-            className={`mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 text-white text-xl ${
-              selectedApps.length
-                ? "bg-[#2ad2c9] hover:bg-[#1bb3a7]"
-                : "bg-[#e0e0e0] text-gray-400 cursor-not-allowed"
-            }`}
-          >
-            <FaQrcode className="mr-2" /> Generate QR Code
-          </button>
-
-          <button
-            className="mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 bg-[#38bdf8] hover:bg-[#0ea5e9] text-white text-xl"
-            onClick={() => router.push(`/country/${countryCode}/essentials`)}
-          >
-            <FaGlobe className="mr-2" /> Essentials
-          </button>
-        </div>
-      </div>
-    </main>
-  );
+                    <button
+                        disabled={selectedApps.length < 2}
+                        onClick={handleGenerateQR}
+                        className={`mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all text-white text-xl btn-animated ${selectedApps.length >= 2 ? 'bg-[#2ad2c9] hover:bg-[#1bb3a7]' : 'bg-[#e0e0e0] text-gray-400 cursor-not-allowed'}`}
+                    >
+                        <FaQrcode className="mr-2" /> Generate QR Code
+                    </button>
+                    <button
+                        className="mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all text-white text-xl bg-[#38bdf8] hover:bg-[#0ea5e9] font-semibold shadow btn-animated"
+                        onClick={() => {
+                            setShow(true);
+                            router.push(`/country/${countryCode}/Essentials`);
+                        }}
+                    >
+                        <FaGlobe className="mr-2" /> Essentials
+                    </button>
+                </div>
+            </div>
+        </main>
+    );
 }
 
 

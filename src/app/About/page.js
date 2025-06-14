@@ -1,8 +1,13 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
+import { useLoader } from '../../../components/LoaderContext';
 
 export default function AboutPage() {
+  const router = useRouter();
+  const { setShow } = useLoader();
+
   return (
     <main className="bg-gradient-to-br from-[#e0f7fa] via-[#f5fafd] to-[#e3f2fd] text-gray-800 w-full min-h-screen">
       {/* Hero Section */}
@@ -62,7 +67,13 @@ export default function AboutPage() {
       <section className="w-full bg-gradient-to-r from-[#2ad2c9] via-[#38bdf8] to-[#5eead4] py-24 px-4 flex flex-col items-center justify-center text-center text-white animate-fade-in-up relative overflow-hidden">
         <h2 className="text-5xl font-extrabold mb-6 drop-shadow-lg animate-fade-in-up">Ready to Enhance Your Travels?</h2>
         <p className="text-2xl mb-10 max-w-2xl mx-auto text-white/90 font-medium drop-shadow animate-fade-in-up delay-200">Join thousands of travelers who use Travel Buddy to discover essential apps for their journeys.</p>
-        <button className="bg-white text-teal-500 font-bold px-10 py-4 rounded-full text-xl hover:bg-gray-100 transition shadow-lg btn-animated">
+        <button
+          className="bg-white text-teal-500 font-bold px-10 py-4 rounded-full text-xl hover:bg-gray-100 transition shadow-lg btn-animated"
+          onClick={() => {
+            setShow(true);
+            router.push('/Onboarding');
+          }}
+        >
           Start Now
         </button>
       </section>
