@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { fetchAppsByCountry } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
 import Image from "next/image";
-import { findCountryCode, isCountrySupported } from "@/src/utils/countryUtils";
 
 // Custom hook for scroll‐based animation
 function useScrollReveal(ref, options = {}) {
@@ -69,25 +68,23 @@ const HeroSection = () => {
     setShow(true);
     setErrorMsg("");
 
-    try {
-      // First check if this is a supported country
-      const countryCode = findCountryCode(trimmed);
-      
-      if (!countryCode) {
-        // Country not found in our supported countries list
-        router.push(`/country-not-found?q=${encodeURIComponent(trimmed)}`);
-        return;
-      }
-      
-      // Country is supported, redirect to the country page
-      router.push(`/country/${countryCode.toLowerCase()}`);
-    } catch (error) {
-      console.error("Error during country search:", error);
-      setErrorMsg("An error occurred. Please try again.");
-    } finally {
-      setLoading(false);
-      setShow(false);
+    // We assume the user typed either a country ISO code (e.g. "FR" or "jp")
+    // or a full country name. We'll just normalize to lowercase and try.
+    const countryCode = trimmed.toLowerCase();
+
+    // 1) Try fetching apps for that country code
+    const apps = await fetchAppsByCountry(countryCode);
+    setLoading(false);
+    setShow(false);
+
+    if (!apps.length) {
+      // Redirect to country-not-found page instead of showing error message
+      router.push(`/country-not-found?q=${encodeURIComponent(trimmed)}`);
+      return;
     }
+
+    // 2) Redirect to /country/<countryCode>
+    router.push(`/country/${countryCode}`);
   };
 
   const handleKeyPress = (e) => {

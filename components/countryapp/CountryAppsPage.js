@@ -13,7 +13,6 @@ import {
   FaCaretDown, // Added for dropdown icon
 } from "react-icons/fa";
 import { initSession, saveSelectedApps } from "@/src/utils/api";
-import { getCountryName } from "@/src/utils/countryUtils";
 
 export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
   const router = useRouter();
@@ -131,12 +130,6 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     return () => clearInterval(iv);
   }, [countryImages.length]);
 
-  // Get the country name from our utility function
-  const countryName = useMemo(() => {
-    if (countryInfo && countryInfo.name) return countryInfo.name;
-    return getCountryName(countryCode);
-  }, [countryCode, countryInfo]);
-
   return (
     <main className="bg-[#f7fafc] animate-fade-in">
      {/* Header Section */}
@@ -188,7 +181,21 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
               {countryCode}
             </span>
             <span className="text-6xl font-black text-white ml-3 drop-shadow-lg">
-              {countryName}
+              {countryInfo && countryInfo.name
+                ? countryInfo.name
+                : countryCode === "AU"
+                ? "Australia"
+                : countryCode === "TH"
+                ? "Thailand"
+                : countryCode === "FR"
+                ? "France"
+                : countryCode === "IT"
+                ? "Italy"
+                : countryCode === "JP"
+                ? "Japan"
+                : countryCode === "US"
+                ? "United States"
+                : countryCode}
             </span>
           </div>
           <p className="text-2xl max-w-4xl text-white/90 font-normal mb-4 mt-1 drop-shadow">
