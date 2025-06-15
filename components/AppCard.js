@@ -63,7 +63,7 @@ const AppCard = ({ app }) => {
       <div className="p-4 flex items-center space-x-3 border-b border-gray-100">
         <div className="flex-shrink-0 w-12 h-12 rounded-xl overflow-hidden bg-gray-100 flex items-center justify-center">
           {icon ? (
-            <img src={icon} alt={`${name} icon`} className="w-full h-full object-cover" />
+            <image src={icon} alt={`${name} icon`} className="w-full h-full object-cover" />
           ) : (
             <svg className="w-6 h-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />

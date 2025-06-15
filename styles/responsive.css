@@ -88,6 +88,24 @@ a.active:active,
   .grid {
     gap: 1rem;
   }
+  
+  .mobile-only {
+    display: block;
+  }
+  
+  .desktop-only {
+    display: none;
+  }
+}
+
+@media (min-width: 641px) {
+  .mobile-only {
+    display: none;
+  }
+  
+  .desktop-only {
+    display: block;
+  }
 }
 
 /* Medium devices (tablets, 768px and down) */
@@ -119,6 +137,10 @@ a.active:active,
     padding-left: 2rem;
     padding-right: 2rem;
   }
+  
+  .responsive-container {
+    max-width: 1024px;
+  }
 }
 
 /* Extra large devices (large desktops, 1280px and up) */
@@ -127,6 +149,10 @@ a.active:active,
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+  }
+  
+  .responsive-container {
+    max-width: 1280px;
   }
 }
 
@@ -268,5 +294,57 @@ a.active:active,
   100% {
     opacity: 0;
     transform: scale(40, 40);
+  }
+}
+
+/* Responsive utilities */
+
+/* Custom responsive classes */
+.responsive-container {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 640px) {
+  .responsive-container {
+    max-width: 640px;
+  }
+}
+
+@media (min-width: 768px) {
+  .responsive-container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-container {
+    max-width: 1024px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .responsive-container {
+    max-width: 1280px;
+  }
+}
+
+/* Responsive text sizes */
+.responsive-text {
+  font-size: 1rem;
+}
+
+@media (min-width: 768px) {
+  .responsive-text {
+    font-size: 1.125rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .responsive-text {
+    font-size: 1.25rem;
   }
 } 

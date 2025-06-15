@@ -3,7 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useLoader } from "@/components/LoaderContext";
-import Image from "next/image";
+import NextImage from "next/image";
 import {
   FaPlus,
   FaCheck,
@@ -111,61 +111,55 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
       return 0;
     });
 
-  // Hero images rotation
-  const countryImageFolder =
-    countryCode.length === 2 ? countryCode.toUpperCase() : countryCode;
-  const countryImages = useMemo(
-    () =>
-      Array.from({ length: 10 }, (_, i) =>
-        `/${countryImageFolder}/IMG${String(i + 1).padStart(2, "0")}.jpg`
-      ),
-    [countryImageFolder]
-  );
-  const [activeImageIdx, setActiveImageIdx] = useState(0);
+  // Generate background gradients based on country code
+  const getCountryGradient = (code) => {
+    // Map country codes to color schemes
+    const colorMap = {
+      AU: ['#00843D', '#FFCD00'], // Australia: green and gold
+      TH: ['#FF0000', '#FFFFFF', '#0038B8'], // Thailand: red, white, blue
+      FR: ['#0055A4', '#FFFFFF', '#EF4135'], // France: blue, white, red
+      IT: ['#008C45', '#F4F5F0', '#CD212A'], // Italy: green, white, red
+      JP: ['#FFFFFF', '#BC002D'], // Japan: white and red
+      US: ['#3C3B6E', '#FFFFFF', '#B22234'], // USA: blue, white, red
+      IN: ['#FF9933', '#FFFFFF', '#138808'], // India: saffron, white, green
+      // Default colors for other countries
+      DEFAULT: ['#7b8794', '#f7fafc']
+    };
+    
+    const colors = colorMap[code] || colorMap.DEFAULT;
+    
+    if (colors.length === 2) {
+      return `linear-gradient(to bottom, ${colors[0]}, ${colors[1]})`;
+    } else if (colors.length === 3) {
+      return `linear-gradient(to bottom, ${colors[0]} 33%, ${colors[1]} 33%, ${colors[1]} 66%, ${colors[2]} 66%)`;
+    }
+    
+    return `linear-gradient(to bottom, ${colors[0]}, #f7fafc)`;
+  };
+  
+  const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0);
+  const countryGradient = getCountryGradient(countryCode);
+  
   useEffect(() => {
     const iv = setInterval(
-      () => setActiveImageIdx((i) => (i + 1) % countryImages.length),
+      () => setActiveBackgroundIndex((i) => (i + 1) % 3),
       4000
     );
     return () => clearInterval(iv);
-  }, [countryImages.length]);
+  }, []);
 
   return (
     <main className="bg-[#f7fafc] animate-fade-in">
      {/* Header Section */}
      <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden animate-fade-in-up">
         <div className="absolute inset-0 w-full h-full z-0">
-          {countryImages.map((img, i) => (
-            <div 
-              key={img}
-              className={`absolute inset-0 transition-opacity duration-1000 ${
-                i === activeImageIdx ? "opacity-40" : "opacity-0"
-              }`}
-              style={{
-                zIndex: 0,
-              }}
-            >
-              <Image
-                src={img}
-                alt="country bg"
-                fill
-                sizes="100vw"
-                className="object-cover object-top"
-                style={{
-                  pointerEvents: "none",
-                  transition: "opacity 1s",
-                  objectPosition: "center",
-                }}
-                onError={(e) => {
-                  // Handle image load error
-                  const target = e.target;
-                  if (target.parentNode) {
-                    target.parentNode.style.display = 'none';
-                  }
-                }}
-              />
-            </div>
-          ))}
+          <div 
+            className="absolute inset-0 opacity-40"
+            style={{
+              background: countryGradient,
+              zIndex: 0,
+            }}
+          />
           <div
             className="absolute inset-0 w-full h-full"
             style={{
@@ -294,9 +288,10 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
         </div>
       </div>
       <br />
-      {/* Apps & Sidebar */}
+
+      {/* Main content with apps grid and sidebar */}
       <div className="w-full max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-8 px-2 sm:px-6 md:px-14 pb-16">
-        {/* Grid */}
+        {/* Left: Apps Grid */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-stretch">
           {filteredApps.map((app) => (
             <div
@@ -310,7 +305,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                   <div className="flex items-center gap-2 min-w-0">
                     {/* Icon */}
                     <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-gray-100 border border-[#e0e0e0] flex-shrink-0 overflow-hidden">
-                      <Image
+                      <NextImage
                         src={app.icon_url || "/file.svg"}
                         alt={app.name || "App icon"}
                         fill
@@ -363,155 +358,95 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                         app.price ? "bg-gray-200 text-gray-800" : "bg-green-100 text-green-800"
                       }`}
                     >
-                      {app.price ? `$${app.price}` : "Free"}
+                      {app.price ? "Paid" : "Free"}
                     </span>
                   </div>
-                  {/* Center: Platform tags */}
-                  <div className="flex items-center gap-2 justify-center w-1/3 min-w-0">
-                    {app.ios_link && (
-                      <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
-                        iOS
+                  {/* Right: Platform tags */}
+                  <div className="flex items-center sm:gap-3 w-1/3 min-w-0 justify-end">
+                    {app.platforms && Array.isArray(app.platforms) && app.platforms.map((platform) => (
+                      <span
+                        key={platform}
+                        className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800"
+                      >
+                        {platform}
                       </span>
-                    )}
-                    {app.android_link && (
-                      <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
-                        Android
-                      </span>
-                    )}
-                    {app.website_link && (
-                      <span className="px-2 py-0.5 rounded-full border border-[#e0e0e0] text-xs font-semibold text-gray-700 bg-[#f7fafc]">
-                        Web
-                      </span>
-                    )}
-                  </div>
-                  {/* Right: Category pill */}
-                  <div className="flex justify-end w-1/3 min-w-0">
-                    <span className="px-2 py-0.5 rounded-full bg-[#e0ecec] text-xs font-medium text-[#222] whitespace-nowrap mt-1 sm:mt-0">
-                      {app.category || "Uncategorized"}
-                    </span>
+                    ))}
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
-        {/* Sidebar */}
-        <div className="w-full lg:w-[320px] bg-white rounded-2xl sm:rounded-3xl shadow-lg border border-[#e0e0e0] p-4 sm:p-6 self-start mt-8 lg:mt-0">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-xl sm:text-2xl text-[#222] whitespace-nowrap">
-              Selected Apps <span className="text-[#2ad2c9]">({selectedApps.length})</span>
-            </h3>
-          </div>
-          <div className="space-y-3 sm:space-y-4">
-            {selectedApps.length === 0 ? (
-              <div className="text-center py-8 sm:py-12 text-gray-400 text-base sm:text-lg">
-                No apps selected yet
+
+        {/* Right: Selected Apps Sidebar */}
+        <div className="lg:w-[350px] bg-white rounded-2xl shadow-md border border-gray-200 p-6 h-fit sticky top-24">
+          <h2 className="text-xl font-bold mb-4">Selected Apps ({selectedApps.length})</h2>
+          
+          {selectedApps.length === 0 ? (
+            <div className="text-center py-6">
+              <p className="text-gray-500 mb-2">No apps selected yet</p>
+              <p className="text-gray-500 text-sm">Add apps to create your personalized travel apps bundle</p>
+            </div>
+          ) : (
+            <>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm text-gray-500">{selectedApps.length} app{selectedApps.length !== 1 ? 's' : ''} selected</span>
+                <button 
+                  onClick={clearAll}
+                  className="text-sm text-red-500 hover:text-red-700 font-medium hover:underline transition-colors"
+                >
+                  Clear All
+                </button>
               </div>
-            ) : (
-              selectedApps.map((appId) => {
-                const app = apps.find((a) => a.id === appId);
-                if (!app) return null;
-                return (
-                  <div
-                    key={app.id}
-                    className="flex items-center gap-3 sm:gap-4 bg-white border border-[#e0e0e0] rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 shadow-sm"
-                  >
-                    <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded overflow-hidden bg-gray-100 border border-[#e0e0e0]">
-                      <Image
-                        src={app.icon_url || "/file.svg"}
-                        alt=""
-                        fill
-                        sizes="(max-width: 640px) 32px, 40px"
-                        className="object-cover"
-                      />
+              <div className="space-y-4 mb-6">
+                {selectedApps.map(appId => {
+                  const app = apps.find(a => a.id === appId);
+                  return app ? (
+                    <div key={app.id} className="flex items-center justify-between">
+                      <span className="font-medium">{app.name}</span>
+                      <button 
+                        onClick={() => toggleSelect(app.id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <FaTimes />
+                      </button>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-[#222] truncate text-sm sm:text-base">
-                        {app.name}
-                      </div>
-                      <div className="text-xs sm:text-sm text-gray-400 truncate">
-                        {app.category}
-                      </div>
-                    </div>
-                    <button
-                      className="ml-2 p-2 rounded-full hover:bg-[#ffeaea] hover:text-red-500 text-gray-400 transition"
-                      onClick={() =>
-                        setSelectedApps((prev) =>
-                          prev.filter((id) => id !== app.id)
-                        )
-                      }
-                    >
-                      <FaTimes />
-                    </button>
-                  </div>
-                );
-              })
+                  ) : null;
+                })}
+              </div>
+            </>
+          )}
+          
+          <div className="space-y-3 mt-6">
+            <button
+              onClick={handleGenerateQR}
+              disabled={!selectedApps.length}
+              className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-all ${
+                selectedApps.length
+                  ? "bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+            >
+              <FaQrcode className="text-lg" />
+              Generate QR Code
+            </button>
+            
+            <button
+              onClick={handleEssentialsClick}
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-md hover:shadow-lg transition-all"
+            >
+              <FaGlobe className="text-lg" />
+              Essentials
+            </button>
+            
+            {selectedApps.length > 0 && (
+              <p className="text-xs text-center text-gray-500 mt-2">
+                Select at least 2 apps to generate a QR code
+              </p>
             )}
           </div>
-          <button
-            type="button"
-            className="mt-6 sm:mt-8 w-full py-3 sm:py-4 rounded-lg sm:rounded-xl bg-red-100 text-red-600 font-semibold hover:bg-red-500 hover:text-white text-base sm:text-lg"
-            onClick={clearAll}
-            disabled={!selectedApps.length}
-          >
-            Clear All
-          </button>
-          <button
-            disabled={!selectedApps.length}
-            onClick={handleGenerateQR}
-            className={`mt-3 sm:mt-4 w-full py-3 sm:py-4 rounded-lg sm:rounded-xl flex items-center justify-center gap-2 sm:gap-3 text-white text-base sm:text-xl ${
-              selectedApps.length
-                ? "bg-[#2ad2c9] hover:bg-[#1bb3a7]"
-                : "bg-[#e0e0e0] text-gray-400 cursor-not-allowed"
-            }`}
-          >
-            <FaQrcode className="mr-2" /> Generate QR Code
-          </button>
-          <button
-            className="mt-3 sm:mt-4 w-full py-3 sm:py-4 rounded-lg sm:rounded-xl flex items-center justify-center gap-2 sm:gap-3 bg-[#38bdf8] hover:bg-[#0ea5e9] text-white text-base sm:text-xl"
-            onClick={handleEssentialsClick}
-          >
-            <FaGlobe className="mr-2" /> Essentials
-          </button>
         </div>
       </div>
     </main>
   );
 }
-
-
-
-// <main className="bg-[#f7fafc] animate-fade-in">
-//       {/* Hero */}
-//       <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden">
-//         <div className="absolute inset-0">
-//           {countryImages.map((img, i) => (
-//             <img
-//               key={img}
-//               src={img}
-//               alt=""
-//               className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
-//                 i === activeImageIdx ? "opacity-40" : "opacity-0"
-//               }`}
-//             />
-//           ))}
-//           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(20,20,20,0.55)_0%,rgba(20,20,20,0.25)_40%,rgba(20,20,20,0.05)_70%,rgba(20,20,20,0)_100%)]" />
-//         </div>
-//         <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-10">
-//           <div className="flex items-center gap-6 mb-2 mt-8">
-//             <span className="text-4xl font-bold text-white/90">
-//               {countryCode}
-//             </span>
-//             <span className="text-6xl font-black text-white drop-shadow-lg">
-//               {countryInfo?.country || countryCode}
-//             </span>
-//           </div>
-//           <p className="text-2xl max-w-4xl text-white/90 drop-shadow-sm">
-//             {countryInfo?.shortDescription ||
-//               `Explore ${countryCode} with the best travel apps.`}
-//           </p>
-//           <div className="h-1 w-28 bg-[#2ad2c9] rounded mt-4" />
-//         </div>
-//       </div>
-
-//make filter small , and add ,rating and free on one side and ios,android on other
