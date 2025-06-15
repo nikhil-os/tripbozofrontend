@@ -10,7 +10,7 @@ export default async function CountryPage({ params }) {
 
   // Now fetch the apps for this country code
   const apps = await fetchAppsByCountry(countryCode);
-  
+
   // Create country info object with basic details
   const countryInfo = {
     name: countryCode === "AU" ? "Australia" :
