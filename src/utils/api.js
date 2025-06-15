@@ -163,17 +163,17 @@ export async function downloadAppList(sessionId) {
  * 7) Fetch essentials data for a given country code with improved error handling
  *    GET /country/<countryCode>/essentials/
  */
-export async function fetchEssentials(countryCode) {
-  if (!useApi) {
-    console.info("[TripBozo API] fetchEssentials disabled → returning dummy data");
-    return {
-      emergencies: [],
-      phrases: [],
-      tips: [],
-    };
-  }
-
-  try {
+  export async function fetchEssentials(countryCode) {
+    if (!useApi) {
+      console.info("[TripBozo API] fetchEssentials disabled → returning dummy data");
+      return {
+        emergencies: [],
+        phrases: [],
+        tips: [],
+      };
+    }
+  
+    try {
     // Create a promise that rejects after 5 seconds
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => reject(new Error('Request timed out')), 5000);
@@ -190,13 +190,13 @@ export async function fetchEssentials(countryCode) {
       phrases: [],
       tips: [],
     };
-  } catch (err) {
-    console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
+    } catch (err) {
+      console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
     // Return an empty object instead of throwing, so the component can handle it
-    return {
-      emergencies: [],
-      phrases: [],
-      tips: [],
-    };
+      return {
+        emergencies: [],
+        phrases: [],
+        tips: [],
+      };
+    }
   }
-}

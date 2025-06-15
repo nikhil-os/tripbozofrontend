@@ -1,7 +1,7 @@
 // src/app/country/[country]/essentials/page.jsx
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useLayoutEffect } from "react";
 import { useParams } from "next/navigation";
 import { fetchEssentials } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
@@ -47,11 +47,26 @@ export default function EssentialsPage() {
   });
   const [loading, setLoading] = useState(true);
 
+  // Memoize the fallback data to avoid recreating it on every render
+  const fallbackEmergencies = FALLBACK.emergencies;
+  const fallbackPhrases = FALLBACK.phrases;
+  const fallbackTips = FALLBACK.tips;
+
+  // Immediately hide loader when component mounts
+  useLayoutEffect(() => {
+    setShow(false);
+  }, [setShow]);
+
   useEffect(() => {
     let isMounted = true; // Flag to track if component is mounted
     
+    // Immediately hide any existing loader
+    setShow(false);
+    
     async function loadData() {
-      setShow(true); // Show the loader
+      if (isMounted) {
+        setShow(true); // Show the loader
+      }
       
       try {
         const json = await fetchEssentials(country.toUpperCase());
@@ -61,21 +76,25 @@ export default function EssentialsPage() {
             emergencies:
               json.emergencies?.length > 0
                 ? json.emergencies
-                : FALLBACK.emergencies,
+                : fallbackEmergencies,
             phrases:
-              json.phrases?.length > 0 ? json.phrases : FALLBACK.phrases,
-            tips: json.tips?.length > 0 ? json.tips : FALLBACK.tips,
+              json.phrases?.length > 0 ? json.phrases : fallbackPhrases,
+            tips: json.tips?.length > 0 ? json.tips : fallbackTips,
           });
+          // Explicitly hide loader when data is loaded
+          setShow(false);
         }
       } catch (error) {
         console.error("Error fetching essentials:", error);
         if (isMounted) {
           // Use fallback data on error
           setData({
-            emergencies: FALLBACK.emergencies,
-            phrases: FALLBACK.phrases,
-            tips: FALLBACK.tips,
+            emergencies: fallbackEmergencies,
+            phrases: fallbackPhrases,
+            tips: fallbackTips,
           });
+          // Explicitly hide loader on error
+          setShow(false);
         }
       } finally {
         // Always hide the loader and set loading to false, regardless of success or failure
@@ -93,7 +112,14 @@ export default function EssentialsPage() {
       isMounted = false;
       setShow(false); // Ensure loader is hidden if component unmounts during fetch
     };
-  }, [country, setShow]);
+  }, [country, setShow, fallbackEmergencies, fallbackPhrases, fallbackTips]);
+
+  // Make sure loader is hidden when component unmounts
+  useEffect(() => {
+    return () => {
+      setShow(false);
+    };
+  }, [setShow]);
 
   if (loading) {
     return <p className="p-8 text-center text-gray-600">Loading…</p>;

@@ -78,8 +78,8 @@ const HeroSection = () => {
     setShow(false);
 
     if (!apps.length) {
-      // Redirect to country-not-found page instead of showing error message
-      router.push(`/country-not-found?q=${encodeURIComponent(trimmed)}`);
+      // No apps returned => likely invalid country code (or no apps exist)
+      setErrorMsg(`No travel apps found for "${trimmed}".`);
       return;
     }
 
@@ -126,16 +126,16 @@ const HeroSection = () => {
               alt={img.alt}
               className={`transition-transform duration-1000 ${
                 bgIndex === idx ? "scale-105" : "scale-100"
-              } z-0 will-change-transform`}
+            } z-0 will-change-transform`}
               fill
               sizes="100vw"
               priority={idx < 2}
-              style={{
-                objectFit: "cover",
+            style={{
+              objectFit: "cover",
                 filter: bgIndex === idx ? "contrast(1.12) saturate(1.12) brightness(0.97)" : "blur(0px)",
-              }}
-              draggable={false}
-            />
+            }}
+            draggable={false}
+          />
           </div>
         ))}
         {/* Subtle dark overlay for contrast */}
@@ -166,40 +166,40 @@ const HeroSection = () => {
             <div className="w-2/3 sm:w-full max-w-2xl mx-auto relative rounded-full sm:rounded-xl shadow-xl transition-all duration-300 hover:shadow-2xl">
               <div className="flex items-center w-full bg-white border border-gray-300 rounded-full sm:rounded-xl overflow-hidden p-1 sm:p-2">
                 <div className="flex-grow flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                     className="ml-4 text-gray-500 h-5 w-5 sm:h-6 sm:w-6"
                     aria-hidden="true"
-                  >
+                >
                     <circle cx="14" cy="14" r="8"></circle>
-                    <path d="m21 21-4.3-4.3"></path>
-                  </svg>
-                  <input
-                    type="text"
-                    aria-label="Search country"
+                  <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                <input
+                  type="text"
+                  aria-label="Search country"
                     placeholder="Eg. France or FR"
-                    value={query}
-                    onChange={handleInputChange}
-                    onKeyPress={handleKeyPress}
+                  value={query}
+                  onChange={handleInputChange}
+                  onKeyPress={handleKeyPress}
                     className="h-10 sm:h-12 w-full pl-3 pr-4 text-gray-800 text-base sm:text-lg font-medium placeholder-gray-400 focus:outline-none bg-transparent"
-                  />
-                </div>
-                <button
-                  onClick={handleSearch}
-                  disabled={loading}
+                />
+              </div>
+              <button
+                onClick={handleSearch}
+                disabled={loading}
                   className="bg-teal-500 hover:bg-teal-600 text-white px-1 sm:px-3 py-6 font-semibold text-sm sm:text-base h-10 sm:h-12 flex items-center justify-center transition-colors duration-300 rounded-full sm:rounded-xl w-[12%] min-w-[60px] mx-1 active:scale-95 active:shadow-inner transform transition-transform"
                   aria-label="Search for travel apps by country"
-                >
+              >
                   {loading ? "..." : "Search"}
-                </button>
+              </button>
               </div>
             </div>
 
