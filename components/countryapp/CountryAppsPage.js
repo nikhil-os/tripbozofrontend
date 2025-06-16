@@ -371,15 +371,20 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                       {app.category || "Uncategorized"}
                     </span>
                     {/* Platform pills */}
-                    {Array.isArray(app.platforms) && app.platforms.map((platform) => (
-                      <span
-                        key={platform}
-                        className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800"
-                      >
-                        {platform}
-                      </span>
-                    ))}
-                  </div>
+                {/* Android pill */}
+                  {app.android_link && (
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                      Android
+                    </span>
+                  )}
+
+                  {/* iOS pill */}
+                  {app.ios_link && (
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800">
+                      iOS
+                    </span>
+                  )}
+                </div>
                 </div>
               </div>
             </div>
@@ -388,77 +393,84 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
 
         {/* Right: Selected Apps Sidebar */}
         <div className="lg:w-[350px] bg-white rounded-2xl shadow-md border border-gray-200 p-6 h-fit sticky top-24">
-          <h2 className="text-xl font-bold mb-4">Selected Apps ({selectedApps.length})</h2>
+        <h2 className="text-xl font-bold mb-6 text-gray-800">Selected Apps ({selectedApps.length})</h2>
           
-          {selectedApps.length === 0 ? (
-           <div className="text-center py-6">
-             <p className="text-gray-700 mb-2">No apps selected yet</p>
-             <p className="text-gray-700 text-sm">
-               Add apps to create your personalized travel apps bundle
-             </p>
-           </div>
-         ) : (
-           <>
-             <div className="flex items-center justify-between mb-4">
-               <span className="text-md font-medium text-gray-800">
-                 {selectedApps.length} app
-                 {selectedApps.length !== 1 ? "s" : ""} selected
-               </span>
-               {/* Clear All as a styled button */}
-               <button
-                 onClick={clearAll}
-                 className="px-4 py-2 bg-red-200 hover:bg-red-300 text-red-800 font-semibold rounded-lg transition"
+        {selectedApps.length === 0 ? (
+         <div className="text-center py-8">
+           <p className="text-gray-800 mb-2 font-medium">No apps selected yet</p>
+           <p className="text-gray-600 text-sm">
+             Pick some apps on the left to build your bundle.
+           </p>
+         </div>
+       ) : (
+         <div className="space-y-4 mb-6">
+           {selectedApps.map(appId => {
+             const app = apps.find(a => a.id === appId);
+             return app ? (
+               <div
+                 key={app.id}
+                 className="flex items-center gap-3 p-3 bg-gray-100 rounded-xl"
                >
-                 Clear All
-               </button>
-             </div>
-              <div className="space-y-4 mb-6">
-                {selectedApps.map(appId => {
-                  const app = apps.find(a => a.id === appId);
-                  return app ? (
-                    <div key={app.id} className="flex items-center justify-between">
-                      <span className="font-medium">{app.name}</span>
-                      <button 
-                        onClick={() => toggleSelect(app.id)}
-                        className="text-red-500 hover:text-red-700"
-                      >
-                        <FaTimes />
-                      </button>
-                    </div>
-                  ) : null;
-                })}
-              </div>
-            </>
-          )}
-          
-          <div className="space-y-3 mt-6">
-               <button
-                 onClick={handleGenerateQR}
-                 disabled={!selectedApps.length}
-                 className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition ${
-                   selectedApps.length
-                     ? "bg-teal-300 hover:bg-teal-400 shadow"
-                     : "bg-gray-300 cursor-not-allowed"
-                 }`}
-               >
-                 <FaQrcode className="text-lg" />
-                 Generate QR Code
-               </button>
+                 <div className="w-10 h-10 relative flex-shrink-0">
+                   <NextImage
+                     src={app.icon_url || "/file.svg"}
+                     alt={app.name}
+                     fill
+                     className="object-cover rounded-lg"
+                   />
+                 </div>
+                 <span className="flex-1 text-gray-900 font-medium">
+                   {app.name}
+                 </span>
+                 <button
+                   onClick={() => toggleSelect(app.id)}
+                   className="text-red-500 hover:text-red-700"
+                   aria-label={`Remove ${app.name}`}
+                 >
+                   <FaTimes />
+                 </button>
+               </div>
+             ) : null;
+           })}
+         </div>
+       )}
 
-               <button
-                 onClick={handleEssentialsClick}
-                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-200 hover:bg-blue-300 text-blue-800 font-semibold shadow transition"
-               >
-                 <FaGlobe className="text-lg" />
-                 Essentials
-               </button>
-            
-            {selectedApps.length > 0 && (
-              <p className="text-xs text-center text-gray-500 mt-2">
-                Select at least 2 apps to generate a QR code
-              </p>
-            )}
-          </div>
+          {/* Buttons group at bottom */}
+        <div className="flex flex-col gap-3 mt-6">
+          <button
+            onClick={handleGenerateQR}
+            disabled={!selectedApps.length}
+            className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition ${
+              selectedApps.length
+                ? "bg-teal-400 hover:bg-teal-500 shadow-lg"
+                : "bg-gray-300 cursor-not-allowed"
+            }`}
+          >
+            <FaQrcode className="text-lg" />
+            Generate QR Code
+          </button>
+
+          <button
+            onClick={handleEssentialsClick}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-300 hover:bg-blue-400 text-blue-900 font-semibold shadow-lg transition"
+          >
+            <FaGlobe className="text-lg" />
+            Essentials
+          </button>
+
+          <button
+            onClick={clearAll}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-red-300 hover:bg-red-400 text-red-900 font-semibold shadow-lg transition"
+          >
+            Clear All
+          </button>
+
+          {selectedApps.length > 0 && (
+            <p className="text-xs text-center text-gray-500 mt-1">
+              Select at least 2 apps to generate a QR code
+            </p>
+          )}
+        </div>
         </div>
       </div>
     </main>
