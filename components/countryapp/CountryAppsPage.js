@@ -348,12 +348,14 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                 >
                   {app.description || "No description available."}
                 </p>
-                {/* Bottom row: rating | platform tags | category */}
-                <div className="flex flex-row items-center justify-between mt-3 w-full">
-                  {/* Left: Rating & Price */}
-                  <div className="flex items-center sm:gap-3 w-1/3 min-w-0 justify-start">
-                    <span className="text-[#f7b500] text-base sm:text-lg leading-none">★</span>
-                    <span className="font-semibold text-gray-800 text-sm sm:text-base">{app.rating || "4.5"}</span>
+                {/* Bottom row: rating on left; category + platforms grouped bottom‑right */}
+                <div className="mt-3 flex items-center justify-between w-full">
+                  {/* Rating & Price */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#f7b500] text-base sm:text-lg">★</span>
+                    <span className="font-semibold text-gray-800 text-sm sm:text-base">
+                      {app.rating || "4.5"}
+                    </span>
                     <span
                       className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
                         app.price ? "bg-gray-200 text-gray-800" : "bg-green-100 text-green-800"
@@ -362,9 +364,14 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                       {app.price ? "Paid" : "Free"}
                     </span>
                   </div>
-                  {/* Right: Platform tags */}
-                  <div className="flex items-center sm:gap-3 w-1/3 min-w-0 justify-end">
-                    {app.platforms && Array.isArray(app.platforms) && app.platforms.map((platform) => (
+                  {/* Category  Platforms */}
+                  <div className="flex items-center gap-2">
+                    {/* Category pill */}
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                      {app.category || "Uncategorized"}
+                    </span>
+                    {/* Platform pills */}
+                    {Array.isArray(app.platforms) && app.platforms.map((platform) => (
                       <span
                         key={platform}
                         className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800"
@@ -384,21 +391,27 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           <h2 className="text-xl font-bold mb-4">Selected Apps ({selectedApps.length})</h2>
           
           {selectedApps.length === 0 ? (
-            <div className="text-center py-6">
-              <p className="text-gray-500 mb-2">No apps selected yet</p>
-              <p className="text-gray-500 text-sm">Add apps to create your personalized travel apps bundle</p>
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm text-gray-500">{selectedApps.length} app{selectedApps.length !== 1 ? 's' : ''} selected</span>
-                <button 
-                  onClick={clearAll}
-                  className="text-sm text-red-500 hover:text-red-700 font-medium hover:underline transition-colors"
-                >
-                  Clear All
-                </button>
-              </div>
+           <div className="text-center py-6">
+             <p className="text-gray-700 mb-2">No apps selected yet</p>
+             <p className="text-gray-700 text-sm">
+               Add apps to create your personalized travel apps bundle
+             </p>
+           </div>
+         ) : (
+           <>
+             <div className="flex items-center justify-between mb-4">
+               <span className="text-md font-medium text-gray-800">
+                 {selectedApps.length} app
+                 {selectedApps.length !== 1 ? "s" : ""} selected
+               </span>
+               {/* Clear All as a styled button */}
+               <button
+                 onClick={clearAll}
+                 className="px-4 py-2 bg-red-200 hover:bg-red-300 text-red-800 font-semibold rounded-lg transition"
+               >
+                 Clear All
+               </button>
+             </div>
               <div className="space-y-4 mb-6">
                 {selectedApps.map(appId => {
                   const app = apps.find(a => a.id === appId);
@@ -419,26 +432,26 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           )}
           
           <div className="space-y-3 mt-6">
-            <button
-              onClick={handleGenerateQR}
-              disabled={!selectedApps.length}
-              className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-all ${
-                selectedApps.length
-                  ? "bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              <FaQrcode className="text-lg" />
-              Generate QR Code
-            </button>
-            
-            <button
-              onClick={handleEssentialsClick}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-md hover:shadow-lg transition-all"
-            >
-              <FaGlobe className="text-lg" />
-              Essentials
-            </button>
+               <button
+                 onClick={handleGenerateQR}
+                 disabled={!selectedApps.length}
+                 className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition ${
+                   selectedApps.length
+                     ? "bg-teal-300 hover:bg-teal-400 shadow"
+                     : "bg-gray-300 cursor-not-allowed"
+                 }`}
+               >
+                 <FaQrcode className="text-lg" />
+                 Generate QR Code
+               </button>
+
+               <button
+                 onClick={handleEssentialsClick}
+                 className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-200 hover:bg-blue-300 text-blue-800 font-semibold shadow transition"
+               >
+                 <FaGlobe className="text-lg" />
+                 Essentials
+               </button>
             
             {selectedApps.length > 0 && (
               <p className="text-xs text-center text-gray-500 mt-2">

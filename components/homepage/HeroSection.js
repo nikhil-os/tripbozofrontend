@@ -92,13 +92,19 @@ const HeroSection = () => {
     setLoading(false);
     setShow(false);
   
-    if (!results.length) {
-      setErrorMsg(`No country found for "${trimmed}".`);
-      return;
-    }
+    // if (!results.length) {
+    //   setErrorMsg(`No country found for "${trimmed}".`);
+    //   return;
+    // }
   
-    // pick the first match
-    const countryCode = results[0].code.toLowerCase();
+    // // pick the first match
+    // const countryCode = results[0].code.toLowerCase();
+    // router.push(`/country/${countryCode}`);
+    // if no matching country in our DB, still navigate into /country/<query>—
+    // our server‐side page will call notFound() and hit src/app/not-found.js
+    const countryCode = results.length
+      ? results[0].code.toLowerCase()
+      : trimmed.toLowerCase();
     router.push(`/country/${countryCode}`);
   };
 
