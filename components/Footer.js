@@ -22,10 +22,43 @@ const Footer = () => {
             </div>
             <p className="text-gray-400 text-sm italic -mt-2">Less googling, more going.</p>
             <p className="text-gray-300 text-sm">Your essential companion for seamless travel experiences worldwide.</p>
-            <div className="flex space-x-4">
-              {/* Social icons here */}
-            </div>
-            <div className="w-[70%] h-px bg-white/30 mt-4 md:hidden"></div>
+             {/* Contact Us Buttons */}
+      <div className="flex justify-center items-center space-x-6 mb-4">
+        <a
+          href="https://instagram.com/your_instagram_handle"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          className="text-gray-600 hover:text-teal-500 transition-colors"
+        >
+          <FiInstagram size={24} />
+        </a>
+        <a
+          href="https://linkedin.com/in/your_linkedin_profile"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="LinkedIn"
+          className="text-gray-600 hover:text-teal-500 transition-colors"
+        >
+          <FiLinkedin size={24} />
+        </a>
+        <a
+          href="mailto:support@tripbozo.com"
+          aria-label="Email us"
+          className="text-gray-600 hover:text-teal-500 transition-colors"
+        >
+          <FiMail size={24} />
+        </a>
+        <a
+          href="https://twitter.com/your_twitter_handle"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Twitter"
+          className="text-gray-600 hover:text-teal-500 transition-colors"
+        >
+          <FiTwitter size={24} />
+        </a>
+      </div>
           </div>
 
           {/* Quick Links - centered on mobile and desktop */}
