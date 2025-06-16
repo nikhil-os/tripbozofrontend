@@ -1,4 +1,5 @@
-"use client";
+// This component listens for route changes and hides the loader when navigation completes.
+'use client';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useLoader } from './LoaderContext';
@@ -8,9 +9,10 @@ export default function LoaderRouteListener() {
   const { setShow } = useLoader();
 
   useEffect(() => {
-    // Hide loader when navigation completes
+    // Hide the loader when the route changes (navigation complete)
     setShow(false);
-  }, [pathname, setShow]);
+    // eslint-disable-next-line
+  }, [pathname]);
 
-  return null; // This component doesn't render anything
-} 
+  return null;
+}

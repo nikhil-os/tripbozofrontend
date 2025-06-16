@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 export default function RootWrapper({ children }) {
   const pathname = usePathname();
   const isBundle = pathname.startsWith("/bundle-redirect");
+  const isBundle = pathname.startsWith("/bundle-redirect");
 
   return (
     <>
