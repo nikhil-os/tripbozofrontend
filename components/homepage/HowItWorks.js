@@ -6,7 +6,7 @@ import { FaMapMarkedAlt, FaThList, FaPlaneDeparture } from 'react-icons/fa';
 const steps = [
   {
     title: 'Pick a Destination',
-    description: 'Choose a country you’re traveling to and unlock local travel apps.',
+    description: "Choose a country you're traveling to and unlock local travel apps.",
     icon: <FaMapMarkedAlt className="text-teal-500 text-4xl mb-4" />,
   },
   {
@@ -23,16 +23,16 @@ const steps = [
 
 const HowItWorks = () => {
   return (
-    <section className="py-16 px-4 bg-white">
+    <section className="py-16 px-4 sm:px-6 md:px-8 bg-white">
       <div className="max-w-5xl mx-auto text-center">
-        <h2 className="text-4xl font-bold text-gray-800 mb-2">
+        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">
           How Trip Bozo Works
         </h2>
-        <p className="text-lg text-gray-600 mb-12">
+        <p className="text-base sm:text-lg text-gray-600 mb-12">
           Your companion for discovering essential travel applications
         </p>
 
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-6 md:gap-8 md:grid-cols-3">
           {steps.map((step, index) => (
             <div
               key={index}

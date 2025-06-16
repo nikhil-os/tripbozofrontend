@@ -5,6 +5,7 @@ import { Analytics } from "@vercel/analytics/next";
 import RootWrapper from "@/components/RootWrapper"; // see below
 
 const geistSans = Geist({
+  subsets: ["latin"],
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
