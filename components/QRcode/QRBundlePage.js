@@ -60,7 +60,7 @@ export default function QRBundlePage() {
       setApps(qrResp.selected_apps || []);
       setLoading(false);
     })();
-  }, []);
+  }, [storageKey]);
 
   // Embed‐code copy
   const handleEmbedCopy = () => {
