@@ -1,12 +1,11 @@
 // src/app/layout.jsx
-// src/app/layout.jsx
 import "./globals.css";
 import "@/styles/responsive.css";
 import { Geist, Geist_Mono } from "next/font/google";
 import RootWrapper from "@/components/RootWrapper";
-import RootWrapper from "@/components/RootWrapper";
 import { Analytics } from "@vercel/analytics/next";
 import { LoaderProvider } from "@/components/LoaderContext";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -97,9 +96,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}
       >
-        <LoaderProvider>
-        <RootWrapper>{children}</RootWrapper>
-      </LoaderProvider>
+               <LoaderProvider>
+         <RootWrapper>{children}</RootWrapper>
+       </LoaderProvider>
         <Analytics />
       </body>
     </html>

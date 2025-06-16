@@ -1,37 +1,58 @@
-'use client';
+"use client";
 
-
-
-import { useEffect, useState, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import { FaPlus, FaCheck, FaTimes, FaQrcode, FaGlobe, FaChevronDown } from 'react-icons/fa';
-import { useLoader } from '../LoaderContext';
+import { useEffect, useState, useMemo } from "react";
+import { useRouter } from "next/navigation";
+import { useLoader } from "@/components/LoaderContext";
+import NextImage from "next/image";
+import {
+  FaPlus,
+  FaCheck,
+  FaTimes,
+  FaQrcode,
+  FaGlobe,
+  FaCaretDown, // Added for dropdown icon
+} from "react-icons/fa";
+import { initSession, saveSelectedApps } from "@/src/utils/api";
 
 export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
-    const [selectedApps, setSelectedApps] = useState([]);
-    const [search, setSearch] = useState("");
-    const [activeCategory, setActiveCategory] = useState("ALL");
-    const [filterDropdownOpen, setFilterDropdownOpen] = useState(false);
-    const [filterType, setFilterType] = useState(null); // 'topRated', 'paid', 'free' or null
-    const router = useRouter();
-    const { setShow } = useLoader();
+  const router = useRouter();
+  const { setShow } = useLoader();
+  const storageKey = `selectedAppIds_${countryCode}`;
+  const [selectedApps, setSelectedApps] = useState(() => {
+    try {
+      const raw = localStorage.getItem(storageKey);
+      return raw ? JSON.parse(raw) : [];
+    } catch {
+      return [];
+    }
+  });
+  useEffect(() => {
+    localStorage.setItem(storageKey, JSON.stringify(selectedApps));
+  }, [selectedApps, storageKey]);
 
-    // Load selected apps from localStorage on mount
-    useEffect(() => {
-        const stored = localStorage.getItem('selectedAppIds');
-        if (stored) {
-            setSelectedApps(JSON.parse(stored));
-        }
-    }, []);
+  const clearAll = () => {
+    setSelectedApps([]);
+    localStorage.removeItem(storageKey);
+  };
 
-    // Persist selected apps to localStorage whenever they change
-    useEffect(() => {
-        localStorage.setItem('selectedAppIds', JSON.stringify(selectedApps));
-    }, [selectedApps]);
+  // Search + category + filter
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState("ALL");
+  const [filterType, setFilterType] = useState("ALL");
+  const [isFilterOpen, setIsFilterOpen] = useState(false); // State for filter dropdown
 
-    const categories = [
-        'ALL', 'Communication', 'Dining', 'Navigation', 'Finance', 'Safety', 'Accommodation'
-    ];
+   // 1) Dynamically derive the list of categories from your apps:
+   const categories = useMemo(() => {
+     const cats = new Set(apps.map((a) => a.category || "Uncategorized"));
+     return ["ALL", ...Array.from(cats)];
+   }, [apps]);
+
+  const filterOptions = [
+    { value: "ALL", label: "All Filters" },
+    { value: "FREE", label: "Free Apps" },
+    { value: "PAID", label: "Paid Apps" },
+    { value: "TOP_RATED", label: "Top Rated" },
+  ];
 
   const toggleSelect = (appId) => {
     setSelectedApps((prev) =>
@@ -41,27 +62,54 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     );
   };
 
-    const handleGenerateQR = () => {
-        setShow(true);
-        const selectedAppIds = selectedApps.join(",");
-        router.push(`/qr-bundle?apps=${selectedAppIds}`);
-    };
+  const handleGenerateQR = async () => {
+    if (!selectedApps.length) {
+      alert("Please select at least one app.");
+      return;
+    }
+    
+    setShow(true); // Show loader before navigation
+    
+    let sid = localStorage.getItem("sessionId") || (await initSession());
+    if (!sid) {
+      setShow(false);
+      return alert("Could not initialize session.");
+    }
+    
+    const { session_id } = await saveSelectedApps(selectedApps);
+    sid = session_id || sid;
+    localStorage.setItem("sessionId", sid);
+    
+    router.push(`/qr-bundle?country=${countryCode}`);
+    // Loader will be hidden by LoaderRouteListener
+  };
 
-    // Enhanced filtered apps logic
-    const filteredApps = apps
-        .filter(app =>
-            (activeCategory === 'ALL' || app.category === activeCategory) &&
-            (app.name.toLowerCase().includes(search.toLowerCase()) || app.description.toLowerCase().includes(search.toLowerCase()))
-        )
-        .filter(app => {
-            if (filterType === 'paid') return !!app.price && app.price > 0;
-            if (filterType === 'free') return !app.price || app.price === 0;
-            return true;
-        })
-        .sort((a, b) => {
-            if (filterType === 'topRated') return (b.rating || 0) - (a.rating || 0);
-            return 0;
-        });
+  const handleEssentialsClick = () => {
+    setShow(true); // Show loader before navigation
+    router.push(`/country/${countryCode}/Essentials`);
+    // Loader will be hidden by LoaderRouteListener
+  };
+
+  const filteredApps = apps
+    .filter(
+      (app) =>
+        (activeCategory === "ALL" || (app.category || "Uncategorized") === activeCategory) &&
+        (app.name.toLowerCase().includes(search.toLowerCase()) ||
+          (app.description || "")
+            .toLowerCase()
+            .includes(search.toLowerCase()))
+    )
+    .filter((app) => {
+      if (filterType === "FREE") return !app.price || app.price === 0;
+      if (filterType === "PAID") return app.price && app.price > 0;
+      return true;
+    })
+    .sort((a, b) => {
+      if (filterType === "TOP_RATED") {
+        return (b.rating || 0) - (a.rating || 0);
+      }
+      return 0;
+    });
 
   // Generate background gradients based on country code
   const getCountryGradient = (code) => {
@@ -330,63 +378,75 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           ))}
         </div>
 
-                {/* Sidebar for Selected Apps */}
-                <div className="w-[320px] min-w-[260px] max-w-[340px] bg-white rounded-3xl shadow-lg border border-[#e0e0e0] p-6 mt-2 animate-slide-in-left relative flex-shrink-0">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-2xl  text-[#222]">Selected Apps <span className="text-[#2ad2c9]">({selectedApps.length})</span></h3>
-                    </div>
-                    <div className="space-y-4">
-                        {selectedApps.length === 0 ? (
-                            <div className="text-center py-12 text-gray-400 text-lg">No apps selected yet</div>
-                        ) : (
-                            selectedApps.map((appId) => {
-                                const app = apps.find((a) => a.id === appId);
-                                return (
-                                    <div key={app.id} className="flex items-center gap-4 bg-white border border-[#e0e0e0] rounded-xl px-4 py-3 shadow-sm">
-                                        <img src={app.icon || '/file.svg'} alt={app.name} className="w-10 h-10 rounded object-cover bg-gray-100 border border-[#e0e0e0]" />
-                                        <div className="flex-1 min-w-0">
-                                            <div className="font-semibold text-[#222] truncate">{app.name}</div>
-                                            <div className="text-sm text-gray-400 truncate">{app.category}</div>
-                                        </div>
-                                        <button
-                                            className="ml-2 p-2 rounded-full hover:bg-[#ffeaea] hover:text-red-500 text-gray-400 transition"
-                                            title="Remove"
-                                            onClick={() => setSelectedApps(selectedApps.filter(id => id !== app.id))}
-                                        >
-                                            <FaTimes />
-                                        </button>
-                                    </div>
-                                );
-                            })
-                        )}
-                    </div>
-                    <button
-                        type="button"
-                        className="mt-8 w-full py-4 rounded-xl font-semibold bg-red-100 text-red-600 border border-[#e0e0e0] transition duration-200 focus:outline-none focus:ring-2 focus:ring-red-300 hover:bg-red-500 hover:text-white text-lg"
-                        onClick={() => setSelectedApps([])}
-                        disabled={selectedApps.length === 0}
-                        style={{ backgroundColor: selectedApps.length === 0 ? '' : undefined, color: selectedApps.length === 0 ? '' : undefined }}
-                    >
-                        Clear All
-                    </button>
-                    <button
-                        disabled={selectedApps.length < 2}
-                        onClick={handleGenerateQR}
-                        className={`mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all text-white text-xl btn-animated ${selectedApps.length >= 2 ? 'bg-[#2ad2c9] hover:bg-[#1bb3a7]' : 'bg-[#e0e0e0] text-gray-400 cursor-not-allowed'}`}
-                    >
-                        <FaQrcode className="mr-2" /> Generate QR Code
-                    </button>
-                    <button
-                        className="mt-4 w-full py-4 rounded-xl flex items-center justify-center gap-3 transition-all text-white text-xl bg-[#38bdf8] hover:bg-[#0ea5e9] font-semibold shadow btn-animated"
-                        onClick={() => {
-                            setShow(true);
-                            router.push(`/country/${countryCode}/Essentials`);
-                        }}
-                    >
-                        <FaGlobe className="mr-2" /> Essentials
-                    </button>
-                </div>
+        {/* Right: Selected Apps Sidebar */}
+        <div className="lg:w-[350px] bg-white rounded-2xl shadow-md border border-gray-200 p-6 h-fit sticky top-24">
+          <h2 className="text-xl font-bold mb-4">Selected Apps ({selectedApps.length})</h2>
+          
+          {selectedApps.length === 0 ? (
+            <div className="text-center py-6">
+              <p className="text-gray-500 mb-2">No apps selected yet</p>
+              <p className="text-gray-500 text-sm">Add apps to create your personalized travel apps bundle</p>
             </div>
-        </main>
-    );
+          ) : (
+            <>
+              <div className="flex items-center justify-between mb-4">
+                <span className="text-sm text-gray-500">{selectedApps.length} app{selectedApps.length !== 1 ? 's' : ''} selected</span>
+                <button 
+                  onClick={clearAll}
+                  className="text-sm text-red-500 hover:text-red-700 font-medium hover:underline transition-colors"
+                >
+                  Clear All
+                </button>
+              </div>
+              <div className="space-y-4 mb-6">
+                {selectedApps.map(appId => {
+                  const app = apps.find(a => a.id === appId);
+                  return app ? (
+                    <div key={app.id} className="flex items-center justify-between">
+                      <span className="font-medium">{app.name}</span>
+                      <button 
+                        onClick={() => toggleSelect(app.id)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <FaTimes />
+                      </button>
+                    </div>
+                  ) : null;
+                })}
+              </div>
+            </>
+          )}
+          
+          <div className="space-y-3 mt-6">
+            <button
+              onClick={handleGenerateQR}
+              disabled={!selectedApps.length}
+              className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-all ${
+                selectedApps.length
+                  ? "bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"
+                  : "bg-gray-400 cursor-not-allowed"
+              }`}
+            >
+              <FaQrcode className="text-lg" />
+              Generate QR Code
+            </button>
+            
+            <button
+              onClick={handleEssentialsClick}
+              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-md hover:shadow-lg transition-all"
+            >
+              <FaGlobe className="text-lg" />
+              Essentials
+            </button>
+            
+            {selectedApps.length > 0 && (
+              <p className="text-xs text-center text-gray-500 mt-2">
+                Select at least 2 apps to generate a QR code
+              </p>
+            )}
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }
