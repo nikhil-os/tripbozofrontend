@@ -73,7 +73,7 @@ export default function QRBundlePage() {
   const handleDownloadList = async () => {
     try {
       const blob = await downloadAppList(sessionId);
-      saveAs(blob, `${sessionId}-app-list.txt`);
+      saveAs(blob, `${sessionId}-app-list.html`);
     } catch {
       alert("Failed to download app list.");
     }

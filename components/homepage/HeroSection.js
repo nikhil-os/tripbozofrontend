@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { fetchAppsByCountry } from "@/src/utils/api";
+import { fetchAppsByCountry, searchCountries } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
 import Image from "next/image";
 
@@ -70,20 +70,35 @@ const HeroSection = () => {
 
     // We assume the user typed either a country ISO code (e.g. "FR" or "jp")
     // or a full country name. We'll just normalize to lowercase and try.
-    const countryCode = trimmed.toLowerCase();
+    // const countryCode = trimmed.toLowerCase();
 
-    // 1) Try fetching apps for that country code
-    const apps = await fetchAppsByCountry(countryCode);
+  //   // 1) Try fetching apps for that country code
+  //   const apps = await fetchAppsByCountry(countryCode);
+  //   setLoading(false);
+  //   setShow(false);
+
+  //   if (!apps.length) {
+  //     // No apps returned => likely invalid country code (or no apps exist)
+  //     setErrorMsg(`No travel apps found for "${trimmed}".`);
+  //     return;
+  //   }
+
+  //   // 2) Redirect to /country/<countryCode>
+  //   router.push(`/country/${countryCode}`);
+  // };
+
+    // 1) search by name/code
+    const results = await searchCountries(trimmed);
     setLoading(false);
     setShow(false);
-
-    if (!apps.length) {
-      // No apps returned => likely invalid country code (or no apps exist)
-      setErrorMsg(`No travel apps found for "${trimmed}".`);
+  
+    if (!results.length) {
+      setErrorMsg(`No country found for "${trimmed}".`);
       return;
     }
-
-    // 2) Redirect to /country/<countryCode>
+  
+    // pick the first match
+    const countryCode = results[0].code.toLowerCase();
     router.push(`/country/${countryCode}`);
   };
 

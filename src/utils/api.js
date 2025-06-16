@@ -133,13 +133,15 @@ export async function fetchAppsByCountry(countryCode) {
     const res = await apiClient.get(`/country/${countryCode}/apps/`);
     // The endpoint returns an array of TravelApp objects; usage:
     const apps = res.data;
-    return Array.isArray(apps) && apps.length > 0 ? apps : sampleApps;
+    // return Array.isArray(apps) && apps.length > 0 ? apps : sampleApps;
+    return Array.isArray(apps) ? apps : [];
   } catch (err) {
     console.warn(
       `[TripBozo API] Failed to fetch apps for country ${countryCode}:`,
       err.message
     );
-    return sampleApps;
+    // return sampleApps;
+    return [];
   }
 }
 
