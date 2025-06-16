@@ -1,6 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import AppLink from './AppLink';
+import { FiInstagram, FiLinkedin, FiMail, FiTwitter } from 'react-icons/fi';
 
 const Footer = () => {
   return (

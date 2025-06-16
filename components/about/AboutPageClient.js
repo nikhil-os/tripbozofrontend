@@ -57,12 +57,11 @@ export default function AboutPageClient() {
       <main className="bg-gradient-to-br from-[#e0f7fa] via-[#f5fafd] to-[#e3f2fd] text-gray-800 w-full min-h-screen">
         {/* Hero Section */}
         <section className="w-full bg-gradient-to-r from-[#38bdf8] via-[#2ad2c9] to-[#5eead4] text-white py-16 sm:py-24 px-4 sm:px-8 text-center relative overflow-hidden">
-          <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold mb-6 drop-shadow-lg animate-fade-in-up">
-            Your Essential <br className="hidden sm:block" /> Travel Companion
+        <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold mb-6 drop-shadow-lg tracking-tight animate-fade-in-up relative z-10">
+            Your Essential<br className="hidden sm:block" /> Travel Companion
           </h1>
-          <p className="text-xl sm:text-2xl max-w-2xl mx-auto mb-8 text-white/90 font-medium drop-shadow animate-fade-in-up delay-200">
-            Trip Bozo curates the perfect app bundle for every traveler's needs,
-            no matter where your journey takes you.
+          <p className="text-xl sm:text-2xl max-w-2xl mx-auto mb-8 text-white/90 font-medium drop-shadow animate-fade-in-up delay-200 relative z-10">
+            Trip Bozo curates the perfect app bundle for every traveler&apos;s needs, no matter where your journey takes you.
           </p>
         </section>
 
