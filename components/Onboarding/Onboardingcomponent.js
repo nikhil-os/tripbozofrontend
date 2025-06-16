@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useLoader } from '../LoaderContext';
+import { useLoader } from '@/components/LoaderContext';
 
 export default function Onboarding() {
   const router = useRouter();
@@ -28,10 +28,11 @@ export default function Onboarding() {
     { code: 'AU', name: 'Australia' },
   ];
 
-  const handleViewApps = () => {
-    if (selectedCountry) {
+  const handleViewApps = (countryCode) => {
+    if (countryCode) {
       setShow(true); // Show loader before navigation
-      router.push(`/country/${selectedCountry}`);
+      router.push(`/country/${countryCode}`);
+      // Loader will be hidden by LoaderRouteListener
     } else {
       alert('Please select a destination country first!');
     }

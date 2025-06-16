@@ -1,8 +1,9 @@
 'use client';
 import Image from 'next/image';
-import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
 import AppLink from './AppLink';
+import React, { useEffect, useState, useRef } from 'react';
+import { FiMenu, FiX } from 'react-icons/fi';
+import { useRouter } from 'next/navigation';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -142,8 +143,9 @@ const Navbar = () => {
             </div>
           )}
         </div>
-        {/* Center: Nav Links - absolutely centered */}
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 flex gap-12 text-gray-600 text-base font-normal">
+
+        {/* Center: Nav Links - absolutely centered (Desktop Only) */}
+        <div className="hidden lg:flex absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 items-center space-x-10">
           <AppLink href="/" className="relative group font-semibold tracking-wide transition text-gray-700 hover:text-teal-500 focus:text-teal-600 focus:outline-none">
             Home
             <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-teal-400 transition-all group-hover:w-full group-focus:w-full"></span>
@@ -170,15 +172,16 @@ const Navbar = () => {
               Profile
             </AppLink>
           ) : (
-            <span
-              className="inline-flex items-center gap-2 bg-gray-200 border-2 border-gray-300 text-gray-400 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all opacity-60 cursor-not-allowed select-none"
+            <AppLink
+              href="/Login"
+              className="inline-flex items-center gap-2 bg-gray-200 border-2 border-gray-300 text-gray-400 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all opacity-60 cursor-not-allowed pointer-events-none select-none"
               style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
               tabIndex={-1}
               aria-disabled="true"
             >
               <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
               Login
-            </span>
+            </AppLink>
           )}
           <AppLink
             href="/Onboarding"

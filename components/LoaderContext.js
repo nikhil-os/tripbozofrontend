@@ -1,9 +1,14 @@
+"use client";
+
 import React, { createContext, useContext, useState } from 'react';
 
-const LoaderContext = createContext({ show: false, setShow: () => {} });
+// Create the context
+const LoaderContext = createContext();
 
+// Provider component
 export function LoaderProvider({ children }) {
   const [show, setShow] = useState(false);
+  
   return (
     <LoaderContext.Provider value={{ show, setShow }}>
       {children}
@@ -11,6 +16,13 @@ export function LoaderProvider({ children }) {
   );
 }
 
+// Custom hook for using the context
 export function useLoader() {
-  return useContext(LoaderContext);
-}
+  const context = useContext(LoaderContext);
+  
+  if (!context) {
+    throw new Error('useLoader must be used within a LoaderProvider');
+  }
+  
+  return context;
+} 
