@@ -1,7 +1,9 @@
 // src/app/layout.jsx
+// src/app/layout.jsx
 import "./globals.css";
 import "@/styles/responsive.css";
 import { Geist, Geist_Mono } from "next/font/google";
+import RootWrapper from "@/components/RootWrapper";
 import RootWrapper from "@/components/RootWrapper";
 import { Analytics } from "@vercel/analytics/next";
 import { LoaderProvider } from "@/components/LoaderContext";
