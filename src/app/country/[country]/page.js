@@ -2,6 +2,7 @@
 
 import CountryAppsPage from '@/components/countryapp/CountryAppsPage';
 import { fetchAppsByCountry } from '@/src/utils/api';
+import { notFound } from "next/navigation";
 
 export default async function CountryPage({ params }) {
   // "params" must be awaited before using its properties:
@@ -10,6 +11,12 @@ export default async function CountryPage({ params }) {
 
   // Now fetch the apps for this country code
   const apps = await fetchAppsByCountry(countryCode);
+
+  if (!apps.length) {
+    // trigger next.js’s not-found.js
+    return notFound();
+  }
+
 
   // Create country info object with basic details
   const countryInfo = {
@@ -30,5 +37,14 @@ export default async function CountryPage({ params }) {
           "Find the best travel apps for your next destination."
   };
 
-  return <CountryAppsPage countryCode={countryCode} apps={apps} countryInfo={countryInfo} />;
+
+
+
+   return (
+       <CountryAppsPage
+         countryCode={countryCode}
+         apps={apps}
+         countryInfo={countryInfo}
+       />
+     );
 }
