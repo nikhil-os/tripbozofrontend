@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predev": "node -e \"const fs=require('fs');const path=require('path');const iconsDir=path.join(__dirname,'public','icons');if(!fs.existsSync(iconsDir)){fs.mkdirSync(iconsDir,{recursive:true});console.log('Created icons directory');}const placeholderPath=path.join(iconsDir,'placeholder.txt');if(!fs.existsSync(placeholderPath)){fs.writeFileSync(placeholderPath,'Placeholder for PWA icons');}\"",
     "dev": "next dev",
     "build": "next build",
+    "prebuild": "node -e \"const fs=require('fs');const path=require('path');const iconsDir=path.join(__dirname,'public','icons');if(!fs.existsSync(iconsDir)){fs.mkdirSync(iconsDir,{recursive:true});console.log('Created icons directory');}const placeholderPath=path.join(iconsDir,'placeholder.txt');if(!fs.existsSync(placeholderPath)){fs.writeFileSync(placeholderPath,'Placeholder for PWA icons');}\"",
     "start": "next start",
     "lint": "next lint"
   },

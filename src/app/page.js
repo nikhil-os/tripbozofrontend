@@ -1,21 +1,17 @@
-'use client';
+import HomePage from '@/components/homepage/HomePage';
 
-import React from 'react';
-import PopularDestinations from '/components/homepage/PopularDestinations';
-
-import HeroSection from '/components/homepage/HeroSection';
-import HowItWorks from '/components/homepage/HowItWorks';
-import CallToAction from '/components/homepage/CallToAction';
-
-const HomePage = () => {
-  return (
-    <main>
-      <HeroSection />
-      <PopularDestinations />
-      <HowItWorks />
-      <CallToAction />
-    </main>
-  );
+export const metadata = {
+  title: 'Trip Bozo | Your Essential Travel App Companion',
+  description: 'Trip Bozo curates the perfect app bundle for every traveler\'s needs. Discover essential travel apps for navigation, communication, and local experiences.',
+  alternates: {
+    canonical: 'https://tripbozo.com',
+  },
+  openGraph: {
+    title: 'Trip Bozo | Your Essential Travel App Companion',
+    description: 'Discover curated travel app bundles tailored to your destination. Navigate, communicate, and explore with confidence.',
+  }
 };
 
-export default HomePage;
+export default function Page() {
+  return <HomePage />;
+}
