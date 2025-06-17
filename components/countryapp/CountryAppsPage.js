@@ -171,44 +171,18 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
           />
         </div>
         <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-10">
-          <div className="flex items-center gap-6 mb-2 mt-8">
-            <span className="text-4xl font-bold text-white/80">
-              {countryCode}
-            </span>
-            <span className="text-6xl font-black text-white ml-3 drop-shadow-lg">
-              {countryInfo && countryInfo.name
-                ? countryInfo.name
-                : countryCode === "AU"
-                ? "Australia"
-                : countryCode === "TH"
-                ? "Thailand"
-                : countryCode === "FR"
-                ? "France"
-                : countryCode === "IT"
-                ? "Italy"
-                : countryCode === "JP"
-                ? "Japan"
-                : countryCode === "US"
-                ? "United States"
-                : countryCode}
-            </span>
-          </div>
-          <p className="text-2xl max-w-4xl text-white/90 font-normal mb-4 mt-1 drop-shadow">
-            {countryInfo?.shortDescription ||
-              (countryCode === "AU"
-                ? "Discover Australia's vibrant cities, stunning beaches, and unique wildlife with the best travel apps."
-                : countryCode === "IN"
-                ? "Experience the colors, culture, and diversity of India—find the perfect apps for your journey."
-                : countryCode === "FR"
-                ? "Explore France's art, cuisine, and romance—your essential travel apps for every region."
-                : countryCode === "IT"
-                ? "Uncover Italy's history, food, and beauty—travel smarter with curated apps."
-                : countryCode === "JP"
-                ? "Navigate Japan's traditions and technology—apps to enhance your adventure."
-                : countryCode === "US"
-                ? "From coast to coast, discover the USA's wonders with top travel apps."
-                : "Find the best travel apps for your next destination.")}
-          </p>
+                 {/* ✅ Dynamically show code, name and description from `countryInfo` */}
+         <div className="flex items-center gap-6 mb-2 mt-8">
+           <span className="text-4xl font-bold text-white/80">
+             {countryInfo.code}
+           </span>
+           <span className="text-6xl font-black text-white ml-3 drop-shadow-lg">
+             {countryInfo.name}
+           </span>
+         </div>
+         <p className="text-2xl max-w-4xl text-white/90 font-normal mb-4 mt-1 drop-shadow">
+           {countryInfo.description}
+         </p>
           <div
             className="h-1 w-28 bg-[#2ad2c9] rounded"
             style={{ width: "7rem" }}
