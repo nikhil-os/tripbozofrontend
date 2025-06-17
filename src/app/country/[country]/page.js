@@ -3,6 +3,9 @@ import CountryAppsPage from '@/components/countryapp/CountryAppsPage';
 import { fetchAppsByCountry, fetchCountryInfo } from '@/src/utils/api';
 import { notFound } from 'next/navigation';
 
+
+
+
 export default async function CountryPage({ params }) {
   const countryCode = params.country.toUpperCase();
 
@@ -17,11 +20,24 @@ export default async function CountryPage({ params }) {
     return notFound();
   }
 
+
+  async function fetchCountryImages(code) {
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/country/${countryCode}/images/`);
+      if (!res.ok) return [];
+      return res.json();
+    } catch {
+      return [];
+    }
+  }
+
+
   return (
     <CountryAppsPage
       countryCode={countryInfo.code}
       countryInfo={countryInfo}
       apps={apps}
+      heroImages={images}
     />
   );
 }

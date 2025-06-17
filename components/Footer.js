@@ -28,7 +28,7 @@ const Footer = () => {
              <br></br> */}
       <div className="mt-6 mb-4 flex justify-center items-center space-x-6 ">
         <a
-          href="https://instagram.com/your_instagram_handle"
+          href="https://www.instagram.com/tripbozo?utm_source=qr&igsh=MXRxcjFrMnA2Nmo2Yg=="
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"

@@ -143,7 +143,7 @@ export default function AboutPageClient() {
             </h2>
 
             <form
-              action="https://formsubmit.co/bozotrip@gmail.com"
+              action="https://formsubmit.co/el/legamo"
               method="POST"
               className="grid gap-4 sm:grid-cols-2 bg-white p-8 rounded-2xl shadow-lg text-gray-800"
             >
