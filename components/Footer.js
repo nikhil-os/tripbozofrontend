@@ -24,9 +24,9 @@ const Footer = () => {
             <p className="text-gray-400 text-sm italic -mt-2">Less googling, more going.</p>
             <p className="text-gray-300 text-sm">Your essential companion for seamless travel experiences worldwide.</p>
              {/* Contact Us Buttons */}
-             <br></br>
-             <br></br>
-      <div className="flex justify-center items-center space-x-6 mb-4">
+             {/* <br></br>
+             <br></br> */}
+      <div className="mt-6 mb-4 flex justify-center items-center space-x-6 ">
         <a
           href="https://instagram.com/your_instagram_handle"
           target="_blank"
