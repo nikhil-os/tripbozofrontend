@@ -142,21 +142,24 @@ const HeroSection = () => {
               bgIndex === idx ? "opacity-100" : "opacity-0"
             }`}
           >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              className={`transition-transform duration-1000 ${
-                bgIndex === idx ? "scale-105" : "scale-100"
-            } z-0 will-change-transform`}
-              fill
-              sizes="100vw"
-              priority={idx < 2}
-            style={{
-              objectFit: "cover",
-                filter: bgIndex === idx ? "contrast(1.12) saturate(1.12) brightness(0.97)" : "blur(0px)",
-            }}
-            draggable={false}
-          />
+                       <Image
+             src={img.src}
+             alt={img.alt}
+             fill
+             sizes="100vw"
+             priority                     /* always load as high priority */
+             unoptimized                  /* skip the built-in optimizer */
+             quality={100}                /* render at max quality */
+             style={{
+               objectFit: "cover",
+               transform: bgIndex === idx ? "scale(1.05)" : "scale(1)",
+               transition: "transform 1s",
+               filter: bgIndex === idx
+                 ? "contrast(1.12) saturate(1.12) brightness(0.97)"
+                 : "none",
+             }}
+             draggable={false}
+           />
           </div>
         ))}
         {/* Subtle dark overlay for contrast */}

@@ -37,7 +37,7 @@ const Footer = () => {
           <FiInstagram size={24} />
         </a>
         <a
-          href="https://linkedin.com/in/your_linkedin_profile"
+          href="https://www.linkedin.com/company/107882785/admin/dashboard/"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="LinkedIn"
@@ -46,14 +46,14 @@ const Footer = () => {
           <FiLinkedin size={24} />
         </a>
         <a
-          href="mailto:support@tripbozo.com"
+          href="mailto:bozotrip@gmail.com"
           aria-label="Email us"
           className="text-gray-600 hover:text-teal-500 transition-colors"
         >
           <FiMail size={24} />
         </a>
         <a
-          href="https://twitter.com/your_twitter_handle"
+          href="https://x.com/tripbozo"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Twitter"
