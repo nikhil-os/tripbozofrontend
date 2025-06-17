@@ -3,12 +3,14 @@
 
 import React, { useEffect, useState, useCallback, useLayoutEffect } from "react";
 import { useParams } from "next/navigation";
-import { fetchEssentials } from "@/src/utils/api";
+import { fetchEssentials,fetchCountryInfo } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
 
 export default function EssentialsPage() {
   const { country } = useParams();
   const { setShow } = useLoader();
+
+  const [countryName, setCountryName] = useState("");  // ← state to hold the human‑readable name
 
   const FALLBACK = {
     emergencies: [
@@ -56,6 +58,19 @@ export default function EssentialsPage() {
   useLayoutEffect(() => {
     setShow(false);
   }, [setShow]);
+
+
+  // fetch the pretty name
+useEffect(() => {
+  fetchCountryInfo(country.toUpperCase())
+    .then(info => {
+      setCountryName(info.name || country.toUpperCase());
+    })
+    .catch(() => {
+      setCountryName(country.toUpperCase());
+    });
+}, [country]);
+
 
   useEffect(() => {
     let isMounted = true; // Flag to track if component is mounted

@@ -125,23 +125,23 @@ export async function searchCountries(query) {
 
 /** Fetch country metadata (code, name, description, flag, categories, etc.) */
 export async function fetchCountryInfo(countryCode) {
-  if (!useApi) {
-    return { code: countryCode, name: countryCode, description: "", flag: null };
-  }
+  // if (!useApi) {
+  //   return { code: countryCode, name: countryCode, description: "", flag: null };
+  // }
   try {
     const res = await apiClient.get(`/country/${countryCode}/`);
     return res.data;
   } catch (err) {
     console.warn(`Failed to fetch country info for ${countryCode}:`, err);
-    return { code: countryCode, name: countryCode, description: "", flag: null };
+    return { code: countryCode, name: countryCode, description: "",};
   }
 }
 
 /** Fetch the apps for a given country code */
 export async function fetchAppsByCountry(countryCode) {
-  if (!useApi) {
-    return sampleApps;
-  }
+  // if (!useApi) {
+  //   return sampleApps;
+  // }
   try {
     const res = await apiClient.get(`/country/${countryCode}/apps/`);
     return Array.isArray(res.data) ? res.data : [];
