@@ -31,7 +31,7 @@ export default async function CountryPage({ params }) {
     }
   }
 
-
+  const images = await fetchCountryImages(countryCode);
   return (
     <CountryAppsPage
       countryCode={countryInfo.code}
