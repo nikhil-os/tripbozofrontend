@@ -122,25 +122,31 @@ export async function searchCountries(query) {
  *    GET /country/<countryCode>/apps/
  *    If no real data, fallback to sampleApps.
  */
+
+/** Fetch country metadata (code, name, description, flag, categories, etc.) */
+export async function fetchCountryInfo(countryCode) {
+  if (!useApi) {
+    return { code: countryCode, name: countryCode, description: "", flag: null };
+  }
+  try {
+    const res = await apiClient.get(`/country/${countryCode}/`);
+    return res.data;
+  } catch (err) {
+    console.warn(`Failed to fetch country info for ${countryCode}:`, err);
+    return { code: countryCode, name: countryCode, description: "", flag: null };
+  }
+}
+
+/** Fetch the apps for a given country code */
 export async function fetchAppsByCountry(countryCode) {
   if (!useApi) {
-    console.info("[TripBozo API] Using sample apps for country:", countryCode);
     return sampleApps;
   }
-
   try {
-    // We assume your Django endpoint is: GET /country/<countryCode>/apps/
     const res = await apiClient.get(`/country/${countryCode}/apps/`);
-    // The endpoint returns an array of TravelApp objects; usage:
-    const apps = res.data;
-    // return Array.isArray(apps) && apps.length > 0 ? apps : sampleApps;
-    return Array.isArray(apps) ? apps : [];
+    return Array.isArray(res.data) ? res.data : [];
   } catch (err) {
-    console.warn(
-      `[TripBozo API] Failed to fetch apps for country ${countryCode}:`,
-      err.message
-    );
-    // return sampleApps;
+    console.warn(`Failed to fetch apps for country ${countryCode}:`, err);
     return [];
   }
 }

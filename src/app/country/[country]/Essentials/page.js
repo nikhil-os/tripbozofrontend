@@ -141,7 +141,7 @@ export default function EssentialsPage() {
           <p className="text-white/90 max-w-2xl text-lg font-medium drop-shadow-sm text-center">
             Offline emergency info, key phrases & safety tips for{" "}
             <span className="capitalize font-bold underline underline-offset-4">
-              {country}
+            {countryName}
             </span>
             .
           </p>
