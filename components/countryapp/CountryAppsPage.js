@@ -202,6 +202,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
           src={src}
           alt={`Background ${idx + 1}`}
           fill
+          unoptimized     
           style={{ objectFit: "cover" }}
         />
       </div>
