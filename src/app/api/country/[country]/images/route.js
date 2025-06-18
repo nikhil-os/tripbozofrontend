@@ -22,10 +22,12 @@ export async function GET(req, { params }) {
 
   try {
     // Check Redis cache
-    const cached = redis && (await redis.get(cacheKey));
-    if (cached) {
-      return NextResponse.json(JSON.parse(cached));
-    }
+    // 1) Serve from cache
+const cached = redis && (await redis.get(cacheKey));
+if (cached) {
+  const urls = typeof cached === "string" ? JSON.parse(cached) : cached;
+  return NextResponse.json(urls);
+}
 
     // Throttle daily API usage
     const today = new Date().toISOString().slice(0, 10);
