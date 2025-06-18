@@ -187,6 +187,11 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
     return () => clearInterval(iv);
   }, []);
 
+
+  console.log("Hero image URLs:", heroImages);
+
+
+
   return (
     <main className="bg-[#f7fafc] animate-fade-in">
       {/* Hero Section */}
