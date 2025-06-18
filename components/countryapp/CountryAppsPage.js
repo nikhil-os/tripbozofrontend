@@ -127,8 +127,9 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
     async function loadImages() {
       try {
         const res = await fetch(`/api/country/${countryCode}/images`);
-        if (!res.ok) throw new Error(res.statusText);
+        if (!res.ok) throw new Error(`${res.status}`);
         const urls = await res.json();
+        console.log("Hero image URLs:", urls);
         setHeroImages(urls);
       } catch (err) {
         console.warn("Failed to load hero images:", err);
@@ -136,7 +137,6 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
     }
     loadImages();
   }, [countryCode]);
-
   // rotate
   useEffect(() => {
     if (!heroImages.length) return;
