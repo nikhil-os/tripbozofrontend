@@ -2,6 +2,7 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 
+// 1. Redis Init
 let redis;
 try {
   redis = Redis.fromEnv();
@@ -9,22 +10,24 @@ try {
   console.error("🔥 Redis init failed:", e);
 }
 
-const CACHE_TTL    = 12 * 60 * 60; // 12 hrs
-const DAILY_CAP    = 100;
+// 2. Constants
+const CACHE_TTL = 12 * 60 * 60; // 12 hrs
+const DAILY_CAP = 100;
 const DAILY_PREFIX = "country_api_daily";
 
+// 3. GET Handler
 export async function GET(req, { params }) {
   const country = (params.country || "").toLowerCase();
   const cacheKey = `country_images_${country}`;
 
   try {
-    // 1. Serve from Redis cache if exists
+    // Check Redis cache
     const cached = redis && (await redis.get(cacheKey));
     if (cached) {
       return NextResponse.json(JSON.parse(cached));
     }
 
-    // 2. Check daily cap
+    // Throttle daily API usage
     const today = new Date().toISOString().slice(0, 10);
     const rateKey = `${DAILY_PREFIX}_${today}`;
     const todayCount = parseInt((await redis.get(rateKey)) || "0", 10);
@@ -36,11 +39,10 @@ export async function GET(req, { params }) {
       );
     }
 
-    // 3. Fetch images from Wikimedia Commons
+    // Wikimedia Commons API Call
+    const query = encodeURIComponent(`${country} landscape`);
     const wikiRes = await fetch(
-      `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&generator=search&gsrsearch=${encodeURIComponent(
-        country + " landscape"
-      )}&gsrlimit=5&iiprop=url`
+      `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&generator=search&gsrsearch=${query}&gsrlimit=5&iiprop=url`
     );
 
     const wikiData = await wikiRes.json();
@@ -52,34 +54,31 @@ export async function GET(req, { params }) {
           .filter(Boolean)
       : [];
 
-    const imageUrls = wikiUrls.length > 0
-      ? wikiUrls
-      : Array.from({ length: 5 }, (_, i) =>
-          `https://source.unsplash.com/1600x900/?${encodeURIComponent(
-            country
-          )},landscape&sig=${i}`
-        );
+    // If no images found, return a fallback message (no Unsplash)
+    if (wikiUrls.length === 0) {
+      return NextResponse.json(
+        { detail: "No images found for this country" },
+        { status: 404 }
+      );
+    }
 
-    // 4. Save to Redis + increment rate
+    // Cache result + track usage
     if (redis) {
       await Promise.all([
-        redis.set(cacheKey, JSON.stringify(imageUrls), { ex: CACHE_TTL }),
+        redis.set(cacheKey, JSON.stringify(wikiUrls), { ex: CACHE_TTL }),
         redis.incr(rateKey),
         redis.expire(rateKey, 24 * 60 * 60),
       ]);
     }
 
-    return NextResponse.json(imageUrls);
+    return NextResponse.json(wikiUrls);
   } catch (err) {
-    console.error("🔥 API Error:", err);
+    console.error("🔥 Wikimedia API error:", err);
 
-    // fallback: generate Unsplash image URLs
-    const fallback = Array.from({ length: 5 }, (_, i) =>
-      `https://source.unsplash.com/1600x900/?${encodeURIComponent(
-        country
-      )},landscape&sig=${i}`
+    // No Unsplash fallback — just fail gracefully
+    return NextResponse.json(
+      { detail: "Image fetching failed" },
+      { status: 500 }
     );
-
-    return NextResponse.json(fallback);
   }
 }

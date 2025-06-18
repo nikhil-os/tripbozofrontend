@@ -71,7 +71,7 @@ const PopularDestinations = () => {
           >
             <div className="absolute inset-0">
               <Image
-                src="/Images/france.png"
+                src="/Images/france.jpg"
                 alt="France"
                 className="absolute inset-0 object-cover"
                 fill
