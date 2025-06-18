@@ -126,7 +126,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   useEffect(() => {
     async function loadImages() {
       try {
-        const res = await fetch(`/api/country/${countryCode}/images`);
+        const res = await fetch(`/api/country/${countryCode}`);
         if (!res.ok) throw new Error(res.statusText);
         const urls = await res.json();
         setHeroImages(urls);
