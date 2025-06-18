@@ -124,24 +124,19 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   const [bgIndex, setBgIndex] = useState(0);
 
   useEffect(() => {
-    async function loadImages() {
-      try {
-        const res = await fetch(`/api/country/${countryCode}/images`);
-        if (!res.ok) throw new Error(`${res.status}`);
-        const urls = await res.json();
-        console.log("Hero image URLs:", urls);
-        setHeroImages(urls);
-      } catch (err) {
-        console.warn("Failed to load hero images:", err);
-      }
-    }
-    loadImages();
+    // Build 5 Unsplash Source URLs directly:
+    const q = encodeURIComponent(countryCode.toLowerCase());
+    const urls = Array.from({ length: 5 }, (_, i) =>
+      `https://source.unsplash.com/1600x900/?${q},landscape&sig=${i}`
+    );
+    setHeroImages(urls);
   }, [countryCode]);
-  // rotate
+
+  // Rotate every 4s:
   useEffect(() => {
     if (!heroImages.length) return;
     const iv = setInterval(() => {
-      setBgIndex((i) => (i + 1) % heroImages.length);
+      setBgIndex(i => (i + 1) % heroImages.length);
     }, 4000);
     return () => clearInterval(iv);
   }, [heroImages]);
