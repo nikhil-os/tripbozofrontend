@@ -95,6 +95,31 @@ const Footer = () => {
           <div className="flex space-x-8">
             <AppLink href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</AppLink>
             <AppLink href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</AppLink>
+          
+                      {/* —— NEW ATTRIBUTION —— */}
+                      <span className="text-gray-500 md:ml-8">
+              Hero images via{' '}
+              <a
+                href="https://unsplash.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white transition-colors"
+              >
+                Unsplash
+              </a>{' '}
+              &{' '}
+              <a
+                href="https://pixabay.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-white transition-colors"
+              >
+                Pixabay
+              </a>
+            </span>
+
+          
+          
           </div>
         </div>
       </div>
