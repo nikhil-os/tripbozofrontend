@@ -4,58 +4,82 @@ import { Redis } from "@upstash/redis";
 
 let redis;
 try {
-  redis = Redis.fromEnv(); // will throw if your env is wrong
+  redis = Redis.fromEnv();
 } catch (e) {
   console.error("🔥 Redis init failed:", e);
 }
 
-const CACHE_TTL    = 12 * 60 * 60;
+const CACHE_TTL    = 12 * 60 * 60; // 12 hrs
 const DAILY_CAP    = 100;
-const DAILY_PREFIX = "unsplash_daily_count";
+const DAILY_PREFIX = "country_api_daily";
 
 export async function GET(req, { params }) {
   const country = (params.country || "").toLowerCase();
-  const cacheKey = `unsplash_src_${country}`;
+  const cacheKey = `country_images_${country}`;
 
   try {
-    // 1) Serve from cache
+    // 1. Serve from Redis cache if exists
     const cached = redis && (await redis.get(cacheKey));
     if (cached) {
       return NextResponse.json(JSON.parse(cached));
     }
 
-    // 2) Rate tilt
-    const today = new Date().toISOString().slice(0,10);
+    // 2. Check daily cap
+    const today = new Date().toISOString().slice(0, 10);
     const rateKey = `${DAILY_PREFIX}_${today}`;
     const todayCount = parseInt((await redis.get(rateKey)) || "0", 10);
 
     if (todayCount >= DAILY_CAP) {
-      return NextResponse.json({ detail: "Daily image cap reached" }, { status: 429 });
+      return NextResponse.json(
+        { detail: "Daily image cap reached" },
+        { status: 429 }
+      );
     }
 
-    // 3) Build URLs
-    const q = encodeURIComponent(country);
-    const urls = Array.from({ length: 5 }, (_, i) =>
-      `https://source.unsplash.com/1600x900/?${q},landscape&sig=${i}`
+    // 3. Fetch images from Wikimedia Commons
+    const wikiRes = await fetch(
+      `https://commons.wikimedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&generator=search&gsrsearch=${encodeURIComponent(
+        country + " landscape"
+      )}&gsrlimit=5&iiprop=url`
     );
 
-    // 4) Cache + bump counter
+    const wikiData = await wikiRes.json();
+    const pages = wikiData?.query?.pages;
+
+    const wikiUrls = pages
+      ? Object.values(pages)
+          .map((p) => p.imageinfo?.[0]?.url)
+          .filter(Boolean)
+      : [];
+
+    const imageUrls = wikiUrls.length > 0
+      ? wikiUrls
+      : Array.from({ length: 5 }, (_, i) =>
+          `https://source.unsplash.com/1600x900/?${encodeURIComponent(
+            country
+          )},landscape&sig=${i}`
+        );
+
+    // 4. Save to Redis + increment rate
     if (redis) {
       await Promise.all([
-        redis.set(cacheKey, JSON.stringify(urls), { ex: CACHE_TTL }),
+        redis.set(cacheKey, JSON.stringify(imageUrls), { ex: CACHE_TTL }),
         redis.incr(rateKey),
         redis.expire(rateKey, 24 * 60 * 60),
       ]);
     }
 
-    return NextResponse.json(urls);
+    return NextResponse.json(imageUrls);
   } catch (err) {
-    console.error("🔥 /api/country/[country] error:", err);
-    // Fallback: still return un‑cached URLs so the page doesn’t 502
-    const q = encodeURIComponent(country);
+    console.error("🔥 API Error:", err);
+
+    // fallback: generate Unsplash image URLs
     const fallback = Array.from({ length: 5 }, (_, i) =>
-      `https://source.unsplash.com/1600x900/?${q},landscape&sig=${i}`
+      `https://source.unsplash.com/1600x900/?${encodeURIComponent(
+        country
+      )},landscape&sig=${i}`
     );
+
     return NextResponse.json(fallback);
   }
 }
