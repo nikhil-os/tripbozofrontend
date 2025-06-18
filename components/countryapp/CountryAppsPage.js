@@ -15,31 +15,9 @@ import {
 } from "react-icons/fa";
 import { initSession, saveSelectedApps } from "@/src/utils/api";
 
-const PIXABAY_KEY = process.env.NEXT_PUBLIC_PIXABAY_KEY;
-const CACHE_TTL = 12 * 60 * 60 * 1000;    // 12h
-const DAILY_CAP = 100;                    // max Pixabay calls per day
-const RATE_KEY = "pixabay_rate";          // localStorage key
-
-function incrementDailyCount() {
-  const today = new Date().toISOString().slice(0,10);
-  let { date, count } = JSON.parse(localStorage.getItem(RATE_KEY) || "{}");
-  if (date !== today) {
-    date = today;
-    count = 0;
-  }
-  count += 1;
-  localStorage.setItem(RATE_KEY, JSON.stringify({ date, count }));
-  return count;
-}
-
-function getDailyCount() {
-  const today = new Date().toISOString().slice(0,10);
-  const stored = JSON.parse(localStorage.getItem(RATE_KEY) || "{}");
-  return stored.date === today ? stored.count : 0;
-}
 
 
-export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
+export default function CountryAppsPage({ countryCode, apps, countryInfo,heroImages = [], }) {
   const router = useRouter();
   const { setShow } = useLoader();
   const storageKey = `selectedAppIds_${countryCode}`;
@@ -59,6 +37,20 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     setSelectedApps([]);
     localStorage.removeItem(storageKey);
   };
+
+
+  const [bgIndex, setBgIndex] = useState(0);
+
+  // rotate background every 4s
+  useEffect(() => {
+    if (!heroImages.length) return;
+    const iv = setInterval(() => {
+      setBgIndex(i => (i + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(iv);
+  }, [heroImages]);
+
+
 
   // Search + category + filter
   const [search, setSearch] = useState("");
@@ -138,63 +130,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
 
 
 
-  // ─────────────────────────────────────────────────────────────
-  // Hero‑banner images from Pixabay + sessionStorage cache
-   // ───────────────── Pixabay Hero ─────────────────────
-   const [heroImages, setHeroImages] = useState([]);
-   const [bgIndex, setBgIndex] = useState(0);
- 
-   useEffect(() => {
-     const key = `pixabay_${countryCode.toLowerCase()}`;
-     const raw = sessionStorage.getItem(key);
- 
-     // Try cache
-     if (raw) {
-       const { ts, urls } = JSON.parse(raw);
-       if (Date.now() - ts < CACHE_TTL) {
-         setHeroImages(urls);
-         return;
-       }
-       sessionStorage.removeItem(key);
-     }
- 
-     // Enforce daily cap
-     if (getDailyCount() >= DAILY_CAP) {
-       console.warn("Pixabay daily cap reached, skipping fetch");
-       return;
-     }
- 
-     // Fetch fresh
-     const query = countryInfo.name || countryCode;
-     fetch(
-       `https://pixabay.com/api/?key=${PIXABAY_KEY}` +
-         `&q=${encodeURIComponent(query)}` +
-         `&image_type=photo&orientation=horizontal&per_page=5&safesearch=true`
-     )
-       .then((r) => r.json())
-       .then((json) => {
-         const urls = (json.hits || []).map((h) => h.largeImageURL);
-         if (!urls.length) return;
-         setHeroImages(urls);
-         sessionStorage.setItem(
-           key,
-           JSON.stringify({ ts: Date.now(), urls })
-         );
-         incrementDailyCount();
-       })
-       .catch((err) => console.warn("Pixabay fetch failed:", err));
-   }, [countryCode, countryInfo.name]);
- 
-   // rotate
-   useEffect(() => {
-     if (!heroImages.length) return;
-     const iv = setInterval(
-       () => setBgIndex((i) => (i + 1) % heroImages.length),
-       4000
-     );
-     return () => clearInterval(iv);
-   }, [heroImages]);
-
+  
 
 
   // Generate background gradients based on country code
@@ -253,16 +189,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
         />
       </div>
     ))}
-    {/* your gradient overlay and text */}
-    <div className="absolute inset-0 bg-gradient-to-b from-[#7b8794]/50 to-[#f7fafc]/0"></div>
-    <div className="relative z-10 flex flex-col justify-center items-center h-full text-white px-6">
-      <div className="flex items-center gap-4 mb-2">
-        <span className="text-3xl font-bold">{countryInfo.code}</span>
-        <h1 className="text-5xl font-extrabold">{countryInfo.name}</h1>
-      </div>
-      <p className="max-w-xl text-center">{countryInfo.description}</p>
-    </div>
-  </div>
+    
 
     {/* // <main className="bg-[#f7fafc] animate-fade-in"> */}
      {/* Header Section */}
@@ -283,10 +210,10 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
               zIndex: 1,
             }}
           />
-        </div>
-        <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-10"> */}
+        </div>*/}
+        <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-10"> 
                  {/* ✅ Dynamically show code, name and description from `countryInfo` */}
-         {/* <div className="flex items-center gap-6 mb-2 mt-8">
+         <div className="flex items-center gap-6 mb-2 mt-8">
            <span className="text-4xl font-bold text-white/80">
              {countryInfo.code}
            </span>
@@ -302,7 +229,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
             style={{ width: "7rem" }}
           ></div>
         </div>
-      </div> */}
+      </div>
       {/* Search & Filter (overlapping hero) */}
       <div className="relative z-20 -mt-8 w-full max-w-[1920px] mx-auto px-2 sm:px-6 md:px-14">
         <div className="flex flex-row gap-3 items-center justify-between">

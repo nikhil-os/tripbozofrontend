@@ -19,7 +19,7 @@ const Footer = () => {
                 height={40} // Adjust height as needed
                 className="rounded-full" // Optional: if your logo is circular
               /> */}
-              <span className="font-display text-2xl sm:text-xl font-bold">Trip Bozo</span>
+              <span className="font-display text-2xl sm:text-xl font-bold">tripbozo</span>
             </div>
             <p className="text-gray-400 text-sm italic -mt-2">Less googling, more going.</p>
             <p className="text-gray-300 text-sm">Your essential companion for seamless travel experiences worldwide.</p>
@@ -28,7 +28,7 @@ const Footer = () => {
              <br></br> */}
       <div className="mt-6 mb-4 flex justify-center items-center space-x-6 ">
         <a
-          href="https://instagram.com/your_instagram_handle"
+          href="https://www.instagram.com/tripbozo?utm_source=qr&igsh=MXRxcjFrMnA2Nmo2Yg=="
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Instagram"
