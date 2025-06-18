@@ -6,6 +6,7 @@ const nextConfig = {
         "play-lh.googleusercontent.com",     // Play Store icons
         "play.google.com",                   // play store pages (if you ever fetch pages)
         "lh3.googleusercontent.com",         // another Google host you might hit
+        "source.unsplash.com",           // Unsplash Source API
       ],
     },
     // Automatically copy logo.png to favicon.ico on build if it doesn't exist

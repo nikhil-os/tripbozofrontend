@@ -17,7 +17,7 @@ import { initSession, saveSelectedApps } from "@/src/utils/api";
 
 
 
-export default function CountryAppsPage({ countryCode, apps, countryInfo,heroImages = [], }) {
+export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   const router = useRouter();
   const { setShow } = useLoader();
   const storageKey = `selectedAppIds_${countryCode}`;
@@ -39,17 +39,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo,heroIma
   };
 
 
-  const [bgIndex, setBgIndex] = useState(0);
-
-  // rotate background every 4s
-  useEffect(() => {
-    if (!heroImages.length) return;
-    const iv = setInterval(() => {
-      setBgIndex(i => (i + 1) % heroImages.length);
-    }, 4000);
-    return () => clearInterval(iv);
-  }, [heroImages]);
-
+  
 
 
   // Search + category + filter
@@ -129,7 +119,34 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo,heroIma
     });
 
 
+  // ───────────────── Hero images ──────────────────
+  const [heroImages, setHeroImages] = useState([]);
+  const [bgIndex, setBgIndex] = useState(0);
 
+  useEffect(() => {
+    async function loadImages() {
+      try {
+        const res = await fetch(`/api/country/${countryCode}`);
+        if (!res.ok) throw new Error(res.statusText);
+        const urls = await res.json();
+        setHeroImages(urls);
+      } catch (err) {
+        console.warn("Failed to load hero images:", err);
+      }
+    }
+    loadImages();
+  }, [countryCode]);
+
+  // rotate
+  useEffect(() => {
+    if (!heroImages.length) return;
+    const iv = setInterval(() => {
+      setBgIndex((i) => (i + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(iv);
+  }, [heroImages]);
+
+  // ───────────────── End Hero images ─────────────
   
 
 
