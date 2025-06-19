@@ -156,7 +156,7 @@ export default function NotFound() {
           We couldn&apos;t find apps for the country you searched.
         </p>
         <p className="text-lg text-gray-600 mb-8">
-          But don&apos;t worry — we're constantly adding new countries and their must-have apps!
+          But don&apos;t worry — we&apos;re constantly adding new countries and their must-have apps!
         </p>
         
         <div className="space-y-6">
