@@ -1,146 +1,47 @@
 // src/app/country/[country]/essentials/page.jsx
 "use client";
 
-import React, { useEffect, useState, useCallback, useLayoutEffect } from "react";
-import { useParams } from "next/navigation";
-import { fetchEssentials,fetchCountryInfo } from "@/src/utils/api";
+import React, { useEffect, useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { fetchEssentials, fetchCountryInfo } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
 
 export default function EssentialsPage() {
   const { country } = useParams();
+  const router = useRouter();
   const { setShow } = useLoader();
 
-  const [countryName, setCountryName] = useState("");  // ← state to hold the human‑readable name
-
-  const FALLBACK = {
-    emergencies: [
-      { name: "Police", phone: "100" },
-      { name: "Fire Brigade", phone: "101" },
-      { name: "Ambulance", phone: "102" },
-      { name: "Women Safety Helpline", phone: "1091" },
-      { name: "Child Helpline", phone: "1098" },
-      { name: "Disaster Management", phone: "108" },
-      { name: "Tourist Helpline", phone: "1363" },
-      { name: "Road Assistance", phone: "1073" },
-      { name: "Coast Guard", phone: "1554" },
-      { name: "Cyber Crime", phone: "155260" },
-      { name: "Anti Poison", phone: "1066" },
-      { name: "Railway Enquiry", phone: "139" },
-      { name: "Airline Enquiry", phone: "1800-180-1407" },
-      { name: "Taxi Services", phone: "1800-123-4567" },
-      { name: "General Emergency", phone: "112" },
-    ],
-    phrases: [
-      { original: "Hello", translation: "Hola" },
-      { original: "Thank you", translation: "Gracias" },
-      { original: "Where is…?", translation: "¿Dónde está…?" },
-    ],
-    tips: [
-      { tip: "Keep emergency numbers handy." },
-      { tip: "Carry some local currency." },
-      { tip: "Save a copy of your passport in your phone." },
-    ],
-  };
-
-  const [data, setData] = useState({
-    emergencies: [],
-    phrases: [],
-    tips: [],
-  });
+  const [countryName, setCountryName] = useState("");
+  const [data, setData] = useState({ emergencies: [], phrases: [], tips: [] });
   const [loading, setLoading] = useState(true);
 
-  // Memoize the fallback data to avoid recreating it on every render
-  const fallbackEmergencies = FALLBACK.emergencies;
-  const fallbackPhrases = FALLBACK.phrases;
-  const fallbackTips = FALLBACK.tips;
-
-  // Immediately hide loader when component mounts
-  useLayoutEffect(() => {
-    setShow(false);
-  }, [setShow]);
-
-
-  // fetch the pretty name
-useEffect(() => {
-  fetchCountryInfo(country.toUpperCase())
-    .then(info => {
-      setCountryName(info.name || country.toUpperCase());
-    })
-    .catch(() => {
-      setCountryName(country.toUpperCase());
-    });
-}, [country]);
-
-
+  // Only get the pretty name once
   useEffect(() => {
-    let isMounted = true; // Flag to track if component is mounted
-    
-    // Immediately hide any existing loader
-    setShow(false);
-    
-    async function loadData() {
-      if (isMounted) {
-        setShow(true); // Show the loader
-      }
-      
-      try {
-        const json = await fetchEssentials(country.toUpperCase());
-        
-        if (isMounted) {
-          setData({
-            emergencies:
-              json.emergencies?.length > 0
-                ? json.emergencies
-                : fallbackEmergencies,
-            phrases:
-              json.phrases?.length > 0 ? json.phrases : fallbackPhrases,
-            tips: json.tips?.length > 0 ? json.tips : fallbackTips,
-          });
-          // Explicitly hide loader when data is loaded
-          setShow(false);
-        }
-      } catch (error) {
-        console.error("Error fetching essentials:", error);
-        if (isMounted) {
-          // Use fallback data on error
-          setData({
-            emergencies: fallbackEmergencies,
-            phrases: fallbackPhrases,
-            tips: fallbackTips,
-          });
-          // Explicitly hide loader on error
-          setShow(false);
-        }
-      } finally {
-        // Always hide the loader and set loading to false, regardless of success or failure
-        if (isMounted) {
-          setLoading(false);
-          setShow(false); // Hide the loader
-        }
-      }
-    }
-    
-    loadData();
-    
-    // Cleanup function to handle component unmounting
-    return () => {
-      isMounted = false;
-      setShow(false); // Ensure loader is hidden if component unmounts during fetch
-    };
-  }, [country, setShow, fallbackEmergencies, fallbackPhrases, fallbackTips]);
+    fetchCountryInfo(country.toUpperCase())
+      .then((info) => setCountryName(info.name || country.toUpperCase()))
+      .catch(() => setCountryName(country.toUpperCase()));
+  }, [country]);
 
-  // Make sure loader is hidden when component unmounts
+  // Fetch the essentials, but DO NOT touch the loader here
   useEffect(() => {
-    return () => {
-      setShow(false);
-    };
-  }, [setShow]);
+    fetchEssentials(country.toUpperCase())
+      .then((json) => {
+        setData({
+          emergencies: json.emergencies.length ? json.emergencies : '',
+          phrases: json.phrases.length ? json.phrases : '',
+          tips: json.tips.length ? json.tips : '',
+        });
+      })
+      .catch(() => {
+        // on error, set your fallback
+      })
+      .finally(() => setLoading(false));
+  }, [country]);
 
   if (loading) {
-    return <p className="p-8 text-center text-gray-600">Loading…</p>;
+    return <p className="p-8 text-center">Loading…</p>;
   }
 
-  const { emergencies, phrases, tips } = data;
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-[#e0f7fa] via-[#f5fafd] to-[#e3f2fd] animate-fade-in">

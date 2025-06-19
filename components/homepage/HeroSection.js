@@ -64,13 +64,19 @@ const HeroSection = () => {
       return;
     }
 
+// start both spinners
+setLoading(true);
+setShow(true);
+setErrorMsg("");
+
+
 // If it's exactly two letters, try it as an ISO code first
     if (/^[A-Za-z]{2}$/.test(trimmed)) {
         // See if we actually have metadata for that code
         const info = await fetchCountryInfo(trimmed.toUpperCase());
         if (info?.name) {
           setLoading(false);
-          setShow(false);
+          // setShow(false);
           router.push(`/country/${trimmed.toLowerCase()}`);
           return;
         }
@@ -78,7 +84,7 @@ const HeroSection = () => {
         // Otherwise search by full name
         const results = await searchCountries(trimmed);
         setLoading(false);
-        setShow(false);
+        // setShow(false);
     
       
     
