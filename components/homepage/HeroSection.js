@@ -27,6 +27,10 @@ function useScrollReveal(ref, options = {}) {
   return isVisible;
 }
 
+
+
+
+
 // Hero images with descriptive alt text for better SEO
 const heroImages = [
   { src: "/IMG1.jpg", alt: "Beautiful beach destination for travelers" },
@@ -52,8 +56,17 @@ const HeroSection = () => {
     const [suggestions, setSuggestions] = useState([]);
     const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
 
+     // → NEW: highlight index for keyboard nav
+     const [highlightedIndex, setHighlightedIndex] = useState(-1);
+
+
     // Simple in‐memory cache so we don’t refetch on selection
     const prefetchCache = useRef(new Map());
+
+
+     // → NEW: refs for click‑outside  input
+     const inputRef = useRef(null);
+     const dropdownRef = useRef(null);
 
 
   // ――― Search Bar State & Handlers ―――
@@ -138,11 +151,35 @@ setErrorMsg("");
 
   }};
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
-    }
-  };
+  // → NEW: full keyboard navigation
+const handleKeyDown = (e) => {
+  if (!isSuggestionsVisible) {
+    if (e.key === "Enter") return handleSearch();
+    return;
+  }
+  switch (e.key) {
+    case "ArrowDown":
+      e.preventDefault();
+      setHighlightedIndex(i => Math.min(i + 1, suggestions.length - 1));
+      break;
+    case "ArrowUp":
+      e.preventDefault();
+      setHighlightedIndex(i => Math.max(i - 1, 0));
+      break;
+    case "Enter":
+      e.preventDefault();
+      if (highlightedIndex >= 0) {
+        handleSelect(suggestions[highlightedIndex]);
+      } else {
+        handleSearch();
+      }
+      break;
+    case "Escape":
+      setIsSuggestionsVisible(false);
+      break;
+  }
+};
+
   // ――― End Search Bar Logic ―――
 
 
@@ -160,6 +197,24 @@ setErrorMsg("");
           }
           router.push(`/country/${code}`);
         };
+
+
+        useEffect(() => {
+          const onClickOutside = (e) => {
+            if (
+              dropdownRef.current &&
+              !dropdownRef.current.contains(e.target) &&
+              inputRef.current &&
+              !inputRef.current.contains(e.target)
+            ) {
+              setIsSuggestionsVisible(false);
+            }
+          };
+          document.addEventListener("mousedown", onClickOutside);
+          return () => document.removeEventListener("mousedown", onClickOutside);
+        }, []);
+        
+
 
 
   const [bgIndex, setBgIndex] = useState(0);
@@ -254,12 +309,13 @@ setErrorMsg("");
                   <path d="m21 21-4.3-4.3"></path>
                 </svg>
                 <input
+                ref={inputRef}
                   type="text"
                   aria-label="Search country"
                     placeholder="Eg. France or FR"
                   value={query}
                   onChange={handleInputChange}
-                  onKeyPress={handleKeyPress}
+                  onKeyDown={handleKeyDown}
                     className="h-10 sm:h-12 w-full pl-3 pr-4 text-gray-800 text-base sm:text-lg font-medium placeholder-gray-400 focus:outline-none bg-transparent"
                 />
               </div>
@@ -267,12 +323,33 @@ setErrorMsg("");
 
   {/* ――― Autocomplete Suggestions ――― */}
            {isSuggestionsVisible && suggestions.length > 0 && (
-           <ul className="absolute bg-white w-full max-w-2xl mt-1 rounded-lg shadow-lg z-50">
+           <ul
+              ref={dropdownRef}
+              className="
+                absolute
+                top-full     /* sits directly below the input */
+                left-0
+                w-full
+                mt-1         /* small gap */
+                bg-white
+                border border-gray-200
+                rounded-lg
+                shadow-lg
+                z-50
+                max-h-60
+                overflow-auto
+              "
+            >
              {suggestions.map((c) => (
-               <li
-                 key={c.code}
-                 onClick={() => handleSelect(c)}
-                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
+      <li
+ key={c.code}
+ onClick={() => handleSelect(c)}
+       onMouseEnter={() => setHighlightedIndex(idx)}
+       className={`px-4 py-2 cursor-pointer ${
+         idx === highlightedIndex
+           ? "bg-teal-100 text-teal-900"
+           : "hover:bg-gray-100"
+       }`}
                >
                  {c.name} ({c.code})
                </li>

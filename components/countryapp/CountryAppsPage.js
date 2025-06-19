@@ -148,8 +148,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   const heroSrc = `/img/${upperCountryCode}.webp`;
 
   
-  const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0);
-  const countryGradient = getCountryGradient(countryCode);
+
   
   useEffect(() => {
     const iv = setInterval(
