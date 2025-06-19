@@ -124,32 +124,32 @@ export async function searchCountries(query) {
  */
 
 /** Fetch country metadata (code, name, description, flag, categories, etc.) */
-// export async function fetchCountryInfo(countryCode) {
-//   // if (!useApi) {
-//   //   return { code: countryCode, name: countryCode, description: "", flag: null };
-//   // }
-//   try {
-//     const res = await apiClient.get(`/country/${countryCode}/`);
-//     return res.data;
-//   } catch (err) {
-//     console.warn(`Failed to fetch country info for ${countryCode}:`, err);
-//     return { code: countryCode, name: countryCode, description: "",};
-//   }
-// }
+export async function fetchCountryInfo(countryCode) {
+  // if (!useApi) {
+  //   return { code: countryCode, name: countryCode, description: "", flag: null };
+  // }
+  try {
+    const res = await apiClient.get(`/country/${countryCode}/`);
+    return res.data;
+  } catch (err) {
+    console.warn(`Failed to fetch country info for ${countryCode}:`, err);
+    return { code: countryCode, name: countryCode, description: "",};
+  }
+}
 
-// /** Fetch the apps for a given country code */
-// export async function fetchAppsByCountry(countryCode) {
-//   // if (!useApi) {
-//   //   return sampleApps;
-//   // }
-//   try {
-//     const res = await apiClient.get(`/country/${countryCode}/apps/`);
-//     return Array.isArray(res.data) ? res.data : [];
-//   } catch (err) {
-//     console.warn(`Failed to fetch apps for country ${countryCode}:`, err);
-//     return [];
-//   }
-// }
+/** Fetch the apps for a given country code */
+export async function fetchAppsByCountry(countryCode) {
+  // if (!useApi) {
+  //   return sampleApps;
+  // }
+  try {
+    const res = await apiClient.get(`/country/${countryCode}/apps/`);
+    return Array.isArray(res.data) ? res.data : [];
+  } catch (err) {
+    console.warn(`Failed to fetch apps for country ${countryCode}:`, err);
+    return [];
+  }
+}
 
 export async function downloadAppList(sessionId) {
     // GET /personalized-list/download-text/:sessionId/
@@ -171,132 +171,40 @@ export async function downloadAppList(sessionId) {
  * 7) Fetch essentials data for a given country code with improved error handling
  *    GET /country/<countryCode>/essentials/
  */
-  // export async function fetchEssentials(countryCode) {
-  //   if (!useApi) {
-  //     console.info("[TripBozo API] fetchEssentials disabled → returning dummy data");
-  //     return {
-  //       emergencies: [],
-  //       phrases: [],
-  //       tips: [],
-  //     };
-  //   }
+  export async function fetchEssentials(countryCode) {
+    if (!useApi) {
+      console.info("[TripBozo API] fetchEssentials disabled → returning dummy data");
+      return {
+        emergencies: [],
+        phrases: [],
+        tips: [],
+      };
+    }
   
-  //   try {
-  //   // Create a promise that rejects after 5 seconds
-  //   const timeoutPromise = new Promise((_, reject) => {
-  //     setTimeout(() => reject(new Error('Request timed out')), 5000);
-  //   });
+    try {
+    // Create a promise that rejects after 5 seconds
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Request timed out')), 5000);
+    });
 
-  //   // Race the actual request against the timeout
-  //   const res = await Promise.race([
-  //     apiClient.get(`/country/${countryCode}/essentials/`),
-  //     timeoutPromise
-  //   ]);
-
-  //   return res.data || {
-  //     emergencies: [],
-  //     phrases: [],
-  //     tips: [],
-  //   };
-  //   } catch (err) {
-  //     console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
-  //   // Return an empty object instead of throwing, so the component can handle it
-  //     return {
-  //       emergencies: [],
-  //       phrases: [],
-  //       tips: [],
-  //     };
-  //   }
-  // }
-
-  import { redis } from "@/lib/redis";
-
-
-export async function fetchCountryInfo(countryCode) {
-  const key = `country_info_${countryCode.toUpperCase()}`;
-
-  try {
-    // 1. Try Upstash Redis
-    const cached = await redis.get(key);
-    if (cached) {
-      console.info(`✅ [Redis HIT] ${key}`);
-      return cached;
-    }
-
-    // 2. Fallback to Render API (which itself is cached in Django)
-    const res = await apiClient.get(`/country/${countryCode}/`);
-    const data = res.data;
-
-    // 3. Save to Redis for future use (TTL = 1h)
-    await redis.set(key, data, { ex: 3600 });
-
-    return data;
-  } catch (err) {
-    console.warn(`❌ Redis or API failed for ${key}:`, err.message);
-    return {
-      code: countryCode,
-      name: countryCode,
-      description: "",
-    };
-  }
-}
-
-
-export async function fetchAppsByCountry(countryCode) {
-  const key = `apps_by_country_${countryCode.toUpperCase()}`;
-
-  try {
-    const cached = await redis.get(key);
-    if (cached) {
-      console.info(`✅ [Redis HIT] ${key}`);
-      return cached;
-    }
-
-    const res = await apiClient.get(`/country/${countryCode}/apps/`);
-    const apps = Array.isArray(res.data) ? res.data : [];
-
-    await redis.set(key, apps, { ex: 3600 });
-
-    return apps;
-  } catch (err) {
-    console.warn(`❌ Failed apps fetch for ${countryCode}:`, err.message);
-    return [];
-  }
-}
-
-export async function fetchEssentials(countryCode) {
-  const key = `essentials_${countryCode.toUpperCase()}`;
-  try {
-    const cached = await redis.get(key);
-    if (cached) {
-      console.info(`✅ [Redis HIT] ${key}`);
-      return cached;
-    }
-
-    const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("Request timed out")), 5000)
-    );
-
+    // Race the actual request against the timeout
     const res = await Promise.race([
       apiClient.get(`/country/${countryCode}/essentials/`),
-      timeoutPromise,
+      timeoutPromise
     ]);
 
-    const data = res.data || {
+    return res.data || {
       emergencies: [],
       phrases: [],
       tips: [],
     };
-
-    await redis.set(key, data, { ex: 7200 }); // 2 hours
-
-    return data;
-  } catch (err) {
-    console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
-    return {
-      emergencies: [],
-      phrases: [],
-      tips: [],
-    };
+    } catch (err) {
+      console.warn(`[TripBozo API] Failed to fetch essentials for ${countryCode}:`, err.message);
+    // Return an empty object instead of throwing, so the component can handle it
+      return {
+        emergencies: [],
+        phrases: [],
+        tips: [],
+      };
+    }
   }
-}

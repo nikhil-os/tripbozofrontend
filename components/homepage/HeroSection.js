@@ -47,6 +47,15 @@ const HeroSection = () => {
   const router = useRouter();
   const { setShow } = useLoader();
 
+
+ // ─── Autocomplete state ───
+    const [suggestions, setSuggestions] = useState([]);
+    const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
+
+    // Simple in‐memory cache so we don’t refetch on selection
+    const prefetchCache = useRef(new Map());
+
+
   // ――― Search Bar State & Handlers ―――
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
@@ -55,7 +64,42 @@ const HeroSection = () => {
   const handleInputChange = (e) => {
     setQuery(e.target.value);
     setErrorMsg("");
+    // kickoff suggestion lookup
+      triggerSuggestions(e.target.value);
   };
+
+
+   // Debounce helper
+       const debounceRef = useRef(null);
+       const triggerSuggestions = (text) => {
+         clearTimeout(debounceRef.current);
+         if (!text.trim()) {
+           setSuggestions([]);
+           return;
+         }
+         debounceRef.current = setTimeout(async () => {
+           try {
+             const results = await searchCountries(text.trim());
+             setSuggestions(results);
+             setIsSuggestionsVisible(true);
+             // prefetch each result
+             results.forEach(async (c) => {
+               const code = c.code.toLowerCase();
+               if (!prefetchCache.current.has(code)) {
+                 const [info, apps] = await Promise.all([
+                   fetchCountryInfo(code),
+                   fetchAppsByCountry(code),
+                 ]);
+                 prefetchCache.current.set(code, { info, apps });
+               }
+             });
+           } catch {
+             setSuggestions([]);
+           }
+         }, 300);
+       };
+
+
 
   const handleSearch = async () => {
     const trimmed = query.trim();
@@ -63,7 +107,7 @@ const HeroSection = () => {
       setErrorMsg("Please enter a country name or code.");
       return;
     }
-
+// If user clicked “Search” instead of selecting one
 // start both spinners
 setLoading(true);
 setShow(true);
@@ -100,6 +144,23 @@ setErrorMsg("");
     }
   };
   // ――― End Search Bar Logic ―――
+
+
+  const handleSelect = (country) => {
+          const code = country.code.toLowerCase();
+          setLoading(true);
+          setShow(true);
+          // we already prefetched
+          if (!prefetchCache.current.has(code)) {
+            // fallback if something went wrong
+            prefetchCache.current.set(code, {
+              info: fetchCountryInfo(code),
+              apps: fetchAppsByCountry(code),
+            });
+          }
+          router.push(`/country/${code}`);
+        };
+
 
   const [bgIndex, setBgIndex] = useState(0);
   const howItWorksRef = useRef(null);
@@ -202,6 +263,25 @@ setErrorMsg("");
                     className="h-10 sm:h-12 w-full pl-3 pr-4 text-gray-800 text-base sm:text-lg font-medium placeholder-gray-400 focus:outline-none bg-transparent"
                 />
               </div>
+
+
+  {/* ――― Autocomplete Suggestions ――― */}
+           {isSuggestionsVisible && suggestions.length > 0 && (
+           <ul className="absolute bg-white w-full max-w-2xl mt-1 rounded-lg shadow-lg z-50">
+             {suggestions.map((c) => (
+               <li
+                 key={c.code}
+                 onClick={() => handleSelect(c)}
+                 className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-gray-800"
+               >
+                 {c.name} ({c.code})
+               </li>
+             ))}
+           </ul>
+         )}
+
+
+
               <button
                 onClick={handleSearch}
                 disabled={loading}
@@ -235,7 +315,7 @@ setErrorMsg("");
               </button>
               </div>
             </div>
-
+{/* End Autocomplete Suggestions */}
             {errorMsg && (
               <p className="mt-4 text-red-500 font-bold text-lg drop-shadow-lg">{errorMsg}</p>
             )}
