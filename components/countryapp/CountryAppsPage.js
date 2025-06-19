@@ -145,33 +145,8 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   
    // Convert countryCode to uppercase for image path
    const upperCountryCode = countryCode.toUpperCase();
-  const heroSrc = `/img/${upperCountryCode}.jpg`;
+  const heroSrc = `/img/${upperCountryCode}.webp`;
 
-  // Generate background gradients based on country code
-  const getCountryGradient = (code) => {
-    // Map country codes to color schemes
-    const colorMap = {
-      AU: ['#00843D', '#FFCD00'], // Australia: green and gold
-      TH: ['#FF0000', '#FFFFFF', '#0038B8'], // Thailand: red, white, blue
-      FR: ['#0055A4', '#FFFFFF', '#EF4135'], // France: blue, white, red
-      IT: ['#008C45', '#F4F5F0', '#CD212A'], // Italy: green, white, red
-      JP: ['#FFFFFF', '#BC002D'], // Japan: white and red
-      US: ['#3C3B6E', '#FFFFFF', '#B22234'], // USA: blue, white, red
-      IN: ['#FF9933', '#FFFFFF', '#138808'], // India: saffron, white, green
-      // Default colors for other countries
-      DEFAULT: ['#7b8794', '#f7fafc']
-    };
-    
-    const colors = colorMap[code] || colorMap.DEFAULT;
-    
-    if (colors.length === 2) {
-      return `linear-gradient(to bottom, ${colors[0]}, ${colors[1]})`;
-    } else if (colors.length === 3) {
-      return `linear-gradient(to bottom, ${colors[0]} 33%, ${colors[1]} 33%, ${colors[1]} 66%, ${colors[2]} 66%)`;
-    }
-    
-    return `linear-gradient(to bottom, ${colors[0]}, #f7fafc)`;
-  };
   
   const [activeBackgroundIndex, setActiveBackgroundIndex] = useState(0);
   const countryGradient = getCountryGradient(countryCode);
@@ -195,6 +170,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
      <div className="relative w-full h-[340px] overflow-hidden rounded-b-3xl shadow-lg">
         <NextImage
           src={heroSrc}
+          placeholder="blur"
           alt={`${countryInfo.name} banner`}
           fill
           style={{ objectFit: "cover" }}
