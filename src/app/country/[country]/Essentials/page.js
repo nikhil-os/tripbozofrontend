@@ -27,9 +27,9 @@ export default function EssentialsPage() {
     fetchEssentials(country.toUpperCase())
       .then((json) => {
         setData({
-          emergencies: json.emergencies.length ? json.emergencies : '',
-          phrases: json.phrases.length ? json.phrases : '',
-          tips: json.tips.length ? json.tips : '',
+          emergencies: json.emergencies.length ? json.emergencies : [],
+          phrases: json.phrases.length ? json.phrases : [],
+          tips: json.tips.length ? json.tips : [],
         });
       })
       .catch(() => {
@@ -37,6 +37,8 @@ export default function EssentialsPage() {
       })
       .finally(() => setLoading(false));
   }, [country]);
+
+  const { emergencies, phrases, tips } = data;
 
   if (loading) {
     return <p className="p-8 text-center">Loading…</p>;

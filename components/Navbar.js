@@ -57,8 +57,8 @@ const Navbar = () => {
         <div className="flex items-center z-20 pl-1">
           <AppLink href="/">
             <Image
-              src="/logo.png" // Path to your logo in the public directory
-              alt="Trip Bozo Logo"
+              src="/icons/icon.png" // Path to your logo in the public directory
+              alt="tripbozo Logo"
               width={150}  // Adjust width as needed
               height={150} // Adjust height as needed
               priority // Optional: for images above the fold
