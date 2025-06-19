@@ -143,7 +143,9 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
 
   // // ───────────────── End Hero images ─────────────
   
-  const heroSrc = `/img/${countryCode}.jpg`;
+   // Convert countryCode to uppercase for image path
+   const upperCountryCode = countryCode.toUpperCase();
+  const heroSrc = `/img/${upperCountryCode}.jpg`;
 
   // Generate background gradients based on country code
   const getCountryGradient = (code) => {
