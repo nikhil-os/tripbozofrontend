@@ -150,13 +150,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   
 
   
-  useEffect(() => {
-    const iv = setInterval(
-      () => setActiveBackgroundIndex((i) => (i + 1) % 3),
-      4000
-    );
-    return () => clearInterval(iv);
-  }, []);
+
 
 
   // console.log("Hero image URLs:", heroImages);
@@ -186,26 +180,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
         />
     
 
-    {/* // <main className="bg-[#f7fafc] animate-fade-in"> */}
-     {/* Header Section */}
-     {/* <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden animate-fade-in-up">
-        <div className="absolute inset-0 w-full h-full z-0">
-          <div 
-            className="absolute inset-0 opacity-40"
-            style={{
-              background: countryGradient,
-              zIndex: 0,
-            }}
-          />
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(20,20,20,0.55) 0%, rgba(20,20,20,0.25) 40%, rgba(20,20,20,0.05) 70%, rgba(20,20,20,0) 100%)",
-              zIndex: 1,
-            }}
-          />
-        </div>*/}
+    
         <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-10"> 
                  {/* ✅ Dynamically show code, name and description from `countryInfo` */}
          <div className="flex items-center gap-6 mb-2 mt-8">

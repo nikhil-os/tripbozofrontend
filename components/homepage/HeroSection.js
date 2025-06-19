@@ -363,8 +363,8 @@ const handleKeyDown = (e) => {
        onMouseEnter={() => setHighlightedIndex(idx)}
        className={`px-4 py-2 cursor-pointer ${
          idx === highlightedIndex
-           ? "bg-teal-100 text-teal-900"
-           : "hover:bg-gray-100"
+               ? "bg-teal-500 text-white"      /* selected/highlighted */
+               : "text-gray-900 hover:bg-teal-50" /* default + hover */
        }`}
                >
                  {c.name} ({c.code})
