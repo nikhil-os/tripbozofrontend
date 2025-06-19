@@ -145,7 +145,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   
    // Convert countryCode to uppercase for image path
    const upperCountryCode = countryCode.toUpperCase();
-  const heroSrc = `/img/${upperCountryCode}.webp`;
+  const heroSrc = `/img/${upperCountryCode}.jpg`;
 
   
 
