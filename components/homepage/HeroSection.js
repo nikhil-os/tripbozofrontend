@@ -338,40 +338,46 @@ const handleKeyDown = (e) => {
 
 
   {/* ――― Autocomplete Suggestions ――― */}
-           {isSuggestionsVisible && suggestions.length > 0 && (
-           <ul
-              ref={dropdownRef}
-              className="
-                absolute
-                top-full     /* sits directly below the input */
-                left-0
-                w-full
-                mt-1         /* small gap */
-                bg-white
-                border border-gray-200
-                rounded-lg
-                shadow-lg
-                z-50
-                max-h-60
-                overflow-auto
-              "
-            >
-             {suggestions.map((c, idx) => (
+  {isSuggestionsVisible && suggestions.length > 0 && (
+  <ul
+    ref={dropdownRef}
+    className="
+      absolute top-full left-0 w-full mt-2
+      bg-white/50            /* 50% transparent */
+      backdrop-blur-md       /* glassy frosted effect */
+      border border-white/30 /* very light border */
+      rounded-xl
+      shadow-2xl
+      z-50
+      max-h-64 overflow-auto
+      font-serif             /* classy serif font */
+      text-gray-800
+    "
+  >
+    {suggestions.map((c, idx) => (
       <li
- key={c.code}
- onClick={() => handleSelect(c)}
-       onMouseEnter={() => setHighlightedIndex(idx)}
-       className={`px-4 py-2 cursor-pointer ${
-         idx === highlightedIndex
-               ? "bg-teal-500 text-white"      /* selected/highlighted */
-               : "text-gray-900 hover:bg-teal-50" /* default + hover */
-       }`}
-               >
-                 {c.name} ({c.code})
-               </li>
-             ))}
-           </ul>
-         )}
+        key={c.code}
+        onClick={() => handleSelect(c)}
+        onMouseEnter={() => setHighlightedIndex(idx)}
+        className={`
+          flex items-center px-4 py-3 mb-1
+          rounded-lg
+          cursor-pointer
+          transition-all duration-150 ease-out
+          ${
+            idx === highlightedIndex
+              ? "bg-white/70 text-teal-800 shadow-inner scale-100"
+              : "hover:bg-white/30 hover:scale-[1.02]"
+          }
+        `}
+      >
+        {/* subtle fade-in for each item */}
+        <span className="animate-fade-in">{c.name}</span>
+        <span className="ml-auto text-sm tracking-wide">({c.code})</span>
+      </li>
+    ))}
+  </ul>
+)}
 
 
 
