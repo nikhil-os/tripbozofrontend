@@ -209,7 +209,8 @@ export async function downloadAppList(sessionId) {
   //   }
   // }
 
-  import { redis } from "./redisClient";
+  import { redis } from "@/lib/redis";
+
 
 export async function fetchCountryInfo(countryCode) {
   const key = `country_info_${countryCode.toUpperCase()}`;
