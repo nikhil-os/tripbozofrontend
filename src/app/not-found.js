@@ -153,10 +153,10 @@ export default function NotFound() {
         <div className="text-8xl mb-6">😕</div>
         <h1 className="text-3xl font-bold text-gray-800 mb-4">Country Not Found!</h1>
         <p className="text-lg text-gray-600 mb-6">
-          We couldn't find apps for the country you searched.
+          We couldn&apos;t find apps for the country you searched.
         </p>
         <p className="text-lg text-gray-600 mb-8">
-          But don't worry — we're constantly adding new countries and their must-have apps!
+          But don&apos;t worry — we're constantly adding new countries and their must-have apps!
         </p>
         
         <div className="space-y-6">
