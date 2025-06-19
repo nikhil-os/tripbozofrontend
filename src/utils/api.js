@@ -9,7 +9,7 @@ const useApi = true;
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 10000 
+  // timeout: 30000 
 });
 
 // Blob client only for downloading files

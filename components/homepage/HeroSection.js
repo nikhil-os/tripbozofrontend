@@ -85,32 +85,48 @@ const HeroSection = () => {
    // Debounce helper
        const debounceRef = useRef(null);
        const triggerSuggestions = (text) => {
-         clearTimeout(debounceRef.current);
-         if (!text.trim()) {
-           setSuggestions([]);
-           return;
-         }
-         debounceRef.current = setTimeout(async () => {
-           try {
-             const results = await searchCountries(text.trim());
-             setSuggestions(results);
-             setIsSuggestionsVisible(true);
-             // prefetch each result
-             results.forEach(async (c) => {
-               const code = c.code.toLowerCase();
-               if (!prefetchCache.current.has(code)) {
-                 const [info, apps] = await Promise.all([
-                   fetchCountryInfo(code),
-                   fetchAppsByCountry(code),
-                 ]);
-                 prefetchCache.current.set(code, { info, apps });
-               }
-             });
-           } catch {
-             setSuggestions([]);
-           }
-         }, 300);
-       };
+        clearTimeout(debounceRef.current);
+        if (!text.trim()) {
+          setSuggestions([]);
+          return;
+        }
+      
+        debounceRef.current = setTimeout(async () => {
+          const results = await searchCountries(text.trim());
+          setSuggestions(results);
+          setIsSuggestionsVisible(true);
+      
+         // Prefetch top 5 with concurrency limit
+          const MAX_CONCURRENT = 3;
+          let inFlight = 0;
+          const queue = [];
+      
+          results.slice(0, 5).forEach((c) => {
+            const code = c.code.toLowerCase();
+            if (prefetchCache.current.has(code)) return;
+      
+            const task = async () => {
+              try {
+                const info = await fetchCountryInfo(code);
+                const apps = await fetchAppsByCountry(code);
+                prefetchCache.current.set(code, { info, apps });
+              } catch (err) {
+                console.warn(`Prefetch failed for ${code}:`, err.message);
+              } finally {
+                inFlight--;
+                if (queue.length) queue.shift()();
+              }
+            };
+      
+            queue.push(task);
+          });
+      
+          while (inFlight < MAX_CONCURRENT && queue.length) {
+            inFlight++;
+            queue.shift()();
+          }
+        }, 300);
+      };
 
 
 
@@ -340,7 +356,7 @@ const handleKeyDown = (e) => {
                 overflow-auto
               "
             >
-             {suggestions.map((c) => (
+             {suggestions.map((c, idx) => (
       <li
  key={c.code}
  onClick={() => handleSelect(c)}
