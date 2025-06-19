@@ -99,7 +99,7 @@ const Footer = () => {
                       {/* —— NEW ATTRIBUTION —— */}
                       <span className="text-gray-500 md:ml-8">
               Hero images via{' '}
-              <a
+              {/* <a
                 href="https://unsplash.com"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -107,7 +107,7 @@ const Footer = () => {
               >
                 Unsplash
               </a>{' '}
-              &{' '}
+              &{' '} */}
               <a
                 href="https://pixabay.com"
                 target="_blank"

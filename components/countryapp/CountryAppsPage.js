@@ -119,31 +119,31 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
     });
 
 
-  // ───────────────── Hero images ──────────────────
-  const [heroImages, setHeroImages] = useState([]);
-  const [bgIndex, setBgIndex] = useState(0);
+  // // ───────────────── Hero images ──────────────────
+  // const [heroImages, setHeroImages] = useState([]);
+  // const [bgIndex, setBgIndex] = useState(0);
 
-  useEffect(() => {
-    // Build 5 Unsplash Source URLs directly:
-    const q = encodeURIComponent(countryCode.toLowerCase());
-    const urls = Array.from({ length: 5 }, (_, i) =>
-      `https://source.unsplash.com/1600x900/?${q},landscape&sig=${i}`
-    );
-    setHeroImages(urls);
-  }, [countryCode]);
+  // useEffect(() => {
+  //   // Build 5 Unsplash Source URLs directly:
+  //   const q = encodeURIComponent(countryCode.toLowerCase());
+  //   const urls = Array.from({ length: 5 }, (_, i) =>
+  //     `https://source.unsplash.com/1600x900/?${q},landscape&sig=${i}`
+  //   );
+  //   setHeroImages(urls);
+  // }, [countryCode]);
 
-  // Rotate every 4s:
-  useEffect(() => {
-    if (!heroImages.length) return;
-    const iv = setInterval(() => {
-      setBgIndex(i => (i + 1) % heroImages.length);
-    }, 4000);
-    return () => clearInterval(iv);
-  }, [heroImages]);
+  // // Rotate every 4s:
+  // useEffect(() => {
+  //   if (!heroImages.length) return;
+  //   const iv = setInterval(() => {
+  //     setBgIndex(i => (i + 1) % heroImages.length);
+  //   }, 4000);
+  //   return () => clearInterval(iv);
+  // }, [heroImages]);
 
-  // ───────────────── End Hero images ─────────────
+  // // ───────────────── End Hero images ─────────────
   
-
+  const heroSrc = `/img/${countryCode}.jpg`;
 
   // Generate background gradients based on country code
   const getCountryGradient = (code) => {
@@ -183,30 +183,30 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
   }, []);
 
 
-  console.log("Hero image URLs:", heroImages);
+  // console.log("Hero image URLs:", heroImages);
 
 
 
   return (
     <main className="bg-[#f7fafc] animate-fade-in">
-      {/* Hero Section */}
-    <div className="relative w-full h-[340px] overflow-hidden rounded-b-3xl shadow-lg">
-    {heroImages.map((src, idx) => (
-      <div
-        key={idx}
-        className={`absolute inset-0 transition-opacity duration-1000 ${
-          idx === bgIndex ? "opacity-100" : "opacity-0"
-        }`}
-      >
+     {/* Hero Section */}
+     <div className="relative w-full h-[340px] overflow-hidden rounded-b-3xl shadow-lg">
         <NextImage
-          src={src}
-          alt={`Background ${idx + 1}`}
+          src={heroSrc}
+          alt={`${countryInfo.name} banner`}
           fill
-          unoptimized     
           style={{ objectFit: "cover" }}
+          priority
         />
-      </div>
-    ))}
+
+        {/* subtle gradient overlay for text contrast */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(90deg, rgba(20,20,20,0.55) 0%, rgba(20,20,20,0.25) 40%, rgba(20,20,20,0.05) 70%, rgba(20,20,20,0) 100%)",
+          }}
+        />
     
 
     {/* // <main className="bg-[#f7fafc] animate-fade-in"> */}
