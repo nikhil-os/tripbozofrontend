@@ -52,19 +52,23 @@ const Navbar = () => {
 
   return (
     <nav className="fixed w-full top-0 left-0 z-50 bg-white shadow-sm">
-      <div className="w-[98%] mx-auto py-4 flex justify-between items-center relative">
+      <div className="w-[98%] mx-auto py-1 sm:py-4 flex justify-between items-center relative">
+
         {/* Left: Brand - pushed to extreme left */}
         <div className="flex items-center z-20 pl-1">
           <AppLink href="/">
-            <Image
-              src="/icons/icon.png" // Path to your logo in the public directory
-              alt="tripbozo Logo"
-              width={150}  // Adjust width as needed
-              height={150} // Adjust height as needed
-              priority // Optional: for images above the fold
-              className="rounded-full cursor-pointer" // Optional: if your logo is circular
-            />
+            <div className="w-30 sm:w-32"> {/* responsive wrapper width */}
+              <Image
+                src="/icons/icon.png"
+                alt="trip Logo"
+                width={150} // Keep full resolution
+                height={150}
+                priority
+                className="rounded-full w-full h-auto" // scale visually
+              />
+            </div>
           </AppLink>
+
         </div>
 
         {/* Hamburger Menu Button (Mobile Only) */}

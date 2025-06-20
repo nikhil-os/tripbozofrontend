@@ -297,16 +297,37 @@ const handleKeyDown = (e) => {
         <div className="w-full max-w-5xl mx-auto text-center flex flex-col items-center justify-center">
           {/* Content */}
           <div className="relative z-10 text-white w-full">
-            <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-extrabold mb-8 animate-fade-in-up transition-all duration-700 leading-tight drop-shadow-xl">
+          <h1 className="
+              text-4xl      /* mobile */
+              sm:text-5xl   /* ≥640px */
+              md:text-6xl   /* ≥768px */
+              lg:text-7xl   /* ≥1024px */
+              font-extrabold mb-8 animate-fade-in-up transition-all duration-700 leading-tight drop-shadow-xl
+            ">
               Discover the Perfect Apps for Your Journey
             </h1>
-            <p className="text-2xl sm:text-3xl md:text-2xl mb-12 animate-fade-in-up delay-200 transition-all duration-700 font-semibold drop-shadow-lg">
+            <p className="
+              text-lg       /* mobile */
+              sm:text-xl    /* ≥640px */
+              md:text-2xl   /* ≥768px */
+              mb-12 animate-fade-in-up delay-200 transition-all duration-700 font-semibold drop-shadow-lg
+            ">
               Find essential travel apps curated for your destination
             </p>
 
             {/* ――― Search Bar Start ――― */}
-            <div className="w-2/3 sm:w-full max-w-2xl mx-auto relative rounded-full sm:rounded-xl shadow-xl transition-all duration-300 hover:shadow-2xl">
-              <div className="flex items-center w-full bg-white border border-gray-300 rounded-full sm:rounded-xl overflow-hidden p-1 sm:p-2">
+            <div className="
+   w-11/12      /* mobile: 91% of viewport, so it’s inset a bit */
+   sm:w-2/3     /* ≥640px: go back to your original 66% width */
+   md:w-2/3     /* keep at 66% on medium too */
+   lg:w-2/3     /* desktop: same 66% you used before */
+   max-w-5xl    /* cap it to your original max width */
+   mx-auto
+   relative
+   rounded-full sm:rounded-xl
+   shadow-xl transition-all duration-300 hover:shadow-2xl
+ ">
+<div className="flex items-center w-full bg-white border border-gray-300 rounded-full sm:rounded-xl overflow-hidden p-2 sm:p-3">
                 <div className="flex-grow flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
