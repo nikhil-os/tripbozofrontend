@@ -92,6 +92,12 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
+         {/* Google AdSense */}
+         <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8457921153251875"
+          crossOrigin="anonymous"
+        ></script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}>
         <LoaderProvider>

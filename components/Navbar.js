@@ -51,7 +51,15 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed w-full top-0 left-0 z-50 bg-white shadow-sm">
+    <nav
+    className={`
+      fixed inset-x-0 top-0 z-50 h-16 flex items-center
+      transition-colors duration-300
+      ${scrolled
+        ? "bg-white/30 backdrop-blur-md shadow-sm"
+        : "bg-transparent"}
+    `}
+    >
       <div className="w-[98%] mx-auto py-1 sm:py-4 flex justify-between items-center relative">
 
         {/* Left: Brand - pushed to extreme left */}
@@ -89,8 +97,13 @@ const Navbar = () => {
           {mobileMenuOpen && (
             <div 
               ref={menuRef}
-              className="absolute right-0 top-12 w-64 bg-white rounded-lg shadow-lg py-3 z-30"
-            >
+              className="
+              absolute right-4 top-full mt-2
+              w-64
+              bg-white/80 backdrop-blur-md
+              rounded-lg shadow-lg py-3
+              ">
+            
               <div className="flex flex-col">
                 <AppLink 
                   href="/" 
@@ -119,7 +132,7 @@ const Navbar = () => {
                 {isLoggedIn ? (
                   <AppLink
                     href="/Profile"
-                    className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
+                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <div className="flex items-center">
@@ -128,7 +141,7 @@ const Navbar = () => {
                     </div>
                   </AppLink>
                 ) : (
-                  <div className="px-5 py-3 text-gray-400 cursor-not-allowed">
+                  <div className="px-4 py-2 text-gray-400 cursor-not-allowed">
                     <div className="flex items-center">
                       <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
                       Login
@@ -138,7 +151,7 @@ const Navbar = () => {
                 
                 <AppLink
                   href="/Onboarding"
-                  className="mx-5 my-3 bg-teal-500 hover:bg-teal-600 text-white px-4 py-2 rounded-full text-center font-medium"
+                  className="mx-5 my-3 bg-teal-500 hover:bg-teal-600 text-white px-3 py-1 rounded-full text-center font-medium"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Get Started

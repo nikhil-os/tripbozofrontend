@@ -19,10 +19,11 @@ const Footer = () => {
                 height={40} // Adjust height as needed
                 className="rounded-full" // Optional: if your logo is circular
               /> */}
-              <span className="font-display text-xl sm:text-lg font-bold">Trip Bozo</span>
+              <span className="font-display text-xl sm:text-lg font-bold">tripbozo</span>
             </div>
             <p className="text-gray-400 text-xs italic -mt-1">Less googling, more going.</p>
             <p className="text-gray-300 text-xs">Your essential companion for seamless travel experiences worldwide.</p>
+             <br></br>
              {/* Contact Us Buttons */}
       <div className="mt-4 flex justify-center items-center space-x-5">
         <a
@@ -69,7 +70,7 @@ const Footer = () => {
               <li><AppLink className="text-gray-300 hover:text-white transition-colors text-sm" href="/">Home</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors text-sm" href="/Onboarding">Onboarding</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors text-sm" href="/About">About Us</AppLink></li>
-              {/* <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</AppLink></li> */}
+              <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/contact">Contact Us</AppLink></li>
             </ul>
             <div className="w-[70%] h-px bg-white/30 mt-4 md:hidden"></div>
           </div>
@@ -92,8 +93,8 @@ const Footer = () => {
           
           <div className="flex flex-col md:flex-row md:items-center md:space-x-6 text-center md:text-right space-y-1 md:space-y-0">
             <p className="text-gray-400">Hero images via Pixabay</p>
-            <AppLink href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</AppLink>
-            <AppLink href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</AppLink>
+            <AppLink href="/privacy" className="hover:text-white transition-colors">Privacy Policy</AppLink>
+            <AppLink href="/terms" className="hover:text-white transition-colors">Terms of Service</AppLink>
           </div>
         </div>
       </div>
