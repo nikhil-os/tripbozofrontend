@@ -152,20 +152,28 @@ setErrorMsg("");
           // setShow(false);
           router.push(`/country/${trimmed.toLowerCase()}`);
           return;
-        }
+        }else {
+                  // No such code → 404
+                  setLoading(false);
+                  router.push("/notfound");
+                  return;}}
     
         // Otherwise search by full name
         const results = await searchCountries(trimmed);
         setLoading(false);
         // setShow(false);
-    
+        if (results.length === 0) {
+                // No matches → 404
+                router.push("/not-found");
+                return;
+               }
       
     
         const countryCode = results[0].code.toLowerCase();
         router.push(`/country/${countryCode}`);
 
 
-  }};
+  };
 
   // → NEW: full keyboard navigation
 const handleKeyDown = (e) => {
