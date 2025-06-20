@@ -189,7 +189,7 @@ const HeroSection = () => {
             </p>
 
             {/* ――― Search Bar Start ――― */}
-            <div className="w-2/3  max-w-2xl mx-auto relative   shadow-xl transition-all duration-300 hover:shadow-2xl">
+            <div className="w-3/4  max-w-2xl mx-auto relative   shadow-xl transition-all duration-300 hover:shadow-2xl">
               <div className="flex items-center w-full bg-white border border-gray-300 rounded-2xl  overflow-hidden p-1 ">
                 <div className="flex-grow flex items-center">
                 <svg
