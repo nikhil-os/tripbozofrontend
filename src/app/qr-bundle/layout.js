@@ -10,7 +10,7 @@ const geistSans = Geist({
 });
 
 export const metadata = {
-  title: 'Your Travel Apps Bundle | Trip Bozo',
+  title: 'Your Travel Apps Bundle | tripbozo',
   description: 'Access your curated bundle of travel apps for your destination.',
 };
 

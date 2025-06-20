@@ -121,10 +121,10 @@ export default function AboutPageClient() {
           <div className="max-w-5xl mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
               {[
-                { num: '50+', label: 'Countries Covered' },
-                { num: '1000+', label: 'Curated Apps' },
-                { num: '15k+', label: 'Happy Travelers' },
-                { num: '4.8',  label: 'Average Rating' },
+                { num: '25+', label: 'Countries Covered' },
+                { num: '300+', label: 'Curated Apps' },
+                { num: '1k+', label: 'Happy Travelers' },
+                { num: '4.5',  label: 'Average Rating' },
               ].map((stat,i) => (
                 <div key={i} className="flex flex-col items-center">
                   <span className="text-4xl sm:text-5xl font-bold text-teal-500 mb-2">{stat.num}</span>

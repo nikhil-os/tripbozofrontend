@@ -77,7 +77,7 @@ export default function BundleRedirectPage({ params }) {
       {/* — Mini Header — */}
       <header className="w-full py-2 px-2 bg-white shadow-sm flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Image src="/logo.png" alt="tripbozo" width={80} height={80} />
+          <Image src="/icons/icon.png" alt="tripbozo" width={80} height={80} />
           {/* <span className="text-2xl font-bold text-teal-600">tripbozo</span> */}
         </div>
         <Link href="/">
