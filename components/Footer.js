@@ -69,9 +69,9 @@ const Footer = () => {
             <h4 className="font-display text-xl sm:text-lg font-bold mb-4 text-center">Quick Links</h4>
             <ul className="space-y-2 text-center">
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/">Home</AppLink></li>
-              <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/onboarding">Onboarding</AppLink></li>
-              <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/about">About Us</AppLink></li>
-              <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</AppLink></li>
+              <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/Onboarding">Onboarding</AppLink></li>
+              <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/About">About Us</AppLink></li>
+              {/* <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/essentials/us">Travel Essentials</AppLink></li> */}
             </ul>
             <div className="w-[70%] h-px bg-white/30 mt-6 md:hidden"></div>
           </div>
@@ -85,8 +85,11 @@ const Footer = () => {
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/us">United States 🇺🇸</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/country/th">Thailand 🇹🇭</AppLink></li>
             </ul>
-            <div className="w-[70%] h-px bg-white/30 mt-6 md:hidden"></div>
+
+            {/* ✅ Keep only one subtle line */}
+            {/* <div className="w-[70%] h-px bg-white/30 mt-6 md:hidden"></div> */}
           </div>
+
         </div>
         
         {/* Copyright and Legal - centered on mobile */}

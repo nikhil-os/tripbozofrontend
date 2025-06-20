@@ -178,17 +178,19 @@ const HeroSection = () => {
       <div className="container mx-auto relative z-30 flex flex-col items-center justify-center h-[70vh] px-4">
         <div className="w-full max-w-5xl mx-auto text-center flex flex-col items-center justify-center">
           {/* Content */}
-          <div className="relative z-10 text-white w-full">
-            <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-extrabold mb-8 animate-fade-in-up transition-all duration-700 leading-tight drop-shadow-xl">
+          <div className="relative z-10 text-white w-full ">
+            <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-extrabold mb-12 animate-fade-in-up transition-all duration-700 leading-tight drop-shadow-xl dancing-script">
               Discover the Perfect Apps for Your Journey
             </h1>
-            <p className="text-2xl sm:text-3xl md:text-2xl mb-12 animate-fade-in-up delay-200 transition-all duration-700 font-semibold drop-shadow-lg">
+
+
+            <p className="text-xl sm:text-3xl md:text-2xl mb-16 animate-fade-in-up delay-200 transition-all duration-700 font-semibold drop-shadow-lg ">
               Find essential travel apps curated for your destination
             </p>
 
             {/* ――― Search Bar Start ――― */}
-            <div className="w-2/3 sm:w-full max-w-2xl mx-auto relative rounded-full sm:rounded-xl shadow-xl transition-all duration-300 hover:shadow-2xl">
-              <div className="flex items-center w-full bg-white border border-gray-300 rounded-full sm:rounded-xl overflow-hidden p-1 sm:p-2">
+            <div className="w-2/3  max-w-2xl mx-auto relative   shadow-xl transition-all duration-300 hover:shadow-2xl">
+              <div className="flex items-center w-full bg-white border border-gray-300 rounded-2xl  overflow-hidden p-1 ">
                 <div className="flex-grow flex items-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -219,7 +221,7 @@ const HeroSection = () => {
               <button
                 onClick={handleSearch}
                 disabled={loading}
-                  className="bg-teal-500 hover:bg-teal-600 disabled:opacity-75 disabled:cursor-not-allowed text-white px-1 sm:px-3 py-6 font-semibold text-sm sm:text-base h-10 sm:h-12 flex items-center justify-center transition-colors duration-300 rounded-full sm:rounded-xl w-[12%] min-w-[60px] mx-1 active:scale-95 active:shadow-inner transform transition-transform"
+                  className="bg-teal-500 hover:bg-teal-600 disabled:opacity-75 disabled:cursor-not-allowed text-white px-1  py-6 font-semibold text-sm sm:text-base h-10 sm:h-12 flex items-center justify-center transition-colors duration-300  rounded-2xl w-[12%] min-w-[60px] mx-1 active:scale-95 active:shadow-inner transform "
                   aria-label="Search for travel apps by country"
               >
                   {loading ? (

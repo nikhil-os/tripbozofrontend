@@ -57,7 +57,7 @@ const Navbar = () => {
         {/* Left: Brand - pushed to extreme left */}
         <div className="flex items-center z-20 pl-1">
           <AppLink href="/">
-            <div className="w-30 sm:w-12"> {/* responsive wrapper width */}
+            <div className="w-30 sm:w-32"> {/* responsive wrapper width */}
               <Image
                 src="/logo.png"
                 alt="Trip Bozo Logo"
