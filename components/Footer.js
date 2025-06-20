@@ -90,13 +90,16 @@ const Footer = () => {
         </div>
         
         {/* Copyright and Legal - centered on mobile */}
-        <div className="mt-16 pt-8 border-t border-gray-800 text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center">
-          <p className="mb-4 md:mb-0">© {new Date().getFullYear()} Trip Bozo. All rights reserved.</p>
-          <div className="flex space-x-8">
-            <AppLink href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</AppLink>
-            <AppLink href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</AppLink>
-          </div>
-        </div>
+        <div className="mt-16 pt-8 border-t border-gray-800 text-gray-400 text-sm flex flex-col md:flex-row justify-between items-center w-full">
+  <p className="mb-2 md:mb-0 text-center md:text-left">© {new Date().getFullYear()} Trip Bozo. All rights reserved.</p>
+  
+  <div className="flex flex-col md:flex-row md:items-center md:space-x-8 text-center md:text-right space-y-1 md:space-y-0">
+    <p className="text-gray-400">Hero images via Pixabay</p>
+    <AppLink href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</AppLink>
+    <AppLink href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</AppLink>
+  </div>
+</div>
+
       </div>
     </footer>
   );
