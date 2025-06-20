@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { fetchAppsByCountry } from "@/src/utils/api";
+import { fetchAppsByCountry, searchCountries } from "@/src/utils/api";
 import { useLoader } from "@/components/LoaderContext";
 import Image from "next/image";
 
@@ -70,20 +70,41 @@ const HeroSection = () => {
 
     // We assume the user typed either a country ISO code (e.g. "FR" or "jp")
     // or a full country name. We'll just normalize to lowercase and try.
-    const countryCode = trimmed.toLowerCase();
+    // const countryCode = trimmed.toLowerCase();
 
-    // 1) Try fetching apps for that country code
-    const apps = await fetchAppsByCountry(countryCode);
+  //   // 1) Try fetching apps for that country code
+  //   const apps = await fetchAppsByCountry(countryCode);
+  //   setLoading(false);
+  //   setShow(false);
+
+  //   if (!apps.length) {
+  //     // No apps returned => likely invalid country code (or no apps exist)
+  //     setErrorMsg(`No travel apps found for "${trimmed}".`);
+  //     return;
+  //   }
+
+  //   // 2) Redirect to /country/<countryCode>
+  //   router.push(`/country/${countryCode}`);
+  // };
+
+    // 1) search by name/code
+    const results = await searchCountries(trimmed);
     setLoading(false);
     setShow(false);
-
-    if (!apps.length) {
-      // No apps returned => likely invalid country code (or no apps exist)
-      setErrorMsg(`No travel apps found for "${trimmed}".`);
-      return;
-    }
-
-    // 2) Redirect to /country/<countryCode>
+  
+    // if (!results.length) {
+    //   setErrorMsg(`No country found for "${trimmed}".`);
+    //   return;
+    // }
+  
+    // // pick the first match
+    // const countryCode = results[0].code.toLowerCase();
+    // router.push(`/country/${countryCode}`);
+    // if no matching country in our DB, still navigate into /country/<query>—
+    // our server‐side page will call notFound() and hit src/app/not-found.js
+    const countryCode = results.length
+      ? results[0].code.toLowerCase()
+      : trimmed.toLowerCase();
     router.push(`/country/${countryCode}`);
   };
 
@@ -121,21 +142,24 @@ const HeroSection = () => {
               bgIndex === idx ? "opacity-100" : "opacity-0"
             }`}
           >
-            <Image
-              src={img.src}
-              alt={img.alt}
-              className={`transition-transform duration-1000 ${
-                bgIndex === idx ? "scale-105" : "scale-100"
-            } z-0 will-change-transform`}
-              fill
-              sizes="100vw"
-              priority={idx < 2}
-            style={{
-              objectFit: "cover",
-                filter: bgIndex === idx ? "contrast(1.12) saturate(1.12) brightness(0.97)" : "blur(0px)",
-            }}
-            draggable={false}
-          />
+                       <Image
+             src={img.src}
+             alt={img.alt}
+             fill
+             sizes="100vw"
+             priority                     /* always load as high priority */
+             unoptimized                  /* skip the built-in optimizer */
+             quality={100}                /* render at max quality */
+             style={{
+               objectFit: "cover",
+               transform: bgIndex === idx ? "scale(1.05)" : "scale(1)",
+               transition: "transform 1s",
+               filter: bgIndex === idx
+                 ? "contrast(1.12) saturate(1.12) brightness(0.97)"
+                 : "none",
+             }}
+             draggable={false}
+           />
           </div>
         ))}
         {/* Subtle dark overlay for contrast */}
@@ -195,10 +219,33 @@ const HeroSection = () => {
               <button
                 onClick={handleSearch}
                 disabled={loading}
-                  className="bg-teal-500 hover:bg-teal-600 text-white px-1 sm:px-3 py-6 font-semibold text-sm sm:text-base h-10 sm:h-12 flex items-center justify-center transition-colors duration-300 rounded-full sm:rounded-xl w-[12%] min-w-[60px] mx-1 active:scale-95 active:shadow-inner transform transition-transform"
+                  className="bg-teal-500 hover:bg-teal-600 disabled:opacity-75 disabled:cursor-not-allowed text-white px-1 sm:px-3 py-6 font-semibold text-sm sm:text-base h-10 sm:h-12 flex items-center justify-center transition-colors duration-300 rounded-full sm:rounded-xl w-[12%] min-w-[60px] mx-1 active:scale-95 active:shadow-inner transform transition-transform"
                   aria-label="Search for travel apps by country"
               >
-                  {loading ? "..." : "Search"}
+                  {loading ? (
+                  <svg
+                    className="animate-spin h-5 w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    />
+                  </svg>
+                ) : (
+                  "Search"
+                )}
               </button>
               </div>
             </div>

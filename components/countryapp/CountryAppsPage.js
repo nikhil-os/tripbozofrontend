@@ -3,6 +3,7 @@
 import { useEffect, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useLoader } from "@/components/LoaderContext";
+import Image from "next/image";
 import NextImage from "next/image";
 import {
   FaPlus,
@@ -14,7 +15,7 @@ import {
 } from "react-icons/fa";
 import { initSession, saveSelectedApps } from "@/src/utils/api";
 
-export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
+export default function CountryAppsPage({ countryCode, apps, countryInfo,  heroImages = [], /*…*/ }) {
   const router = useRouter();
   const { setShow } = useLoader();
   const storageKey = `selectedAppIds_${countryCode}`;
@@ -34,6 +35,18 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
     setSelectedApps([]);
     localStorage.removeItem(storageKey);
   };
+
+
+  const [bgIndex, setBgIndex] = useState(0);
+
+  useEffect(() => {
+    if (!heroImages.length) return;
+    const iv = setInterval(() => {
+      setBgIndex(i => (i + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(iv);
+  }, [heroImages]);
+
 
   // Search + category + filter
   const [search, setSearch] = useState("");
@@ -151,69 +164,53 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
   return (
     <main className="bg-[#f7fafc] animate-fade-in">
      {/* Header Section */}
-     <div className="relative w-full h-[340px] bg-gradient-to-b from-[#7b8794] to-[#f7fafc] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden animate-fade-in-up">
-        <div className="absolute inset-0 w-full h-full z-0">
-          <div 
-            className="absolute inset-0 opacity-40"
-            style={{
-              background: countryGradient,
-              zIndex: 0,
-            }}
-          />
-          <div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              background:
-                "linear-gradient(90deg, rgba(20,20,20,0.55) 0%, rgba(20,20,20,0.25) 40%, rgba(20,20,20,0.05) 70%, rgba(20,20,20,0) 100%)",
-              zIndex: 1,
-            }}
-          />
-        </div>
-        <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-10">
-          <div className="flex items-center gap-6 mb-2 mt-8">
-            <span className="text-4xl font-bold text-white/80">
-              {countryCode}
-            </span>
-            <span className="text-6xl font-black text-white ml-3 drop-shadow-lg">
-              {countryInfo && countryInfo.name
-                ? countryInfo.name
-                : countryCode === "AU"
-                ? "Australia"
-                : countryCode === "TH"
-                ? "Thailand"
-                : countryCode === "FR"
-                ? "France"
-                : countryCode === "IT"
-                ? "Italy"
-                : countryCode === "JP"
-                ? "Japan"
-                : countryCode === "US"
-                ? "United States"
-                : countryCode}
-            </span>
-          </div>
-          <p className="text-2xl max-w-4xl text-white/90 font-normal mb-4 mt-1 drop-shadow">
-            {countryInfo?.shortDescription ||
-              (countryCode === "AU"
-                ? "Discover Australia's vibrant cities, stunning beaches, and unique wildlife with the best travel apps."
-                : countryCode === "IN"
-                ? "Experience the colors, culture, and diversity of India—find the perfect apps for your journey."
-                : countryCode === "FR"
-                ? "Explore France's art, cuisine, and romance—your essential travel apps for every region."
-                : countryCode === "IT"
-                ? "Uncover Italy's history, food, and beauty—travel smarter with curated apps."
-                : countryCode === "JP"
-                ? "Navigate Japan's traditions and technology—apps to enhance your adventure."
-                : countryCode === "US"
-                ? "From coast to coast, discover the USA's wonders with top travel apps."
-                : "Find the best travel apps for your next destination.")}
-          </p>
-          <div
-            className="h-1 w-28 bg-[#2ad2c9] rounded"
-            style={{ width: "7rem" }}
-          ></div>
-        </div>
-      </div>
+     {/* ✅ Updated Header Section with Background Slideshow */}
+<div className="relative w-full h-[340px] flex flex-col justify-center rounded-b-3xl shadow-lg overflow-hidden animate-fade-in-up">
+  {/* Background Images Slideshow */}
+  {heroImages.map((src, idx) => (
+    <div
+      key={idx}
+      className={`absolute inset-0 transition-opacity duration-1000 ${
+        idx === bgIndex ? 'opacity-100' : 'opacity-0'
+      }`}
+    >
+      <Image
+        src={src}
+        alt={`Background ${idx + 1}`}
+        fill
+        style={{ objectFit: "cover" }}
+        priority={idx < 2}
+      />
+    </div>
+  ))}
+
+  {/* Gradient Overlay (bottom) */}
+  <div className="absolute inset-0 opacity-40 z-10" style={{ background: countryGradient }} />
+  {/* Side fade overlay */}
+  <div
+    className="absolute inset-0 w-full h-full z-20"
+    style={{
+      background:
+        "linear-gradient(90deg, rgba(20,20,20,0.55) 0%, rgba(20,20,20,0.25) 40%, rgba(20,20,20,0.05) 70%, rgba(20,20,20,0) 100%)",
+    }}
+  />
+
+  {/* Foreground Text Content */}
+  <div className="relative w-[92vw] max-w-[1920px] mx-auto px-14 flex flex-col justify-center h-full z-30">
+    <div className="flex items-center gap-6 mb-2 mt-8">
+      <span className="text-4xl font-bold text-white/80">
+        {countryInfo.code}
+      </span>
+      <span className="text-6xl font-black text-white ml-3 drop-shadow-lg">
+        {countryInfo.name}
+      </span>
+    </div>
+    <p className="text-2xl max-w-4xl text-white/90 font-normal mb-4 mt-1 drop-shadow">
+      {countryInfo.description}
+    </p>
+    <div className="h-1 w-28 bg-[#2ad2c9] rounded" />
+  </div>
+</div>
       {/* Search & Filter (overlapping hero) */}
       <div className="relative z-20 -mt-8 w-full max-w-[1920px] mx-auto px-2 sm:px-6 md:px-14">
         <div className="flex flex-row gap-3 items-center justify-between">
@@ -347,12 +344,14 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                 >
                   {app.description || "No description available."}
                 </p>
-                {/* Bottom row: rating | platform tags | category */}
-                <div className="flex flex-row items-center justify-between mt-3 w-full">
-                  {/* Left: Rating & Price */}
-                  <div className="flex items-center sm:gap-3 w-1/3 min-w-0 justify-start">
-                    <span className="text-[#f7b500] text-base sm:text-lg leading-none">★</span>
-                    <span className="font-semibold text-gray-800 text-sm sm:text-base">{app.rating || "4.5"}</span>
+                {/* Bottom row: rating on left; category + platforms grouped bottom‑right */}
+                <div className="mt-3 flex items-center justify-between w-full">
+                  {/* Rating & Price */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-[#f7b500] text-base sm:text-lg">★</span>
+                    <span className="font-semibold text-gray-800 text-sm sm:text-base">
+                      {app.rating || "4.5"}
+                    </span>
                     <span
                       className={`ml-2 px-2 py-0.5 rounded-full text-xs font-semibold ${
                         app.price ? "bg-gray-200 text-gray-800" : "bg-green-100 text-green-800"
@@ -361,17 +360,27 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
                       {app.price ? "Paid" : "Free"}
                     </span>
                   </div>
-                  {/* Right: Platform tags */}
-                  <div className="flex items-center sm:gap-3 w-1/3 min-w-0 justify-end">
-                    {app.platforms && Array.isArray(app.platforms) && app.platforms.map((platform) => (
-                      <span
-                        key={platform}
-                        className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800"
-                      >
-                        {platform}
-                      </span>
-                    ))}
-                  </div>
+                  {/* Category  Platforms */}
+                  <div className="flex items-center gap-2">
+                    {/* Category pill */}
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+                      {app.category || "Uncategorized"}
+                    </span>
+                    {/* Platform pills */}
+                {/* Android pill */}
+                  {app.android_link && (
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                      Android
+                    </span>
+                  )}
+
+                  {/* iOS pill */}
+                  {app.ios_link && (
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800">
+                      iOS
+                    </span>
+                  )}
+                </div>
                 </div>
               </div>
             </div>
@@ -380,71 +389,84 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo }) {
 
         {/* Right: Selected Apps Sidebar */}
         <div className="lg:w-[350px] bg-white rounded-2xl shadow-md border border-gray-200 p-6 h-fit sticky top-24">
-          <h2 className="text-xl font-bold mb-4">Selected Apps ({selectedApps.length})</h2>
+        <h2 className="text-xl font-bold mb-6 text-gray-800">Selected Apps ({selectedApps.length})</h2>
           
-          {selectedApps.length === 0 ? (
-            <div className="text-center py-6">
-              <p className="text-gray-500 mb-2">No apps selected yet</p>
-              <p className="text-gray-500 text-sm">Add apps to create your personalized travel apps bundle</p>
-            </div>
-          ) : (
-            <>
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-sm text-gray-500">{selectedApps.length} app{selectedApps.length !== 1 ? 's' : ''} selected</span>
-                <button 
-                  onClick={clearAll}
-                  className="text-sm text-red-500 hover:text-red-700 font-medium hover:underline transition-colors"
-                >
-                  Clear All
-                </button>
-              </div>
-              <div className="space-y-4 mb-6">
-                {selectedApps.map(appId => {
-                  const app = apps.find(a => a.id === appId);
-                  return app ? (
-                    <div key={app.id} className="flex items-center justify-between">
-                      <span className="font-medium">{app.name}</span>
-                      <button 
-                        onClick={() => toggleSelect(app.id)}
-                        className="text-red-500 hover:text-red-700"
-                      >
-                        <FaTimes />
-                      </button>
-                    </div>
-                  ) : null;
-                })}
-              </div>
-            </>
+        {selectedApps.length === 0 ? (
+         <div className="text-center py-8">
+           <p className="text-gray-800 mb-2 font-medium">No apps selected yet</p>
+           <p className="text-gray-600 text-sm">
+             Pick some apps on the left to build your bundle.
+           </p>
+         </div>
+       ) : (
+         <div className="space-y-4 mb-6">
+           {selectedApps.map(appId => {
+             const app = apps.find(a => a.id === appId);
+             return app ? (
+               <div
+                 key={app.id}
+                 className="flex items-center gap-3 p-3 bg-gray-100 rounded-xl"
+               >
+                 <div className="w-10 h-10 relative flex-shrink-0">
+                   <NextImage
+                     src={app.icon_url || "/file.svg"}
+                     alt={app.name}
+                     fill
+                     className="object-cover rounded-lg"
+                   />
+                 </div>
+                 <span className="flex-1 text-gray-900 font-medium">
+                   {app.name}
+                 </span>
+                 <button
+                   onClick={() => toggleSelect(app.id)}
+                   className="text-red-500 hover:text-red-700"
+                   aria-label={`Remove ${app.name}`}
+                 >
+                   <FaTimes />
+                 </button>
+               </div>
+             ) : null;
+           })}
+         </div>
+       )}
+
+          {/* Buttons group at bottom */}
+        <div className="flex flex-col gap-3 mt-6">
+          <button
+            onClick={handleGenerateQR}
+            disabled={!selectedApps.length}
+            className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition ${
+              selectedApps.length
+                ? "bg-teal-400 hover:bg-teal-500 shadow-lg"
+                : "bg-gray-300 cursor-not-allowed"
+            }`}
+          >
+            <FaQrcode className="text-lg" />
+            Generate QR Code
+          </button>
+
+          <button
+            onClick={handleEssentialsClick}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-300 hover:bg-blue-400 text-blue-900 font-semibold shadow-lg transition"
+          >
+            <FaGlobe className="text-lg" />
+            Essentials
+          </button>
+
+          <button
+            onClick={clearAll}
+            className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-red-300 hover:bg-red-400 text-red-900 font-semibold shadow-lg transition"
+          >
+            Clear All
+          </button>
+
+          {selectedApps.length > 0 && (
+            <p className="text-xs text-center text-gray-500 mt-1">
+              Select at least 2 apps to generate a QR code
+            </p>
           )}
-          
-          <div className="space-y-3 mt-6">
-            <button
-              onClick={handleGenerateQR}
-              disabled={!selectedApps.length}
-              className={`w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-white font-semibold transition-all ${
-                selectedApps.length
-                  ? "bg-teal-500 hover:bg-teal-600 shadow-md hover:shadow-lg"
-                  : "bg-gray-400 cursor-not-allowed"
-              }`}
-            >
-              <FaQrcode className="text-lg" />
-              Generate QR Code
-            </button>
-            
-            <button
-              onClick={handleEssentialsClick}
-              className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-blue-500 hover:bg-blue-600 text-white font-semibold shadow-md hover:shadow-lg transition-all"
-            >
-              <FaGlobe className="text-lg" />
-              Essentials
-            </button>
-            
-            {selectedApps.length > 0 && (
-              <p className="text-xs text-center text-gray-500 mt-2">
-                Select at least 2 apps to generate a QR code
-              </p>
-            )}
-          </div>
+        </div>
         </div>
       </div>
     </main>
