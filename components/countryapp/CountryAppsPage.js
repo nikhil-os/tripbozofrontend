@@ -255,12 +255,23 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
       <div className="w-full max-w-[1920px] mx-auto flex flex-col lg:flex-row gap-8 px-2 sm:px-6 md:px-14 pb-16">
         {/* Left: Apps Grid */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-stretch">
-          {filteredApps.map((app) => (
-                <div
-                             key={app.id}
-                             className="relative w-[75%] mx-auto sm:w-full ... cursor-pointer"
-                             onClick={() => toggleExpand(app.id)}
-                           >
+        {filteredApps.map((app) => (
+           <div
+             key={app.id}
+             onClick={() => toggleExpand(app.id)}
+             className="
+               relative
+               w-full sm:w-auto
+               bg-white
+               border border-gray-200
+               rounded-xl
+               p-4
+               shadow-md
+               hover:shadow-lg
+               transition
+               cursor-pointer
+             "
+           >
               {/* Content */}
               <div className="flex-1 flex flex-col justify-between">
                 {/* Header row: name + sponsored + select */}
@@ -346,33 +357,57 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                   )}
                  </div>
 
-                {/* Expandable panel */}
-                {expandedId === app.id && (
-                  <div className="mt-3 border-t pt-3 flex gap-3 flex-wrap">
-                    {app.android_link && (
-                      <a
-                        href={app.android_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex-1 text-center py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium"
-                      >
-                        Install on Android
-                      </a>
-                    )}
-                    {app.ios_link && (
-                      <a
-                        href={app.ios_link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                        className="flex-1 text-center py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-lg text-sm font-medium"
-                      >
-                        Install on iOS
-                      </a>
-                    )}
-                  </div>
-                )}
+                {/* Expandable “card footer” */}
+               {expandedId === app.id && (
+                 <div
+                   onClick={(e) => e.stopPropagation()}
+                   className="
+                     mt-4
+                     flex flex-col sm:flex-row gap-3
+                     border-t border-gray-200
+                     pt-4
+                   "
+                 >
+                   {app.android_link && (
+                     <a
+                       href={app.android_link}
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="
+                         flex-1 flex items-center justify-center
+                         space-x-2
+                         px-5 py-3
+                         bg-gradient-to-r from-green-400 to-green-600
+                         hover:from-green-500 hover:to-green-700
+                         text-white font-semibold
+                         rounded-full
+                         transition-transform transform hover:scale-105
+                       "
+                     >
+                       <span>Get it on Google Play</span>
+                     </a>
+                   )}
+                   {app.ios_link && (
+                     <a
+                       href={app.ios_link}
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       className="
+                         flex-1 flex items-center justify-center
+                         space-x-2
+                         px-5 py-3
+                         bg-gradient-to-r from-gray-700 to-gray-900
+                         hover:from-gray-800 hover:to-black
+                         text-white font-semibold
+                         rounded-full
+                         transition-transform transform hover:scale-105
+                       "
+                     >
+                       <span>Download on the App Store</span>
+                     </a>
+                   )}
+                 </div>
+               )}
                 </div>
               </div>
             </div>

@@ -91,16 +91,26 @@ const sampleEsim = [
           <p className="text-gray-700 text-sm mb-4">
             Trusted travel insurance providers and 24/7 assistance services.
           </p>
-          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
-            {(sampleInsurance).map((svc) => (
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+            {sampleInsurance.map((svc) => (
               <a
                 key={svc.name}
                 href={svc.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-red-500 hover:underline text-sm"
+                className="
+                  flex items-center justify-center
+                  px-4 py-3
+                  bg-red-50
+                  border border-red-200
+                  rounded-xl
+                  shadow-sm
+                  transition
+                  hover:shadow-md hover:bg-red-100
+                  text-red-600 font-medium
+                "
               >
-                • {svc.name}
+                {svc.name}
               </a>
             ))}
           </div>
@@ -114,16 +124,26 @@ const sampleEsim = [
           <p className="text-gray-700 text-sm mb-4">
             Browse eSIM plans and local data options to stay connected abroad.
           </p>
-          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
-            {(sampleEsim).map((svc) => (
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+            {sampleEsim.map((svc) => (
               <a
                 key={svc.name}
                 href={svc.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block text-green-600 hover:underline text-sm"
+                className="
+                  flex items-center justify-center
+                  px-4 py-3
+                  bg-green-50
+                  border border-green-200
+                  rounded-xl
+                  shadow-sm
+                  transition
+                  hover:shadow-md hover:bg-green-100
+                  text-green-600 font-medium
+                "
               >
-                • {svc.name}
+                {svc.name}
               </a>
             ))}
           </div>
