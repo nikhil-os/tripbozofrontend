@@ -265,23 +265,24 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
               // stop the outside click handler, then toggle only this one
               onClick={(e) => { e.stopPropagation(); toggleExpand(app.id); }}
               className="
-                          relative
-                          w-full sm:w-auto
-                          bg-white
-                          border border-gray-300
-                          rounded-2xl
-                          p-6
-                          shadow-sm
-                          space-y-6
-                          hover:shadow-md
-                          transition
-                          cursor-pointer
-                          flex flex-col  h-full
-                        "
-                      >
+             relative
+             w-full sm:w-auto
+             self-start
+             bg-white
+             border border-gray-300
+             rounded-2xl
+             p-6
+             shadow-sm
+             space-y-6
+             hover:shadow-md
+             transition
+             cursor-pointer
+             flex flex-col
+           "
+         >
               {/* Content */}
               <div className="flex-1 flex flex-col justify-between">
-                {/* Header row: name + sponsored + select */}
+                {/* Header row: name sponsored + select */}
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2 min-w-0">
                     {/* Icon */}
@@ -306,16 +307,18 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                   <button
                     // stop expansion toggle when clicking “+”
                    onClick={(e) => { e.stopPropagation(); toggleSelect(app.id); }}
-                    className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition-all ${
+                    className={`w-6 h-6 md:w-10 md:h-10 flex items-center justify-center rounded-full border-2 transition-all ${
                       selectedApps.includes(app.id)
                         ? "bg-[#e6fcf7] border-[#2ad2c9] text-[#2ad2c9]"
                         : app.is_sponsored
                         ? "bg-[#fffbe6] border-[#ffe9b3] text-[#e6b800]"
                         : "bg-white border-[#e0e0e0] text-[#2ad2c9]"
-                    }`}
+                    }
+                    text-sm md:text-base  // Adjust icon size responsively`}
                   >
                     {selectedApps.includes(app.id) ? <FaCheck /> : <FaPlus />}
                   </button>
+                
                 </div>
                 <br></br>
                 {/* Description row (2 lines max) */}
@@ -386,7 +389,8 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                                              rel="noopener noreferrer"
                                              className="
                                                inline-flex items-center
-                                               px-5 py-2
+                                               px-4 py-1
+                                               md :px-5  md:py-2
                                                bg-teal-300
                                                border border-teal-400
                                                text-gray-600 
@@ -408,14 +412,15 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                                              rel="noopener noreferrer"
                                              className="
                                                inline-flex items-center
-                                               px-5 py-2
+                                               px-4 py-1
+                                               md :px-5  md:py-2
                                                bg-gray-600
                                                border border-gray-600
                                                text-white-700
                                                rounded-full
                                                text-sm font-bold
                                                shadow-sm
-                                               hover:bg-gray-700
+                                               hover:bg-gray-800
                                                transition
                                              "
                                            >
