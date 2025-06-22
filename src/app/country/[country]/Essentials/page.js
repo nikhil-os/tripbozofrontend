@@ -40,6 +40,19 @@ export default function EssentialsPage() {
 
   const { emergencies, phrases, tips } = data;
 
+// Sample fallbacks
+const sampleInsurance = [
+  { name: "World Nomads", link: "https://www.worldnomads.com" },
+  { name: "Allianz Travel", link: "https://www.allianztravelinsurance.com" },
+  { name: "InsureMyTrip", link: "https://www.insuremytrip.com" },
+];
+const sampleEsim = [
+  { name: "Airalo", link: "https://www.airalo.com" },
+  { name: "GigSky", link: "https://www.gigsky.com" },
+  { name: "Nomad", link: "https://www.getnomad.app" },
+];
+
+
   if (loading) {
     return <p className="p-8 text-center">Loading…</p>;
   }
@@ -63,6 +76,57 @@ export default function EssentialsPage() {
             </span>
             .
           </p>
+        </div>
+      </div>
+
+     
+      {/* ── New Services Section ── */}
+      <div className="max-w-4xl mx-auto px-4 mt-8 grid gap-6 animate-fade-in-up
+                      grid-cols-1 md:grid-cols-2">
+        {/* Insurance Services */}
+        <div className="bg-white p-6 rounded-3xl shadow-md border-l-8 border-red-400">
+          <h3 className="text-xl font-semibold text-red-600 mb-4">
+            Insurance & Assistance
+          </h3>
+          <p className="text-gray-700 text-sm mb-4">
+            Trusted travel insurance providers and 24/7 assistance services.
+          </p>
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+            {(sampleInsurance).map((svc) => (
+              <a
+                key={svc.name}
+                href={svc.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-red-500 hover:underline text-sm"
+              >
+                • {svc.name}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        {/* eSIM Services */}
+        <div className="bg-white p-6 rounded-3xl shadow-md border-l-8 border-green-400">
+          <h3 className="text-xl font-semibold text-green-600 mb-4">
+            eSIM & Connectivity
+          </h3>
+          <p className="text-gray-700 text-sm mb-4">
+            Browse eSIM plans and local data options to stay connected abroad.
+          </p>
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+            {(sampleEsim).map((svc) => (
+              <a
+                key={svc.name}
+                href={svc.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block text-green-600 hover:underline text-sm"
+              >
+                • {svc.name}
+              </a>
+            ))}
+          </div>
         </div>
       </div>
 

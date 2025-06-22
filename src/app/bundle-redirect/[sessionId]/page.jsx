@@ -1,6 +1,4 @@
-// app/bundle-redirect/[sessionId]/page.jsx
 "use client";
-
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,14 +8,25 @@ export const dynamic = "force-dynamic";
 
 export default function BundleRedirectPage({ params }) {
   const { sessionId } = params;
-  const [items, setItems]     = useState([]);       // [{ name, url }]
+  const [items, setItems] = useState([]);       // [{ name, android_link, ios_link }]
   const [loading, setLoading] = useState(true);
   const [nextIdx, setNextIdx] = useState(0);
-  // default message before any test:
   const [popupMsg, setPopupMsg] = useState(
-    "🔒 Please enable pop‑ups for this site so Quick Launch can open all apps at once."
+    "🔒 Please enable pop-ups for this site so Quick Launch can open all apps at once."
   );
 
+  // on mount, detect platform:
+  const [platform, setPlatform] = useState("web"); // "ios" | "android" | "web"
+  useEffect(() => {
+    const ua = navigator.userAgent || "";
+    if (/iPhone|iPad|iPod/.test(ua)) {
+      setPlatform("ios");
+    } else if (/Android/.test(ua)) {
+      setPlatform("android");
+    }
+  }, []);
+
+  // fetch raw items
   useEffect(() => {
     (async () => {
       try {
@@ -26,34 +35,38 @@ export default function BundleRedirectPage({ params }) {
         );
         if (!res.ok) throw new Error();
         const json = await res.json();
-        setItems(json.items || []);
+        // map each item to pick the right URL for this device
+        const mapped = (json.items || []).map((it) => {
+          let url = it.android_link || it.ios_link;   // fallback
+          if (platform === "ios" && it.ios_link) url = it.ios_link;
+          if (platform === "android" && it.android_link) url = it.android_link;
+          return { name: it.name, url };
+        });
+        setItems(mapped);
       } catch {
         setItems([]);
       } finally {
         setLoading(false);
       }
     })();
-  }, [sessionId]);
+  }, [sessionId, platform]);
 
   const openAll = () => items.forEach((it) => window.open(it.url, "_blank"));
-
   const openNext = () => {
     if (nextIdx < items.length) {
       window.open(items[nextIdx].url, "_blank");
       setNextIdx(nextIdx + 1);
     }
   };
-
   const testPopups = () => {
-     // Try to open a tiny window to see if it's blocked:
     const w = window.open("", "_blank", "width=100,height=100");
     if (!w) {
       setPopupMsg(
-        "🔒 Pop‑ups are blocked. Please enable pop‑ups for this site in your browser settings."
+        "🔒 Pop-ups are blocked. Please enable pop-ups for this site in your browser settings."
       );
     } else {
       w.close();
-      setPopupMsg("✅ Pop‑ups allowed! You can now use Quick Launch.");
+      setPopupMsg("✅ Pop-ups allowed! You can now use Quick Launch.");
     }
   };
 
@@ -72,6 +85,7 @@ export default function BundleRedirectPage({ params }) {
     );
   }
 
+  
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* — Mini Header — */}

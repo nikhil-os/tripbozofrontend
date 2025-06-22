@@ -19,6 +19,9 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   metadataBase: new URL("https://tripbozo.com"),
+  icons: {
+    icon: '/favicon.ico', // Standard favicon
+  },
   title: {
     default: "tripbozo | Your Essential Travel App Companion",
     template: "%s | tripbozo"

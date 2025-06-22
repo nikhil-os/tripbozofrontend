@@ -119,42 +119,18 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
     });
 
 
-  // // ───────────────── Hero images ──────────────────
-  // const [heroImages, setHeroImages] = useState([]);
-  // const [bgIndex, setBgIndex] = useState(0);
-
-  // useEffect(() => {
-  //   // Build 5 Unsplash Source URLs directly:
-  //   const q = encodeURIComponent(countryCode.toLowerCase());
-  //   const urls = Array.from({ length: 5 }, (_, i) =>
-  //     `https://source.unsplash.com/1600x900/?${q},landscape&sig=${i}`
-  //   );
-  //   setHeroImages(urls);
-  // }, [countryCode]);
-
-  // // Rotate every 4s:
-  // useEffect(() => {
-  //   if (!heroImages.length) return;
-  //   const iv = setInterval(() => {
-  //     setBgIndex(i => (i + 1) % heroImages.length);
-  //   }, 4000);
-  //   return () => clearInterval(iv);
-  // }, [heroImages]);
-
-  // // ───────────────── End Hero images ─────────────
-  
-   // Convert countryCode to uppercase for image path
+ 
    const upperCountryCode = countryCode.toUpperCase();
   const heroSrc = `/img/${upperCountryCode}.jpg`;
 
   
 
-  
-
-
-
   // console.log("Hero image URLs:", heroImages);
 
+    // track which app card is expanded
+  const [expandedId, setExpandedId] = useState(null);
+  const toggleExpand = (id) =>
+    setExpandedId((prev) => (prev === id ? null : id));
 
 
   return (
@@ -280,10 +256,11 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
         {/* Left: Apps Grid */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-stretch">
           {filteredApps.map((app) => (
-            <div
-              key={app.id}
-              className="relative w-[75%] mx-auto sm:w-full h-[220px] sm:h-[240px] bg-white rounded-2xl sm:rounded-3xl border border-[#e0e0e0] p-4 sm:p-5 flex flex-col justify-between shadow-md transition-all"
-            >
+                <div
+                             key={app.id}
+                             className="relative w-[75%] mx-auto sm:w-full ... cursor-pointer"
+                             onClick={() => toggleExpand(app.id)}
+                           >
               {/* Content */}
               <div className="flex-1 flex flex-col justify-between">
                 {/* Header row: name + sponsored + select */}
@@ -334,7 +311,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                   {app.description || "No description available."}
                 </p>
                 {/* Bottom row: rating on left; category + platforms grouped bottom‑right */}
-                <div className="mt-3 flex items-center justify-between w-full">
+                <div className="mt-3 flex items-start justify-between w-full flex-wrap gap-2">
                   {/* Rating & Price */}
                   <div className="flex items-center gap-2">
                     <span className="text-[#f7b500] text-base sm:text-lg">★</span>
@@ -357,19 +334,45 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                     </span>
                     {/* Platform pills */}
                 {/* Android pill */}
-                  {app.android_link && (
-                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
+                {app.android_link && (
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 whitespace-nowrap">
                       Android
                     </span>
                   )}
-
-                  {/* iOS pill */}
                   {app.ios_link && (
-                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800">
+                    <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-gray-200 text-gray-800 whitespace-nowrap">
                       iOS
                     </span>
                   )}
-                </div>
+                 </div>
+
+                {/* Expandable panel */}
+                {expandedId === app.id && (
+                  <div className="mt-3 border-t pt-3 flex gap-3 flex-wrap">
+                    {app.android_link && (
+                      <a
+                        href={app.android_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex-1 text-center py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg text-sm font-medium"
+                      >
+                        Install on Android
+                      </a>
+                    )}
+                    {app.ios_link && (
+                      <a
+                        href={app.ios_link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="flex-1 text-center py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-lg text-sm font-medium"
+                      >
+                        Install on iOS
+                      </a>
+                    )}
+                  </div>
+                )}
                 </div>
               </div>
             </div>
