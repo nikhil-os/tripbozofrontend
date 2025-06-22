@@ -134,12 +134,16 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
 
 
   return (
-    <main className="bg-[#f7fafc] animate-fade-in">
+    // clicking outside any card collapses all
+    <main
+      onClick={() => setExpandedId(null)}
+      className="bg-[#f7fafc] animate-fade-in"
+    >
      {/* Hero Section */}
      <div className="relative w-full h-[340px] overflow-hidden rounded-b-3xl shadow-lg">
         <NextImage
           src={heroSrc}
-          placeholder="blur"
+          
           alt={`${countryInfo.name} banner`}
           fill
           style={{ objectFit: "cover" }}
@@ -256,22 +260,25 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
         {/* Left: Apps Grid */}
         <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-10 items-stretch">
         {filteredApps.map((app) => (
-           <div
-             key={app.id}
-             onClick={() => toggleExpand(app.id)}
-             className="
-               relative
-               w-full sm:w-auto
-               bg-white
-               border border-gray-200
-               rounded-xl
-               p-4
-               shadow-md
-               hover:shadow-lg
-               transition
-               cursor-pointer
-             "
-           >
+            <div
+              key={app.id}
+              // stop the outside click handler, then toggle only this one
+              onClick={(e) => { e.stopPropagation(); toggleExpand(app.id); }}
+              className="
+                          relative
+                          w-full sm:w-auto
+                          bg-white
+                          border border-gray-300
+                          rounded-2xl
+                          p-6
+                          shadow-sm
+                          space-y-6
+                          hover:shadow-md
+                          transition
+                          cursor-pointer
+                          flex flex-col  h-full
+                        "
+                      >
               {/* Content */}
               <div className="flex-1 flex flex-col justify-between">
                 {/* Header row: name + sponsored + select */}
@@ -297,7 +304,8 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                     )}
                   </div>
                   <button
-                    onClick={() => toggleSelect(app.id)}
+                    // stop expansion toggle when clicking “+”
+                   onClick={(e) => { e.stopPropagation(); toggleSelect(app.id); }}
                     className={`w-8 h-8 flex items-center justify-center rounded-full border-2 transition-all ${
                       selectedApps.includes(app.id)
                         ? "bg-[#e6fcf7] border-[#2ad2c9] text-[#2ad2c9]"
@@ -309,6 +317,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                     {selectedApps.includes(app.id) ? <FaCheck /> : <FaPlus />}
                   </button>
                 </div>
+                <br></br>
                 {/* Description row (2 lines max) */}
                 <p
                   className="text-gray-700 text-xs sm:text-sm mb-3"
@@ -321,6 +330,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                 >
                   {app.description || "No description available."}
                 </p>
+                <br></br>
                 {/* Bottom row: rating on left; category + platforms grouped bottom‑right */}
                 <div className="mt-3 flex items-start justify-between w-full flex-wrap gap-2">
                   {/* Rating & Price */}
@@ -357,54 +367,60 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                   )}
                  </div>
 
-                {/* Expandable “card footer” */}
-               {expandedId === app.id && (
-                 <div
-                   onClick={(e) => e.stopPropagation()}
-                   className="
-                     mt-4
-                     flex flex-col sm:flex-row gap-3
-                     border-t border-gray-200
-                     pt-4
-                   "
-                 >
+                 {/* Expandable “card footer” */}
+                 {expandedId === app.id && (
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="
+                      mt-auto
+                      border-t border-gray-200
+                      pt-4
+                      flex justify-center gap-4
+                    "
+                  >
+                 
                    {app.android_link && (
-                     <a
-                       href={app.android_link}
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       className="
-                         flex-1 flex items-center justify-center
-                         space-x-2
-                         px-5 py-3
-                         bg-gradient-to-r from-green-400 to-green-600
-                         hover:from-green-500 hover:to-green-700
-                         text-white font-semibold
-                         rounded-full
-                         transition-transform transform hover:scale-105
-                       "
-                     >
-                       <span>Get it on Google Play</span>
-                     </a>
+                     <button
+                                             href={app.android_link}
+                                             target="_blank"
+                                             rel="noopener noreferrer"
+                                             className="
+                                               inline-flex items-center
+                                               px-5 py-2
+                                               bg-teal-300
+                                               border border-teal-400
+                                               text-gray-600 
+                                               rounded-full
+                                               text-sm font-bold
+                                               shadow-sm
+                                               hover:bg-teal-400
+                                               
+                                               transition
+                                             "
+                                           >
+                                               Play Store
+                                           </button>
                    )}
                    {app.ios_link && (
-                     <a
-                       href={app.ios_link}
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       className="
-                         flex-1 flex items-center justify-center
-                         space-x-2
-                         px-5 py-3
-                         bg-gradient-to-r from-gray-700 to-gray-900
-                         hover:from-gray-800 hover:to-black
-                         text-white font-semibold
-                         rounded-full
-                         transition-transform transform hover:scale-105
-                       "
-                     >
-                       <span>Download on the App Store</span>
-                     </a>
+                     <button
+                                             href={app.ios_link}
+                                             target="_blank"
+                                             rel="noopener noreferrer"
+                                             className="
+                                               inline-flex items-center
+                                               px-5 py-2
+                                               bg-gray-600
+                                               border border-gray-600
+                                               text-white-700
+                                               rounded-full
+                                               text-sm font-bold
+                                               shadow-sm
+                                               hover:bg-gray-700
+                                               transition
+                                             "
+                                           >
+                                             App Store
+                                           </button>
                    )}
                  </div>
                )}

@@ -45,11 +45,14 @@ const sampleInsurance = [
   { name: "World Nomads", link: "https://www.worldnomads.com" },
   { name: "Allianz Travel", link: "https://www.allianztravelinsurance.com" },
   { name: "InsureMyTrip", link: "https://www.insuremytrip.com" },
+  { name: "VisitorsCoverage", link: "https://www.visitorscoverage.com" },
 ];
 const sampleEsim = [
   { name: "Airalo", link: "https://www.airalo.com" },
   { name: "GigSky", link: "https://www.gigsky.com" },
   { name: "Nomad", link: "https://www.getnomad.app" },
+  { name: "eSIMDB", link: "https://esimdb.com" },
+  { name: "Roamless", link: "https://roamless.com" },
 ];
 
 
@@ -91,28 +94,26 @@ const sampleEsim = [
           <p className="text-gray-700 text-sm mb-4">
             Trusted travel insurance providers and 24/7 assistance services.
           </p>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
-            {sampleInsurance.map((svc) => (
-              <a
-                key={svc.name}
-                href={svc.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="
-                  flex items-center justify-center
-                  px-4 py-3
-                  bg-red-50
-                  border border-red-200
-                  rounded-xl
-                  shadow-sm
-                  transition
-                  hover:shadow-md hover:bg-red-100
-                  text-red-600 font-medium
-                "
-              >
-                {svc.name}
-              </a>
-            ))}
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+           {sampleInsurance.map((svc) => (
+             <a
+               key={svc.name}
+               href={svc.link}
+               target="_blank"
+               rel="noopener noreferrer"
+               className="
+                 inline-flex items-center justify-center
+                 px-3 py-1.5
+                 border border-red-300
+                 rounded-lg
+                 text-red-600 text-sm font-medium
+                 hover:bg-red-50
+                 transition
+               "
+             >
+               {svc.name}
+             </a>
+           ))}
           </div>
         </div>
 
@@ -124,7 +125,7 @@ const sampleEsim = [
           <p className="text-gray-700 text-sm mb-4">
             Browse eSIM plans and local data options to stay connected abroad.
           </p>
-          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
             {sampleEsim.map((svc) => (
               <a
                 key={svc.name}
@@ -132,15 +133,13 @@ const sampleEsim = [
                 target="_blank"
                 rel="noopener noreferrer"
                 className="
-                  flex items-center justify-center
-                  px-4 py-3
-                  bg-green-50
-                  border border-green-200
-                  rounded-xl
-                  shadow-sm
+                  inline-flex items-center justify-center
+                  px-3 py-1.5
+                  border border-green-300
+                  rounded-lg
+                  text-green-600 text-sm font-medium
+                  hover:bg-green-50
                   transition
-                  hover:shadow-md hover:bg-green-100
-                  text-green-600 font-medium
                 "
               >
                 {svc.name}
@@ -150,8 +149,15 @@ const sampleEsim = [
         </div>
       </div>
 
+
+
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-12 space-y-12">
+
+ {/* Brown Divider - Added before Emergency Contacts */}
+ <div className="h-px bg-gradient-to-r from-amber-800 via-amber-600 to-amber-700 opacity-40" />
+
+
         {/* Emergency Contacts */}
         <section className="bg-white p-8 rounded-3xl shadow-md border-l-8 border-teal-400 animate-fade-in-up">
           <h2 className="text-2xl font-bold mb-6 text-teal-700 flex items-center gap-2">
