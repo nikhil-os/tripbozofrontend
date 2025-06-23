@@ -132,7 +132,7 @@ const Navbar = () => {
                 
                 {isLoggedIn ? (
   <Link
-    href="/profile/"
+    href="/profile"
     className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
     onClick={() => setMobileMenuOpen(false)}
   >
@@ -143,7 +143,7 @@ const Navbar = () => {
   </Link>
 ) : (
   <Link
-    href="/login/"
+    href="/login"
     className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
     onClick={() => setMobileMenuOpen(false)}
   >
@@ -187,7 +187,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center space-x-4 pr-1">
           {isLoggedIn ? (
             <Link
-              href="/Profile/"
+              href="/profile"
               className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
               style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
             >
@@ -196,7 +196,7 @@ const Navbar = () => {
             </Link>
           ) : (
             <Link
-  href="/login/"
+  href="/login"
   className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition hover:bg-teal-50"
   style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
 >
