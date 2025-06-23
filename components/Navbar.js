@@ -6,6 +6,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
 import ProfileCard from "@/components/ProfileCard"; 
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
