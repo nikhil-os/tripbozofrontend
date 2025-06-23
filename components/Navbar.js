@@ -144,6 +144,7 @@ const Navbar = () => {
       w-full text-center
       py-2 px-4
       bg-gradient-to-r from-teal-500 to-cyan-500
+      border-1 border-white-600
       hover:from-teal-600 hover:to-cyan-600
       text-white text-sm font-bold tracking-wide
       rounded-lg
@@ -226,6 +227,7 @@ const Navbar = () => {
       inline-flex items-center
       py-2 px-4
       bg-gradient-to-r from-teal-500 to-cyan-500
+      border-1 border-white-600
       hover:from-teal-600 hover:to-cyan-600
       text-white text-sm font-bold tracking-wide
       rounded-lg

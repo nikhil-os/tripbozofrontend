@@ -40,12 +40,13 @@ export default function LoginPage() {
     let clientErrors = {};
 
     // Client-side validation for empty fields
-    if (!form.email && !form.username) {
-      clientErrors.email = ["Please enter your email or username."];
-    }
-    if (!form.password) {
-      clientErrors.password = ["Please enter your password."];
-    }
+      
+        if (!form.identifier.trim()) {
+          clientErrors.identifier = ["Please enter your email or username."];
+        }
+        if (!form.password) {
+          clientErrors.password = ["Please enter your password."];
+        }
 
     // If client-side errors exist, set them and stop submission
     if (Object.keys(clientErrors).length > 0) {
@@ -86,7 +87,7 @@ export default function LoginPage() {
     {/* fixed full-screen gradient behind everything */}
     <div className="fixed inset-0 bg-gradient-to-br from-blue-900/80 via-blue-900/40 to-teal-400/20 -z-10" />
 
-    <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900/80 via-blue-900/40 to-teal-400/20">
+    <main className="min-h-screen flex items-center justify-center">
       {/* Main Glassy Card - Updated to match register page for consistency */}
       <div className="relative z-10 w-full max-w-md bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-8 transform transition-transform hover:-translate-y-1 flex flex-col items-center">
         <h1 className="text-3xl font-extrabold text-gray-800 mb-2 text-center">Login</h1>
