@@ -8,9 +8,10 @@ import { FiUser, FiLogOut } from "react-icons/fi";
 export default function ProfileCard({ open, onClose }) {
   const ref = useRef();
   const [user, setUser] = useState(null);
-  const token = typeof window !== "undefined" && localStorage.getItem("authToken");
+  const rawToken =
+    typeof window !== "undefined" && localStorage.getItem("authToken");
 
-  // click‐outside to close
+  // click-outside to close
   useEffect(() => {
     const onClick = (e) => {
       if (open && ref.current && !ref.current.contains(e.target)) {
@@ -23,15 +24,21 @@ export default function ProfileCard({ open, onClose }) {
 
   // fetch user
   useEffect(() => {
-    if (open && token) {
-      axios
-        .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/user/`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((r) => setUser(r.data))
-        .catch(() => setUser(null));
-    }
-  }, [open, token]);
+    if (!open || !rawToken) return;
+
+    // pick prefix based on the shape of the token
+    const isJwt = rawToken.split(".").length === 3;
+    const headerValue = isJwt
+      ? `Bearer ${rawToken}`
+      : `Token ${rawToken}`;
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/user/`, {
+        headers: { Authorization: headerValue },
+      })
+      .then((r) => setUser(r.data))
+      .catch(() => setUser(null));
+  }, [open, rawToken]);
 
   if (!open) return null;
 
@@ -53,9 +60,7 @@ export default function ProfileCard({ open, onClose }) {
             <p className="font-semibold text-gray-800">
               {user?.username || "—"}
             </p>
-            <p className="text-sm text-gray-500">
-              {user?.email || "—"}
-            </p>
+            <p className="text-sm text-gray-500">{user?.email || "—"}</p>
           </div>
         </div>
         <button
