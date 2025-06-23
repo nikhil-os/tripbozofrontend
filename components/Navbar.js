@@ -5,11 +5,13 @@ import Link from 'next/link'
 import React, { useEffect, useState, useRef } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
+import ProfileCard from "@/components/ProfileCard"; 
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();
 
@@ -52,6 +54,7 @@ const Navbar = () => {
   };
 
   return (
+    <>  
     <nav
     className={`
       fixed inset-x-0 top-0 z-50 h-16 flex items-center
@@ -131,16 +134,15 @@ const Navbar = () => {
                 <div className="w-full h-px bg-gray-200 my-2"></div>
                 
                 {isLoggedIn ? (
-  <Link
-    href="/profile"
-    className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
-    onClick={() => setMobileMenuOpen(false)}
+    <button
+    onClick={() => {
+      setShowProfile((v) => !v);
+      setMobileMenuOpen(false);
+    }}
+    className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500 text-left"
   >
-    <div className="flex items-center">
-      <svg className="w-5 h-5 mr-2 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7.5 7.5 0 0 1 13 0"/></svg>
-      Profile
-    </div>
-  </Link>
+    Profile
+  </button>
 ) : (
   <Link
     href="/login"
@@ -186,14 +188,13 @@ const Navbar = () => {
         {/* Right: Login and Get Started - pushed to extreme right (Desktop Only) */}
         <div className="hidden lg:flex items-center space-x-4 pr-1">
           {isLoggedIn ? (
-            <Link
-              href="/profile"
-              className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
-              style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
-            >
-              <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7.5 7.5 0 0 1 13 0"/></svg>
-              Profile
-            </Link>
+            <button
+            onClick={() => setShowProfile((v) => !v)}
+            className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full font-bold shadow-md hover:bg-teal-50 transition"
+            style={{ minWidth: "120px", letterSpacing: "0.03em" }}
+          >
+            Profile
+          </button>
           ) : (
             <Link
   href="/login"
@@ -216,6 +217,9 @@ const Navbar = () => {
         </div>
       </div>
     </nav>
+       {/* floating profile card */}
+       <ProfileCard open={showProfile} onClose={() => setShowProfile(false)} />
+       </>  
   );
 };
 

@@ -11,7 +11,8 @@ import GoogleLoginBtn from "@/components/googlelogin";
 export default function LoginPage() {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
-  const [form, setForm] = useState({ username: "", email: "", password: "" });
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [form, setForm] = useState({ identifier: "", password: "" });
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -60,10 +61,14 @@ export default function LoginPage() {
 
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login/`,
-        payload
+        { email: form.identifier, password: form.password }
       );
       localStorage.setItem("authToken", res.data.key);
-      router.push("/");
+           // show toast, then redirect
+     setLoginSuccess(true);
+     setTimeout(() => {
+       router.push("/");
+     }, 1500);
     } catch (err) {
       console.error("Login error payload:", err.response?.data);
       const data = err.response?.data || {};
@@ -74,6 +79,10 @@ export default function LoginPage() {
   };
 
   return (
+    <div className="relative w-full min-h-screen">
+    {/* fixed full-screen gradient behind everything */}
+    <div className="fixed inset-0 bg-gradient-to-br from-blue-900/80 via-blue-900/40 to-teal-400/20 -z-10" />
+
     <main className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900/80 via-blue-900/40 to-teal-400/20">
       {/* Main Glassy Card - Updated to match register page for consistency */}
       <div className="relative z-10 w-full max-w-md bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-8 transform transition-transform hover:-translate-y-1 flex flex-col items-center">
@@ -147,9 +156,9 @@ export default function LoginPage() {
               text-white            /* White text */
               font-semibold         /* Slightly less bold */
               text-base             /* Smaller font size */
-              shadow-lg             /* Larger initial shadow */
+              shadow-lg             /* Larger initial */
               hover:from-teal-600 hover:to-teal-700 /* Darker gradient on hover */
-              hover:shadow-xl       /* Larger shadow on hover */
+              hover:shadow-xl       /* Larger  on hover */
               hover:-translate-y-0.5 /* Subtle lift on hover */
               transition-all duration-300 ease-in-out /* Smooth transitions */
             "
@@ -172,5 +181,12 @@ export default function LoginPage() {
         </button>
       </div>
     </main>
+         {/* login success toast */}
+     {loginSuccess && (
+       <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-teal-500 text-white px-6 py-3 rounded-full shadow-lg animate-fade-in-up">
+         ✓ Login Successful!
+       </div>
+     )}
+</div>
   );
 }

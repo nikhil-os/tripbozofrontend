@@ -18,6 +18,7 @@ export default function RegisterPage() {
     password2: "",
   });
   const [errors, setErrors] = useState({});
+  const [registrationSuccess, setRegistrationSuccess] = useState(false);
 
   const validateUsername = (username) => {
     const messages = [];
@@ -62,69 +63,46 @@ export default function RegisterPage() {
     const { id, value } = e.target;
     setForm((f) => ({ ...f, [id]: value }));
 
+    // live‐validate…
     let newErrors = { ...errors };
-
     if (id === "username") {
       newErrors.username = validateUsername(value);
     } else if (id === "email") {
-      newErrors.email = [validateEmail(value)];
+      const msg = validateEmail(value);
+      newErrors.email = msg ? [msg] : [];
     } else if (id === "password1") {
       newErrors.password1 = validatePassword(value);
       if (form.password2 && value !== form.password2) {
         newErrors.password2 = ["Passwords do not match."];
-      } else if (form.password2 && value === form.password2) {
-        if (newErrors.password2 && newErrors.password2.includes("Passwords do not match.")) {
-            newErrors.password2 = [];
-        }
+      } else {
+        delete newErrors.password2;
       }
     } else if (id === "password2") {
       if (value !== form.password1) {
         newErrors.password2 = ["Passwords do not match."];
       } else {
-        newErrors.password2 = [];
+        delete newErrors.password2;
       }
     }
-
-    Object.keys(newErrors).forEach(key => {
-        if (Array.isArray(newErrors[key])) {
-            newErrors[key] = newErrors[key].filter(msg => msg !== "");
-            if (newErrors[key].length === 0) {
-                delete newErrors[key];
-            }
-        } else if (typeof newErrors[key] === 'string' && newErrors[key] === "") {
-            delete newErrors[key];
-        }
+    Object.keys(newErrors).forEach(k => {
+      if (Array.isArray(newErrors[k]) && newErrors[k].length === 0) delete newErrors[k];
     });
-
     setErrors(newErrors);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // client‐side validations…
     let clientErrors = {};
+    const uErr = validateUsername(form.username);
+    if (uErr.length) clientErrors.username = uErr;
+    const eErr = validateEmail(form.email);
+    if (eErr) clientErrors.email = [eErr];
+    const pErr = validatePassword(form.password1);
+    if (pErr.length) clientErrors.password1 = pErr;
+    if (form.password1 !== form.password2) clientErrors.password2 = ["Passwords do not match."];
 
-    const usernameErrors = validateUsername(form.username);
-    if (usernameErrors.length > 0) {
-      clientErrors.username = usernameErrors;
-    }
-
-    const emailError = validateEmail(form.email);
-    if (emailError) {
-      clientErrors.email = [emailError];
-    }
-
-    const password1Errors = validatePassword(form.password1);
-    if (password1Errors.length > 0) {
-      clientErrors.password1 = password1Errors;
-    }
-
-    if (form.password1 !== form.password2) {
-      clientErrors.password2 = ["Passwords do not match."];
-    } else if (!form.password2) {
-        clientErrors.password2 = ["Please confirm your password."];
-    }
-
-    if (Object.keys(clientErrors).length > 0) {
+    if (Object.keys(clientErrors).length) {
       setErrors(clientErrors);
       return;
     }
@@ -140,21 +118,30 @@ export default function RegisterPage() {
           password2: form.password2,
         }
       );
+      // store token & show popup
       localStorage.setItem("authToken", res.data.key);
-      router.push("/");
+      setRegistrationSuccess(true);
+
+      // after 1.5s redirect home
+      setTimeout(() => {
+        router.push("/");
+      }, 1500);
+
     } catch (err) {
       console.error("Registration error payload:", err.response?.data);
-      setErrors({ ...clientErrors, ...(err.response?.data || { non_field_errors: ["Registration failed."] }) });
+      setErrors({
+        ...(err.response?.data || {}),
+      });
     }
   };
 
   return (
     <div className="relative w-full min-h-screen flex items-center justify-center px-4">
-      {/* fixed full-page gradient */}
+      {/* full‐screen gradient */}
       <div className="fixed inset-0 bg-gradient-to-br from-blue-900/80 via-blue-900/40 to-teal-400/20 pointer-events-none" />
 
       {/* glassy card */}
-      <div className="relative z-10 w-full max-w-md bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-8 transform transition-transform hover:-translate-y-1">
+      <div className="relative z-10 w-full max-w-md bg-white/70 backdrop-blur-md rounded-2xl shadow-xl p-8">
         <h1 className="text-3xl font-extrabold text-gray-900 mb-2 text-center">
           Register
         </h1>
@@ -164,9 +151,7 @@ export default function RegisterPage() {
 
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           {errors.non_field_errors && (
-            <p className="text-red-500 text-sm">
-              {errors.non_field_errors.join(" ")}
-            </p>
+            <p className="text-red-500 text-sm">{errors.non_field_errors.join(" ")}</p>
           )}
 
           {/* Username */}
@@ -226,6 +211,7 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 // --- UI/UX Improvement: Text, Background, Shadow ---
                 className="flex-grow px-4 py-3 rounded-l-lg border border-gray-300 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900 shadow-sm"
+                placeholder="••••••••"
                 required
               />
               <button
@@ -260,6 +246,7 @@ export default function RegisterPage() {
                 onChange={handleChange}
                 // --- UI/UX Improvement: Text, Background, Shadow ---
                 className="flex-grow px-4 py-3 rounded-l-lg border border-gray-300 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900 shadow-sm"
+                placeholder="••••••••"
                 required
               />
               <button
@@ -279,20 +266,15 @@ export default function RegisterPage() {
             )}
           </div>
 
-          {/* Submit */}
-          <button
+           {/* Submit */}
+           <button
             type="submit"
             className="w-full py-3 rounded-full bg-teal-500 text-white font-bold text-lg shadow-md hover:bg-teal-600 transition"
+            disabled={registrationSuccess}
           >
-            Register
+            {registrationSuccess ? "✓ Registered" : "Register"}
           </button>
         </form>
-
-        {/* <div className="mt-6 text-center text-sm text-gray-700">
-          Or register with
-        </div>
-        <GoogleLoginBtn /> */}
-        {/* <FacebookLoginBtn /> */}
 
         <button
           className="mt-4 w-full text-center text-sm text-teal-600 hover:underline"
@@ -301,6 +283,22 @@ export default function RegisterPage() {
           Already have an account? Login
         </button>
       </div>
+
+      {/* success toast */}
+      {registrationSuccess && (
+        <div className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-white rounded-full px-6 py-3 shadow-lg flex items-center space-x-2">
+          <svg
+            className="w-6 h-6 text-teal-500"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          <span className="text-gray-800 font-medium">Registration successful!</span>
+        </div>
+      )}
     </div>
   );
 }
