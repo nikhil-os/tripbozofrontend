@@ -14,44 +14,38 @@ const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
   const menuRef = useRef(null);
   const router = useRouter();
+  const pathname = usePathname();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+ // update on mount, on route change, or on storage event
+ useEffect(() => {
+  const updateLogin = () => setIsLoggedIn(!!localStorage.getItem("authToken"));
+  updateLogin();
+  window.addEventListener("storage", updateLogin);
+  return () => window.removeEventListener("storage", updateLogin);
+}, []);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      setIsLoggedIn(!!localStorage.getItem('authToken'));
+// also update whenever the user navigates
+useEffect(() => {
+  setIsLoggedIn(!!localStorage.getItem("authToken"));
+}, [pathname]);
+
+// scroll listener, click-outside listener, etc…
+useEffect(() => {
+  const handleScroll = () => setScrolled(window.scrollY > 10);
+  window.addEventListener("scroll", handleScroll);
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+useEffect(() => {
+  if (!mobileMenuOpen) return;
+  const handleClickOutside = (e) => {
+    if (menuRef.current && !menuRef.current.contains(e.target)) {
+      setMobileMenuOpen(false);
     }
-  }, []);
-
-  // Close menu when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
-        setMobileMenuOpen(false);
-      }
-    };
-
-    if (mobileMenuOpen) {
-      document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [mobileMenuOpen]);
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
   };
+  document.addEventListener("mousedown", handleClickOutside);
+  return () => document.removeEventListener("mousedown", handleClickOutside);
+}, [mobileMenuOpen]);
+
 
   return (
     <>  
