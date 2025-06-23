@@ -133,37 +133,68 @@ const Navbar = () => {
                 
                 <div className="w-full h-px bg-gray-200 my-2"></div>
                 
-                {isLoggedIn ? (
-    <button
+                {/* Mobile Menu Popup Buttons */}
+{isLoggedIn ? (
+  <button
     onClick={() => {
       setShowProfile((v) => !v);
       setMobileMenuOpen(false);
     }}
-    className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500 text-left"
+    className="
+      w-full text-center
+      py-2 px-4
+      bg-gradient-to-r from-teal-500 to-cyan-500
+      hover:from-teal-600 hover:to-cyan-600
+      text-white text-sm font-bold tracking-wide
+      rounded-lg
+      shadow-md
+      hover:shadow-lg
+      transition-all duration-200
+    "
   >
     Profile
   </button>
 ) : (
   <Link
     href="/login"
-    className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
     onClick={() => setMobileMenuOpen(false)}
+    className="
+      w-full text-center
+      py-2 px-4
+      bg-gradient-to-r from-teal-500 to-cyan-500
+      border-1 border-white-600
+      hover:from-teal-600 hover:to-cyan-600
+      text-white text-sm font-bold tracking-wide
+      rounded-lg
+      shadow-md
+      hover:shadow-lg
+      transition-all duration-200
+    "
   >
-    <div className="flex items-center">
-      <svg className="w-5 h-5 mr-2 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
-      Login
-    </div>
+    Login
   </Link>
 )}
 
-                
-                <Link
-                  href="/Onboarding"
-                  className="mx-5 my-3 bg-teal-500 hover:bg-teal-600 text-white px-3 py-1 rounded-full text-center font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Get Started
-                </Link>
+<Link
+  href="/Onboarding"
+  onClick={() => setMobileMenuOpen(false)}
+  className="
+    w-full text-center
+    py-2 px-4
+    bg-white
+    border-2 border-teal-500
+    hover:bg-teal-50
+    text-teal-600 text-sm font-bold tracking-wide
+    rounded-lg
+    shadow-inner
+    shadow-outer
+    hover:shadow-md
+    transition-all duration-200
+  "
+>
+  Get Started
+</Link>
+
               </div>
             </div>
           )}
@@ -187,33 +218,65 @@ const Navbar = () => {
 
         {/* Right: Login and Get Started - pushed to extreme right (Desktop Only) */}
         <div className="hidden lg:flex items-center space-x-4 pr-1">
-          {isLoggedIn ? (
-            <button
-            onClick={() => setShowProfile((v) => !v)}
-            className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full font-bold shadow-md hover:bg-teal-50 transition"
-            style={{ minWidth: "120px", letterSpacing: "0.03em" }}
-          >
-            Profile
-          </button>
-          ) : (
-            <Link
-  href="/login"
-  className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition hover:bg-teal-50"
-  style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
+        {/* Desktop Buttons */}
+{isLoggedIn ? (
+  <button
+    onClick={() => setShowProfile((v) => !v)}
+    className="
+      inline-flex items-center
+      py-2 px-4
+      bg-gradient-to-r from-teal-500 to-cyan-500
+      hover:from-teal-600 hover:to-cyan-600
+      text-white text-sm font-bold tracking-wide
+      rounded-lg
+      shadow-md
+      hover:shadow-lg
+      transition-all duration-200
+    "
+  >
+    Profile
+  </button>
+) : (
+  <Link
+    href="/login"
+    onClick={() => setMobileMenuOpen(false)}
+    className="
+      inline-flex items-center
+      py-2 px-4
+      bg-gradient-to-r from-teal-500 to-cyan-500
+      border-1 border-white-600
+      hover:from-teal-600 hover:to-cyan-600
+      text-white text-sm font-bold tracking-wide
+      
+      rounded-lg
+      shadow-md
+      hover:shadow-lg
+      transition-all duration-200
+    "
+  >
+    Login
+  </Link>
+)}
+
+<Link
+  href="/Onboarding"
+  className="
+    inline-flex items-center
+    py-2 px-4
+    bg-white
+    border-2 border-teal-500
+    hover:bg-teal-50
+    text-teal-600 text-sm font-bold  tracking-wide
+    rounded-lg
+    shadow-inner
+    shadow-outer
+    hover:shadow-md
+    transition-all duration-200
+  "
 >
-  <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/>
-  </svg>
-  Login
+  Get Started
 </Link>
-          )}
-          <Link
-            href="/Onboarding"
-            className="inline-block bg-teal-500 hover:bg-teal-600 text-white px-6 py-2 rounded-full text-base font-semibold shadow-md transition-colors border border-teal-500"
-            style={{ minWidth: '100px', textAlign: 'center' }}
-          >
-            Get Started
-          </Link>
+
         </div>
       </div>
     </nav>

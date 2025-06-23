@@ -55,14 +55,17 @@ export default function LoginPage() {
 
     setErrors({}); // Clear any previous errors before making the API call
     try {
-      const payload = form.email
-        ? { email: form.email, password: form.password }
-        : { username: form.username, password: form.password };
-
+      
+// decide if identifier looks like an email:
+      const isEmail = form.identifier.includes("@");
+      const payload = isEmail
+        ? { email: form.identifier.trim(), password: form.password }
+        : { username: form.identifier.trim(), password: form.password };
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login/`,
-        { email: form.identifier, password: form.password }
+        payload
       );
+
       localStorage.setItem("authToken", res.data.key);
            // show toast, then redirect
      setLoginSuccess(true);
@@ -100,18 +103,18 @@ export default function LoginPage() {
               Email or Username
             </label>
             <input
-              id="email"
+              id="identifier"
               type="text"
-              value={form.email || form.username}
+              value={form.identifier}
               onChange={handleChange}
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-teal-400 bg-white text-gray-900 shadow-sm"
               placeholder="you@example.com or username"
             />
             {/* Display combined errors for email/username input field */}
-            {(errors.email || errors.username) && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.email ? errors.email.join(" ") : errors.username.join(" ")}
-              </p>
+            {errors.identifier && (
+                <p className="text-red-500 text-sm mt-1">
+                  {errors.identifier.join(" ")}
+                </p>
             )}
           </div>
 
