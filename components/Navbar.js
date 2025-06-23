@@ -65,7 +65,7 @@ const Navbar = () => {
 
         {/* Left: Brand - pushed to extreme left */}
         <div className="flex items-center z-20 pl-1">
-          <AppLink href="/">
+          <Link href="/">
             <div className="w-30 sm:w-32"> {/* responsive wrapper width */}
               <Image
                 src="/icons/icon.png"
@@ -76,7 +76,7 @@ const Navbar = () => {
                 className="rounded-full w-full h-auto" // scale visually
               />
             </div>
-          </AppLink>
+          </Link>
 
         </div>
 
@@ -106,33 +106,33 @@ const Navbar = () => {
               ">
             
               <div className="flex flex-col">
-                <AppLink 
+                <Link 
                   href="/" 
                   className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Home
-                </AppLink>
-                <AppLink 
+                </Link>
+                <Link 
                   href="/Onboarding" 
                   className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Onboarding
-                </AppLink>
-                <AppLink 
+                </Link>
+                <Link 
                   href="/About" 
                   className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   About
-                </AppLink>
+                </Link>
                 
                 <div className="w-full h-px bg-gray-200 my-2"></div>
                 
                 {isLoggedIn ? (
   <Link
-    href="/Profile"
+    href="/profile/"
     className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
     onClick={() => setMobileMenuOpen(false)}
   >
@@ -143,7 +143,7 @@ const Navbar = () => {
   </Link>
 ) : (
   <Link
-    href="/login"
+    href="/login/"
     className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
     onClick={() => setMobileMenuOpen(false)}
   >
@@ -187,7 +187,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center space-x-4 pr-1">
           {isLoggedIn ? (
             <Link
-              href="/Profile"
+              href="/Profile/"
               className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all hover:bg-teal-50 hover:text-teal-700 focus:outline-none focus:ring-2 focus:ring-teal-400"
               style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
             >
@@ -196,7 +196,7 @@ const Navbar = () => {
             </Link>
           ) : (
             <Link
-  href="/login"
+  href="/login/"
   className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition hover:bg-teal-50"
   style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
 >
