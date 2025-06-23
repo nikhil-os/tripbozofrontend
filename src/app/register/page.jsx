@@ -119,7 +119,9 @@ export default function RegisterPage() {
         }
       );
       // store token & show popup
-      localStorage.setItem("authToken", res.data.key);
+      // dj-rest-auth with JWT returns { access, refresh }
+      const token = res.data.access ?? res.data.key;
+      localStorage.setItem("authToken", token);
       setRegistrationSuccess(true);
 
       // after 1.5s redirect home

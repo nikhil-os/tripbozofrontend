@@ -67,7 +67,9 @@ export default function LoginPage() {
         payload
       );
 
-      localStorage.setItem("authToken", res.data.key);
+      // dj-rest-auth with JWT returns { access, refresh }
+       const token = res.data.access ?? res.data.key;
+      localStorage.setItem("authToken", token);
            // show toast, then redirect
      setLoginSuccess(true);
      setTimeout(() => {
