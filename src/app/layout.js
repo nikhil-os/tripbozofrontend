@@ -7,6 +7,7 @@ import LoaderRouteListener from "@/components/LoaderRouteListener";
 import LoaderConsumerContent from "@/components/LoaderConsumerContent";
 import RootWrapper from "@/components/RootWrapper";
 import { Analytics } from "@vercel/analytics/next";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -103,6 +104,7 @@ export default function RootLayout({ children }) {
         ></script>
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}>
+      <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
         <LoaderProvider>
           {/* this listens and hides the loader on every route-change */}
           <LoaderRouteListener />
@@ -111,6 +113,7 @@ export default function RootLayout({ children }) {
             <RootWrapper>{children}</RootWrapper>
           </LoaderConsumerContent>
         </LoaderProvider>
+        </GoogleOAuthProvider>
         <Analytics />
       </body>
     </html>

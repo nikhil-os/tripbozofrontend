@@ -96,7 +96,7 @@ const sampleEsim = [
           </p>
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
            {sampleInsurance.map((svc) => (
-             <a
+             <button
                key={svc.name}
                href={svc.link}
                target="_blank"
@@ -104,15 +104,16 @@ const sampleEsim = [
                className="
                  inline-flex items-center justify-center
                  px-3 py-1.5
+                 bg-red-300
                  border border-red-300
                  rounded-lg
-                 text-red-600 text-sm font-medium
-                 hover:bg-red-50
+                 text-gray-700 text-sm font-bold
+                 hover:bg-red-400
                  transition
                "
              >
                {svc.name}
-             </a>
+             </button>
            ))}
           </div>
         </div>
@@ -127,7 +128,7 @@ const sampleEsim = [
           </p>
           <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
             {sampleEsim.map((svc) => (
-              <a
+              <button
                 key={svc.name}
                 href={svc.link}
                 target="_blank"
@@ -135,15 +136,16 @@ const sampleEsim = [
                 className="
                   inline-flex items-center justify-center
                   px-3 py-1.5
+                  bg-green-300
                   border border-green-300
                   rounded-lg
-                  text-green-600 text-sm font-medium
-                  hover:bg-green-50
+                  text-gray-600 text-sm font-bold
+                  hover:bg-green-400
                   transition
                 "
               >
                 {svc.name}
-              </a>
+              </button>
             ))}
           </div>
         </div>

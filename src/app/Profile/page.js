@@ -7,7 +7,7 @@ export default function ProfilePage() {
   // Simulate fetching user data from localStorage or use sample data if none exists
   let initialData;
   if (typeof window !== 'undefined') {
-    const stored = localStorage.getItem('profileData');
+    const stored = localStorage.getItem('authToken');
     if (stored) {
       initialData = JSON.parse(stored);
     } else {

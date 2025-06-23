@@ -26,7 +26,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setIsLoggedIn(!!localStorage.getItem('profileData'));
+      setIsLoggedIn(!!localStorage.getItem('authToken'));
     }
   }, []);
 
@@ -130,24 +130,29 @@ const Navbar = () => {
                 <div className="w-full h-px bg-gray-200 my-2"></div>
                 
                 {isLoggedIn ? (
-                  <AppLink
-                    href="/Profile"
-                    className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <div className="flex items-center">
-                      <svg className="w-5 h-5 mr-2 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7.5 7.5 0 0 1 13 0"/></svg>
-                      Profile
-                    </div>
-                  </AppLink>
-                ) : (
-                  <div className="px-4 py-2 text-gray-400 cursor-not-allowed">
-                    <div className="flex items-center">
-                      <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
-                      Login
-                    </div>
-                  </div>
-                )}
+  <AppLink
+    href="/Profile"
+    className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
+    onClick={() => setMobileMenuOpen(false)}
+  >
+    <div className="flex items-center">
+      <svg className="w-5 h-5 mr-2 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><circle cx="12" cy="7" r="4"/><path d="M5.5 21a7.5 7.5 0 0 1 13 0"/></svg>
+      Profile
+    </div>
+  </AppLink>
+) : (
+  <AppLink
+    href="/login"
+    className="px-4 py-2 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
+    onClick={() => setMobileMenuOpen(false)}
+  >
+    <div className="flex items-center">
+      <svg className="w-5 h-5 mr-2 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
+      Login
+    </div>
+  </AppLink>
+)}
+
                 
                 <AppLink
                   href="/Onboarding"
@@ -190,15 +195,15 @@ const Navbar = () => {
             </AppLink>
           ) : (
             <AppLink
-              href="/Login"
-              className="inline-flex items-center gap-2 bg-gray-200 border-2 border-gray-300 text-gray-400 px-6 py-2 rounded-full text-base font-bold shadow-md transition-all opacity-60 cursor-not-allowed pointer-events-none select-none"
-              style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
-              tabIndex={-1}
-              aria-disabled="true"
-            >
-              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/></svg>
-              Login
-            </AppLink>
+  href="/login"
+  className="inline-flex items-center gap-2 bg-white border-2 border-teal-500 text-teal-600 px-6 py-2 rounded-full text-base font-bold shadow-md transition hover:bg-teal-50"
+  style={{ minWidth: '120px', textAlign: 'center', letterSpacing: '0.03em' }}
+>
+  <svg className="w-5 h-5 text-teal-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-8 0v2M12 11a4 4 0 100-8 4 4 0 000 8zm6 8v-2a6 6 0 00-12 0v2"/>
+  </svg>
+  Login
+</AppLink>
           )}
           <AppLink
             href="/Onboarding"
