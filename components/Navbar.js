@@ -17,6 +17,10 @@ const Navbar = () => {
   const router = useRouter();
   const pathname = usePathname();
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen((open) => !open);
+  };
+
  // update on mount, on route change, or on storage event
  useEffect(() => {
   const updateLogin = () => setIsLoggedIn(!!localStorage.getItem("authToken"));
