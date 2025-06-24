@@ -121,18 +121,27 @@ export default function RegisterPage() {
         }
       );
   
-      // pick up whatever token field you get back:
-      const token = res.data.access ?? res.data.key;
-      if (!token) throw new Error("No token returned on registration");
-  
-      localStorage.setItem("authToken", token);
-  
-      // globally configure axios
-      const isJwt = token.split(".").length === 3;
-      axios.defaults.headers.common["Authorization"] = isJwt
-        ? `Bearer ${token}`
-        : `Token ${token}`;
-  
+           // ── AUTO-LOGIN FALLBACK ────────────────────────────────────────────────
+           // registration succeeded but no token came back? now call JWT create:
+             // 2) Auto-login fallback
+    let token;
+    if (res.data.access || res.data.key) {
+      token = res.data.access ?? res.data.key;
+    } else {
+      const loginRes = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/jwt/create/`,
+        { username: form.username, password: form.password1 }
+      );
+      token = loginRes.data.access;
+    }
+    localStorage.setItem("authToken", token);
+    const isJwt = token.split(".").length === 3;
+    axios.defaults.headers.common["Authorization"] = isJwt
+      ? `Bearer ${token}`
+      : `Token ${token}`;
+
+
+   
       // show toast & redirect
       setRegistrationSuccess(true);
       setTimeout(() => router.push("/"), 1500);
