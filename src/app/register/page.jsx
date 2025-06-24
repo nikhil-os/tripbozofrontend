@@ -92,7 +92,8 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // client‐side validations…
+  
+    // client-side validations…
     let clientErrors = {};
     const uErr = validateUsername(form.username);
     if (uErr.length) clientErrors.username = uErr;
@@ -100,13 +101,14 @@ export default function RegisterPage() {
     if (eErr) clientErrors.email = [eErr];
     const pErr = validatePassword(form.password1);
     if (pErr.length) clientErrors.password1 = pErr;
-    if (form.password1 !== form.password2) clientErrors.password2 = ["Passwords do not match."];
-
+    if (form.password1 !== form.password2)
+      clientErrors.password2 = ["Passwords do not match."];
+  
     if (Object.keys(clientErrors).length) {
       setErrors(clientErrors);
       return;
     }
-
+  
     setErrors({});
     try {
       const res = await axios.post(
@@ -118,29 +120,25 @@ export default function RegisterPage() {
           password2: form.password2,
         }
       );
-      // ── AUTO-LOGIN AFTER REGISTRATION ────────────────────────────────────
-     // dj-rest-auth with JWT returns { access, refresh }
-     const token = res.data.access ?? res.data.key;
-     localStorage.setItem("authToken", token);
-
-     // configure axios for all future requests
-     const isJwt = token.split(".").length === 3;
-     axios.defaults.headers.common["Authorization"] = isJwt
-       ? `Bearer ${token}`
-       : `Token ${token}`;
-
-     // show our success toast
-     setRegistrationSuccess(true);
-
-     // redirect home in 1.5s
-     setTimeout(() => router.push("/"), 1500);
-     // ──────────────────────────────────────────────────────────────────────
-
+  
+      // pick up whatever token field you get back:
+      const token = res.data.access ?? res.data.key;
+      if (!token) throw new Error("No token returned on registration");
+  
+      localStorage.setItem("authToken", token);
+  
+      // globally configure axios
+      const isJwt = token.split(".").length === 3;
+      axios.defaults.headers.common["Authorization"] = isJwt
+        ? `Bearer ${token}`
+        : `Token ${token}`;
+  
+      // show toast & redirect
+      setRegistrationSuccess(true);
+      setTimeout(() => router.push("/"), 1500);
     } catch (err) {
       console.error("Registration error payload:", err.response?.data);
-      setErrors({
-        ...(err.response?.data || {}),
-      });
+      setErrors(err.response?.data || { non_field_errors: ["Registration failed."] });
     }
   };
 
