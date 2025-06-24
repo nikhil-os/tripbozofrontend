@@ -37,9 +37,17 @@ export default function BundleRedirectPage({ params }) {
         const json = await res.json();
         // map each item to pick the right URL for this device
         const mapped = (json.items || []).map((it) => {
-          let url = it.android_link || it.ios_link;   // fallback
-          if (platform === "ios" && it.ios_link) url = it.ios_link;
-          if (platform === "android" && it.android_link) url = it.android_link;
+          let url;
+          if (platform === "ios") {
+            // prefer the App Store link
+            url = it.ios_link || it.android_link;
+          } else if (platform === "android") {
+            // prefer the Play Store link
+            url = it.android_link || it.ios_link;
+          } else {
+            // web or unknown: you can choose to default to one or present both
+            url = it.android_link || it.ios_link;
+          }
           return { name: it.name, url };
         });
         setItems(mapped);
@@ -53,7 +61,7 @@ export default function BundleRedirectPage({ params }) {
 
   const openAll = () => items.forEach((it) => window.open(it.url, "_blank"));
   const openNext = () => {
-    if (nextIdx < items.length) {
+    if (nextIdx < ictems.length) {
       window.open(items[nextIdx].url, "_blank");
       setNextIdx(nextIdx + 1);
     }
@@ -85,7 +93,7 @@ export default function BundleRedirectPage({ params }) {
     );
   }
 
-  
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       {/* — Mini Header — */}
