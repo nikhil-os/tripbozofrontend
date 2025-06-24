@@ -133,67 +133,72 @@ useEffect(() => {
                 <div className="w-full h-px bg-gray-200 my-2"></div>
                 
                 {/* Mobile Menu Popup Buttons */}
-{isLoggedIn ? (
-  <button
-    onClick={() => {
-      setShowProfile((v) => !v);
-      setMobileMenuOpen(false);
-    }}
-        className="
-          w-auto
-          text-center
-          px-4 py-2
-          bg-white/50 backdrop-blur-sm
-          border border-teal-500
-          text-teal-600 text-sm font-semibold tracking-wide
-          rounded-lg
-          hover:bg-cyan-500
-          hover:text-gray-600
-          transition-colors duration-200
-        "
-      >
-    Profile
-  </button>
-) : (
+{/* Mobile Menu Popup Buttons */}
+<div className="flex justify-center space-x-2 px-5 py-3">
+  {isLoggedIn ? (
+    <button
+      onClick={() => {
+        setShowProfile((v) => !v);
+        setMobileMenuOpen(false);
+      }}
+      className="
+        w-auto
+        text-center
+        px-4 py-2
+        bg-white/50 backdrop-blur-sm
+        border border-teal-500
+        text-teal-600 text-sm font-semibold tracking-wide
+        rounded-lg
+        hover:bg-cyan-500
+        hover:text-gray-600
+        transition-colors duration-200
+      "
+    >
+      Profile
+    </button>
+  ) : (
+    <Link
+      href="/login"
+      onClick={() => setMobileMenuOpen(false)}
+      className="
+        w-auto
+        text-center
+        py-2 px-4
+        bg-gradient-to-r from-teal-500 to-cyan-500
+        border-1 border-white-600
+        hover:from-teal-600 hover:to-cyan-600
+        text-white text-sm font-bold tracking-wide
+        rounded-lg
+        shadow-md
+        hover:shadow-lg
+        transition-all duration-200
+      "
+    >
+      Login
+    </Link>
+  )}
+
   <Link
-    href="/login"
+    href="/Onboarding"
     onClick={() => setMobileMenuOpen(false)}
     className="
-      w-auto  text-center
+      w-auto text-center
       py-2 px-4
-      bg-gradient-to-r from-teal-500 to-cyan-500
-      border-1 border-white-600
-      hover:from-teal-600 hover:to-cyan-600
-      text-white text-sm font-bold tracking-wide
+      bg-white
+      border-2 border-teal-500
+      hover:bg-teal-50
+      text-teal-600 text-sm font-bold tracking-wide
       rounded-lg
-      shadow-md
-      hover:shadow-lg
+      shadow-inner
+      shadow-outer
+      hover:shadow-md
       transition-all duration-200
     "
   >
-    Login
+    Get Started
   </Link>
-)}
+</div>
 
-<Link
-  href="/Onboarding"
-  onClick={() => setMobileMenuOpen(false)}
-  className="
-    w-full text-center
-    py-2 px-4
-    bg-white
-    border-2 border-teal-500
-    hover:bg-teal-50
-    text-teal-600 text-sm font-bold tracking-wide
-    rounded-lg
-    shadow-inner
-    shadow-outer
-    hover:shadow-md
-    transition-all duration-200
-  "
->
-  Get Started
-</Link>
 
               </div>
             </div>

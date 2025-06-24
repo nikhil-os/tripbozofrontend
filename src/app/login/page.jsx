@@ -62,13 +62,12 @@ export default function LoginPage() {
       const payload = isEmail
         ? { email: form.identifier.trim(), password: form.password }
         : { username: form.identifier.trim(), password: form.password };
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/login/`,
-        payload
-      );
-
-      // dj-rest-auth with JWT returns { access, refresh }
-       const token = res.data.access ?? res.data.key;
+           // NEW: hit the JWT create endpoint
+           const res = await axios.post(
+             `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/jwt/create/`,
+             payload
+           );
+           const token = res.data.access;  // this is the JWT
       localStorage.setItem("authToken", token);
 
 

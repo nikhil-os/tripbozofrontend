@@ -120,7 +120,8 @@ export default function RegisterPage() {
       );
       // store token & show popup
       // dj-rest-auth with JWT returns { access, refresh }
-      const token = res.data.access ?? res.data.key;
+      // dj-rest-auth JWT registration also returns access/refresh
+ const token = res.data.access;
       localStorage.setItem("authToken", token);
 
 // tell axios to send it on every request
