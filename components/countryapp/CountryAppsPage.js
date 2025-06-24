@@ -372,63 +372,32 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
 
                  {/* Expandable “card footer” */}
                  {expandedId === app.id && (
-                  <div
-                    onClick={(e) => e.stopPropagation()}
-                    className="
-                      mt-auto
-                      border-t border-gray-200
-                      pt-4
-                      flex justify-center gap-4
-                    "
-                  >
-                 
-                   {app.android_link && (
-                     <button
-                                             href={app.android_link}
-                                             target="_blank"
-                                             rel="noopener noreferrer"
-                                             className="
-                                               inline-flex items-center
-                                               px-4 py-1
-                                               md :px-5  md:py-2
-                                               bg-teal-300
-                                               border border-teal-400
-                                               text-gray-600 
-                                               rounded-full
-                                               text-sm font-bold
-                                               shadow-sm
-                                               hover:bg-teal-400
-                                               
-                                               transition
-                                             "
-                                           >
-                                               Play Store
-                                           </button>
-                   )}
-                   {app.ios_link && (
-                     <button
-                                             href={app.ios_link}
-                                             target="_blank"
-                                             rel="noopener noreferrer"
-                                             className="
-                                               inline-flex items-center
-                                               px-4 py-1
-                                               md :px-5  md:py-2
-                                               bg-gray-600
-                                               border border-gray-600
-                                               text-white-700
-                                               rounded-full
-                                               text-sm font-bold
-                                               shadow-sm
-                                               hover:bg-gray-800
-                                               transition
-                                             "
-                                           >
-                                             App Store
-                                           </button>
-                   )}
-                 </div>
-               )}
+                    <div
+                      onClick={(e) => e.stopPropagation()}
+                      className="mt-auto border-t border-gray-200 pt-4 flex justify-center gap-4"
+                    >
+                      {app.android_link && (
+                        <a
+                          href={app.android_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-4 py-2 bg-teal-300 border border-teal-400 text-gray-800 rounded-full text-sm font-semibold shadow-sm hover:bg-teal-400 transition"
+                        >
+                          Play Store
+                        </a>
+                      )}
+                      {app.ios_link && (
+                        <a
+                          href={app.ios_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center px-4 py-2 bg-gray-700 border border-gray-700 text-white rounded-full text-sm font-semibold shadow-sm hover:bg-gray-800 transition"
+                        >
+                          App Store
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

@@ -118,25 +118,23 @@ export default function RegisterPage() {
           password2: form.password2,
         }
       );
-      // store token & show popup
-      // dj-rest-auth with JWT returns { access, refresh }
-      // dj-rest-auth JWT registration also returns access/refresh
- const token = res.data.access;
-      localStorage.setItem("authToken", token);
+      // ── AUTO-LOGIN AFTER REGISTRATION ────────────────────────────────────
+     // dj-rest-auth with JWT returns { access, refresh }
+     const token = res.data.access ?? res.data.key;
+     localStorage.setItem("authToken", token);
 
-// tell axios to send it on every request
-const isJwt = token.split(".").length === 3;
-axios.defaults.headers.common["Authorization"] = 
-  isJwt
-    ? `Bearer ${token}`
-    : `Token ${token}`;
+     // configure axios for all future requests
+     const isJwt = token.split(".").length === 3;
+     axios.defaults.headers.common["Authorization"] = isJwt
+       ? `Bearer ${token}`
+       : `Token ${token}`;
 
-      setRegistrationSuccess(true);
+     // show our success toast
+     setRegistrationSuccess(true);
 
-      // after 1.5s redirect home
-      setTimeout(() => {
-        router.push("/");
-      }, 1500);
+     // redirect home in 1.5s
+     setTimeout(() => router.push("/"), 1500);
+     // ──────────────────────────────────────────────────────────────────────
 
     } catch (err) {
       console.error("Registration error payload:", err.response?.data);
