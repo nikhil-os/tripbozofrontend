@@ -32,13 +32,20 @@ export default function ProfileCard({ open, onClose }) {
       ? `Bearer ${rawToken}`
       : `Token ${rawToken}`;
 
+    console.log("[ProfileCard] rawToken:", rawToken);
+    console.log("[ProfileCard] Authorization:", headerValue);
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/user/`, {
         headers: { Authorization: headerValue },
       })
       .then((r) => setUser(r.data))
-      .catch(() => setUser(null));
+      .catch((err) => {
+        console.warn("[ProfileCard] /user/ failed:", err.response?.status, err.response?.data);
+        setUser(null);
+      });
   }, [open, rawToken]);
+
 
   if (!open) return null;
 
