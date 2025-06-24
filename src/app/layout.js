@@ -1,4 +1,6 @@
 // src/app/layout.jsx
+
+
 import "./globals.css";
 import "@/styles/responsive.css";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -6,6 +8,7 @@ import { LoaderProvider } from "@/components/LoaderContext";
 import LoaderRouteListener from "@/components/LoaderRouteListener";
 import LoaderConsumerContent from "@/components/LoaderConsumerContent";
 import RootWrapper from "@/components/RootWrapper";
+import AuthInitializer from "@/components/AuthInitializer";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
@@ -93,18 +96,6 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
 
- // ← NEW: on client mount, read any saved token and
-  //     configure Axios so all requests use it
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    if (token) {
-      const isJwt = token.split(".").length === 3;
-      axios.defaults.headers.common["Authorization"] = isJwt
-        ? `Bearer ${token}`
-        : `Token ${token}`;
-    }
-  }, []);
-
 
   return (
     <html lang="en">
@@ -124,7 +115,8 @@ export default function RootLayout({ children }) {
           <LoaderRouteListener />
           {/* this actually renders the loader spinner */}
           <LoaderConsumerContent>
-            <RootWrapper>{children}</RootWrapper>
+          
+            <RootWrapper><AuthInitializer />{children}</RootWrapper>
           </LoaderConsumerContent>
         </LoaderProvider>
         </GoogleOAuthProvider>
