@@ -70,6 +70,16 @@ export default function LoginPage() {
       // dj-rest-auth with JWT returns { access, refresh }
        const token = res.data.access ?? res.data.key;
       localStorage.setItem("authToken", token);
+
+
+// tell axios to send it on every request
+const isJwt = token.split(".").length === 3;
+axios.defaults.headers.common["Authorization"] = 
+  isJwt
+    ? `Bearer ${token}`
+    : `Token ${token}`;
+
+
            // show toast, then redirect
      setLoginSuccess(true);
      setTimeout(() => {

@@ -107,7 +107,7 @@ useEffect(() => {
               rounded-lg shadow-lg py-3
               ">
             
-              <div className="flex flex-col">
+              <div className="flex flex-col items-center">
                 <Link 
                   href="/" 
                   className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
@@ -139,19 +139,18 @@ useEffect(() => {
       setShowProfile((v) => !v);
       setMobileMenuOpen(false);
     }}
-    className="
-      w-full text-center
-      py-2 px-4
-      bg-gradient-to-r from-teal-500 to-cyan-500
-      border-1 border-white-600
-      hover:from-teal-600 hover:to-cyan-600
-      text-white text-sm font-bold tracking-wide
-      rounded-lg
-      shadow-md
-      hover:shadow-lg
-      transition-all duration-200
-    "
-  >
+        className="
+          w-auto
+          text-center
+          px-4 py-2
+          bg-white/50 backdrop-blur-sm
+          border border-teal-500
+          text-teal-600 text-sm font-semibold tracking-wide
+          rounded-lg
+          hover:bg-white/70
+          transition-colors duration-200
+        "
+      >
     Profile
   </button>
 ) : (
@@ -159,7 +158,7 @@ useEffect(() => {
     href="/login"
     onClick={() => setMobileMenuOpen(false)}
     className="
-      w-full text-center
+      w-auto  text-center
       py-2 px-4
       bg-gradient-to-r from-teal-500 to-cyan-500
       border-1 border-white-600
@@ -223,17 +222,15 @@ useEffect(() => {
   <button
     onClick={() => setShowProfile((v) => !v)}
     className="
-      inline-flex items-center
-      py-2 px-4
-      bg-gradient-to-r from-teal-500 to-cyan-500
-      border-1 border-white-600
-      hover:from-teal-600 hover:to-cyan-600
-      text-white text-sm font-bold tracking-wide
-      rounded-lg
-      shadow-md
-      hover:shadow-lg
-      transition-all duration-200
-    "
+    +      inline-flex items-center
+    +      py-2 px-4
+    +      bg-white/50 backdrop-blur-sm
+    +      border border-teal-500
+    +      text-teal-600 text-sm font-semibold tracking-wide
+    +      rounded-lg
+    +      hover:bg-white/70
+    +      transition-colors duration-200
+    +    "
   >
     Profile
   </button>

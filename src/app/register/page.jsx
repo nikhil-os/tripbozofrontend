@@ -122,6 +122,14 @@ export default function RegisterPage() {
       // dj-rest-auth with JWT returns { access, refresh }
       const token = res.data.access ?? res.data.key;
       localStorage.setItem("authToken", token);
+
+// tell axios to send it on every request
+const isJwt = token.split(".").length === 3;
+axios.defaults.headers.common["Authorization"] = 
+  isJwt
+    ? `Bearer ${token}`
+    : `Token ${token}`;
+
       setRegistrationSuccess(true);
 
       // after 1.5s redirect home
