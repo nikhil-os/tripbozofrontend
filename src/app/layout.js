@@ -92,6 +92,20 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+
+ // ← NEW: on client mount, read any saved token and
+  //     configure Axios so all requests use it
+  useEffect(() => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      const isJwt = token.split(".").length === 3;
+      axios.defaults.headers.common["Authorization"] = isJwt
+        ? `Bearer ${token}`
+        : `Token ${token}`;
+    }
+  }, []);
+
+
   return (
     <html lang="en">
       <head>

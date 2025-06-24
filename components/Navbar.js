@@ -147,7 +147,8 @@ useEffect(() => {
           border border-teal-500
           text-teal-600 text-sm font-semibold tracking-wide
           rounded-lg
-          hover:bg-white/70
+          hover:bg-cyan-500
+          hover:text-gray-600
           transition-colors duration-200
         "
       >
@@ -222,15 +223,16 @@ useEffect(() => {
   <button
     onClick={() => setShowProfile((v) => !v)}
     className="
-    +      inline-flex items-center
-    +      py-2 px-4
-    +      bg-white/50 backdrop-blur-sm
-    +      border border-teal-500
-    +      text-teal-600 text-sm font-semibold tracking-wide
-    +      rounded-lg
-    +      hover:bg-white/70
-    +      transition-colors duration-200
-    +    "
+          inline-flex items-center
+          py-2 px-4
+          bg-white/50 backdrop-blur-sm
+          border border-teal-500
+          text-teal-600 text-sm font-semibold tracking-wide
+          rounded-lg
+           hover:bg-cyan-500
+          hover:text-gray-600
+          transition-colors duration-200
+        "
   >
     Profile
   </button>
