@@ -1,7 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import AppLink from './AppLink';
-import { FiInstagram, FiLinkedin, FiMail, FiTwitter } from 'react-icons/fi';
+import { FiInstagram, FiLinkedin, FiMail,} from 'react-icons/fi';
+import { FaXTwitter } from 'react-icons/fa6'; 
 
 const Footer = () => {
   return (
@@ -55,10 +56,10 @@ const Footer = () => {
           href="https://x.com/tripbozo"
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Twitter"
+          aria-label="X"
           className="text-gray-600 hover:text-teal-500 transition-colors"
         >
-          <FiTwitter size={20} />
+          <FaXTwitter size={20} />
         </a>
       </div>
           </div>
@@ -70,7 +71,7 @@ const Footer = () => {
               <li><AppLink className="text-gray-300 hover:text-white transition-colors text-sm" href="/">Home</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors text-sm" href="/Onboarding">Onboarding</AppLink></li>
               <li><AppLink className="text-gray-300 hover:text-white transition-colors text-sm" href="/About">About Us</AppLink></li>
-              <li><AppLink className="text-gray-300 hover:text-white transition-colors" href="/contact">Contact Us</AppLink></li>
+              <li><AppLink className="text-gray-300 hover:text-white transition-colors text-sm" href="/contact">Contact Us</AppLink></li>
             </ul>
             <div className="w-[70%] h-px bg-white/30 mt-4 md:hidden"></div>
           </div>
@@ -89,7 +90,7 @@ const Footer = () => {
         
         {/* Copyright and Legal - centered on mobile */}
         <div className="mt-8 pt-4 border-t border-gray-800 text-gray-400 text-xs flex flex-col md:flex-row justify-between items-center w-full">
-          <p className="mb-2 md:mb-0 text-center md:text-left">© {new Date().getFullYear()} Trip Bozo. All rights reserved.</p>
+          <p className="mb-2 md:mb-0 text-center md:text-left">© {new Date().getFullYear()} tripbozo. All rights reserved.</p>
           
           <div className="flex flex-col md:flex-row md:items-center md:space-x-6 text-center md:text-right space-y-1 md:space-y-0">
             <p className="text-gray-400">Hero images via Pixabay</p>

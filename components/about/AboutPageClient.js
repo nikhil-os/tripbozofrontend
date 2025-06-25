@@ -56,7 +56,7 @@ export default function AboutPageClient() {
             Your Essential<br className="hidden sm:block" /> Travel Companion
           </h1>
           <p className="text-xl sm:text-2xl max-w-2xl mx-auto mb-8 text-white/90 font-medium drop-shadow animate-fade-in-up delay-200 relative z-10">
-            Trip Bozo curates the perfect app bundle for every traveler&apos;s needs, no matter where your journey takes you.
+            tripbozo curates the perfect app bundle for every traveler&apos;s needs, no matter where your journey takes you.
           </p>
         </section>
 
@@ -96,10 +96,12 @@ export default function AboutPageClient() {
             </h2>
             {/* Feature Items */}
             {[
+
+              { icon: '📱', title: 'Curated App Collections', text: 'Expert-vetted selections of the best travel apps for every destination, organized by category. Save time researching and focus on enjoying your trip.', align: 'left', bg: 'bg-cyan-100' },
+              { icon: '🚨', title: 'Comprehensive Travel Essentials', text: 'Access offline emergency contacts, key local phrases, safety tips, and essential services—all curated for your destination', align: 'right', bg: 'bg-yellow-100' },
               { icon: '🏔️', title: 'Dynamic Leg Suggestions', text: 'Receive app recommendations based on the type of stop in your journey, from beach destinations to mountain retreats. Our AI-powered system learns your preferences to suggest exactly what you need.', align: 'left', bg: 'bg-blue-100' },
               { icon: '🧑‍💼', title: 'Personalized Onboarding', text: 'Tell us about your travel style and destinations to get the most relevant app suggestions for your journey. We tailor recommendations based on your unique preferences.', align: 'right', bg: 'bg-teal-100' },
-              { icon: '📱', title: 'Curated App Collections', text: 'Expert-vetted selections of the best travel apps for every destination, organized by category. Save time researching and focus on enjoying your trip.', align: 'left', bg: 'bg-cyan-100' },
-              { icon: '🚨', title: 'Emergency Essentials PWA', text: 'Access critical information offline with our installable Progressive Web App for emergencies. Stay prepared for anything during your travels.', align: 'right', bg: 'bg-yellow-100' },
+              
             ].map((feat, i) => (
               <div key={i} className={`mb-16 sm:mb-24 flex flex-col ${feat.align==='right' ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8`}>
                 <div className="md:w-1/3 flex justify-center">
