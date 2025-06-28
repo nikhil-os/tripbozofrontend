@@ -4,9 +4,10 @@
 import React from "react";
 import { FiInstagram, FiLinkedin, FiMail, FiTwitter } from "react-icons/fi";
 import AppLink from "@/components/AppLink";
+import { FaXTwitter } from 'react-icons/fa6';
 
 export const metadata = {
-  title: "Contact Us | TripBozo",
+  title: "Contact Us | tripBozo",
 };
 
 export default function ContactPage() {
@@ -37,7 +38,7 @@ export default function ContactPage() {
           {[ 
             { Icon: FiInstagram, href: "https://www.instagram.com/tripbozo?utm_source=qr&igsh=MXRxcjFrMnA2Nmo2Yg==" },
             { Icon: FiLinkedin, href: "https://www.linkedin.com/company/107882785/" },
-            { Icon: FiTwitter, href: "https://x.com/tripbozo" },
+            { Icon: FaXTwitter , href: "https://x.com/tripbozo" },
           ].map(({ Icon, href }, i) => (
             <a
               key={i}
