@@ -2,6 +2,7 @@
 @import "tailwindcss/utilities";
 @import "tailwindcss";
 
+<<<<<<< HEAD
 
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap');
 
@@ -14,6 +15,8 @@
 
 
 
+=======
+>>>>>>> 553d9aa (feat: SEO overhaul, bugfixes, and content improvements for all country/app pages)
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -36,7 +39,11 @@
 body {
   background: var(--background);
   color: var(--foreground);
+<<<<<<< HEAD
   font-family: Arial, Helvetica, sans-serif, dancing-script;
+=======
+  font-family: Arial, Helvetica, sans-serif;
+>>>>>>> 553d9aa (feat: SEO overhaul, bugfixes, and content improvements for all country/app pages)
 }
 
 /* Smooth scrolling */

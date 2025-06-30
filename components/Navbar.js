@@ -52,6 +52,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed w-full top-0 left-0 z-50 bg-white shadow-sm">
+<<<<<<< HEAD
       <div className="w-[98%] mx-auto py-1 sm:py-4 flex justify-between items-center relative">
 
         {/* Left: Brand - pushed to extreme left */}
@@ -69,6 +70,21 @@ const Navbar = () => {
             </div>
           </AppLink>
 
+=======
+      <div className="w-[98%] mx-auto py-4 flex justify-between items-center relative">
+        {/* Left: Brand - pushed to extreme left */}
+        <div className="flex items-center z-20 pl-1">
+          <AppLink href="/">
+            <Image
+              src="/logo.png" // Path to your logo in the public directory
+              alt="Trip Bozo Logo"
+              width={150}  // Adjust width as needed
+              height={150} // Adjust height as needed
+              priority // Optional: for images above the fold
+              className="rounded-full cursor-pointer" // Optional: if your logo is circular
+            />
+          </AppLink>
+>>>>>>> 553d9aa (feat: SEO overhaul, bugfixes, and content improvements for all country/app pages)
         </div>
 
         {/* Hamburger Menu Button (Mobile Only) */}

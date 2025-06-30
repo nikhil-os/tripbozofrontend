@@ -1,0 +1,353 @@
+COUNTRY,CODE,CATEGORY,APP NAME,PLAY STORE LINK,APP STORE LINK
+France,FR,Travel,City Mapper (local google map),https://play.google.com/store/search?q=citymapper%20france&c=apps&hl=en_IN,https://apps.apple.com/in/app/citymapper-your-transport-app/id469463298
+France,FR,Travel,bonjour RATP (Transport app),https://play.google.com/store/search?q=bonjour%20RATP&c=apps&hl=en_IN,https://apps.apple.com/in/app/bonjour-ratp/id507107090
+France,FR,Travel,SNFC connect,https://play.google.com/store/search?q=SNFC%20connect&c=apps&hl=en_IN,https://apps.apple.com/in/app/sncf-connect-trains-routes/id343889987
+France,FR,Weather,Météo-France,https://play.google.com/store/search?q=meteo%20france&c=apps&hl=en_IN,https://apps.apple.com/in/app/meteo-by-ilmeteo-it/id338851554
+France,FR,Weather,Weather Underground,https://play.google.com/store/search?q=weather+underground&c=apps&hl=en_IN,https://apps.apple.com/in/app/weather-underground-local-map/id486154808
+France,FR,Medical,Doctolib,https://play.google.com/store/search?q=Doctolib&c=apps&hl=en_IN,https://apps.apple.com/in/app/doctolib-your-health-partner/id925339063
+France,FR,Medical,Livi,https://play.google.com/store/apps/details?id=health.livi.android&hl=en_IN,https://apps.apple.com/in/app/livi-see-a-gp-by-video/id1433906974
+France,FR,Medical,Qare,https://play.google.com/store/search?q=qare&c=apps&hl=en_IN,Qare Link on the App Store
+France,FR,Food,Uber Eats France,https://play.google.com/store/search?q=uber%20eats&c=apps&hl=en_IN,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+France,FR,Food,Deliveroo France,https://play.google.com/store/search?q=deliveroo&c=apps&hl=en_IN,https://apps.apple.com/in/app/deliveroo-food-shopping/id1001501844
+France,FR,Food,Flink / Getir,https://play.google.com/store/search?q=flink&c=apps&hl=en_IN,https://apps.apple.com/in/app/flink-groceries-in-minutes/id1531321108
+France,FR,Communication,WhatsApp,https://play.google.com/store/search?q=whatsapp&c=apps&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+France,FR,Communication,Viber,https://play.google.com/store/search?q=viber&c=apps&hl=en_IN,https://apps.apple.com/in/app/rakuten-viber-messenger/id382617920
+France,FR,Payments,Lydia (French app),https://play.google.com/store/apps/details?id=com.lydia.app&pli=1,Lydia on the App Store
+France,FR,Payments,PayPal,https://play.google.com/store/apps/details?id=com.paypal.android.p2pmobile&hl=en_IN,https://apps.apple.com/in/app/paypal-send-manage-pay/id283646709
+France,FR,Hotels,Booking.com,https://play.google.com/store/apps/details?id=com.booking&hl=en,https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839
+France,FR,Hotels,Trivago(cheap price),https://play.google.com/store/apps/details?id=com.trivago&hl=en_IN,https://apps.apple.com/in/app/trivago-compare-hotel-prices/id376888389
+France,FR,Tourist,GetYourGuide,https://play.google.com/store/apps/details?id=com.getyourguide.android&hl=en_IN,https://apps.apple.com/in/app/getyourguide-plan-book/id705079381
+Japan,JP,Travel,Japan Travel by NAVITIME,https://play.google.com/store/apps/details?id=com.navitime.inbound.walk&hl=en_IN,https://apps.apple.com/in/app/japan-travel-smart-transit/id686373726
+Japan,JP,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en_IN,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Japan,JP,Weather,tenki.jp (Android/iOS),https://play.google.com/store/apps/details?id=com.jmc.android.tenkura&hl=en_IN,https://apps.apple.com/us/app/tenki-jp-%E6%97%A5%E6%9C%AC%E6%B0%97%E8%B1%A1%E5%8D%94%E4%BC%9A%E3%81%AE%E5%A4%A9%E6%B0%97%E4%BA%88%E5%A0%B1%E3%82%A2%E3%83%97%E3%83%AA-%E9%9B%A8%E9%9B%B2%E3%83%AC%E3%83%BC%E3%83%80%E3%83%BC/id433865746
+Japan,JP,Weather,Weathernews,https://play.google.com/store/apps/details?id=jp.co.sorakaze.android.weatherjapan&hl=en_IN,https://apps.apple.com/us/app/tenki-jp-%E6%97%A5%E6%9C%AC%E6%B0%97%E8%B1%A1%E5%8D%94%E4%BC%9A%E3%81%AE%E5%A4%A9%E6%B0%97%E4%BA%88%E5%A0%B1%E3%82%A2%E3%83%97%E3%83%AA-%E9%9B%A8%E9%9B%B2%E3%83%AC%E3%83%BC%E3%83%80%E3%83%BC/id433865746
+Japan,JP,Medical,Teladoc Health,https://play.google.com/store/apps/details?id=com.ith.patient&hl=en_IN,https://apps.apple.com/in/app/teladoc-health-patient/id1234068517
+Japan,JP,Medical,SugoiMed,https://play.google.com/store/apps/details?id=com.sugoimed_patient&hl=en_IN,SugoiMED on the App Store
+Japan,JP,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en_IN,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+Japan,JP,Food,Wolt,https://play.google.com/store/apps/details?id=com.wolt.android&hl=en_IN,https://apps.apple.com/in/app/wolt-delivery-food-and-more/id943905271
+Japan,JP,Food,Gurunavi,https://play.google.com/store/apps/details?id=jp.co.gnavi.activity&hl=en_IN,https://apps.apple.com/in/app/%E6%A5%BD%E5%A4%A9%E3%81%90%E3%82%8B%E3%81%AA%E3%81%B3/id311691979
+Japan,JP,Communication,LINE: Calls & Messages,https://play.google.com/store/apps/details?id=jp.naver.line.android&hl=en_IN,LINE on the App Store
+Japan,JP,Communication,WhatsApp Messenger,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Japan,JP,Payments,Rakuten Pay,https://play.google.com/store/apps/details?id=com.ebates&hl=en_IN,https://apps.apple.com/in/app/rakuten-cashback-deals/id723134859
+Japan,JP,Payments,PayPay,https://play.google.com/store/apps/details?id=com.smart.paypay&hl=en_IN,https://apps.apple.com/in/app/paypay-ao/id1523253553
+Japan,JP,Hotels,Rakuten Travel,https://play.google.com/store/apps/details?id=com.rakuten.travel.consumer&hl=en_IN,https://apps.apple.com/in/app/rakuten-travel-hotel-booking/id1491708859
+Japan,JP,Hotels,Agoda: Cheap Flights & Hotels,https://play.google.com/store/apps/details?id=com.agoda.mobile.consumer&hl=en_IN,https://apps.apple.com/in/app/agoda-cheap-flights-hotels/id440676901
+Thailand,TH,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en_IN,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Thailand,TH,Travel,ViaBus,https://play.google.com/store/apps/details?id=com.indyzalab.transitia&hl=en_IN,https://apps.apple.com/in/app/viabus/id1074208600
+Thailand,TH,Medical,Practo,https://play.google.com/store/apps/details?id=com.practo.fabric&hl=en_IN,Practo - Consult Doctor Online on the App Store
+Thailand,TH,Medical,Pharmacity,https://play.google.com/store/apps/details?id=com.pharmacity_extracare&hl=en_IN,Pharmacity - Nhà thuốc uy tín on the App Store
+Thailand,TH,Medical,Teladoc Health,https://play.google.com/store/apps/details?id=com.ith.patient&hl=en_IN,https://apps.apple.com/in/app/teladoc-health-patient/id1234068517
+Thailand,TH,Food,Foodpanda,https://play.google.com/store/apps/details?id=com.global.foodpanda.android&hl=en_IN,https://apps.apple.com/in/app/foodpanda-food-groceries/id758103884
+Thailand,TH,Food,GrabFood,https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=en_IN,https://apps.apple.com/in/app/grab-taxi-ride-food-delivery/id647268330
+Thailand,TH,Weather,Thai Meteorological Department ,https://play.google.com/store/apps/details?id=com.tmddev.thaiweather&hl=en_IN,Thai Weather on the App Store
+Thailand,TH,Hotels,Agoda,https://play.google.com/store/apps/details?id=com.agoda.mobile.consumer&hl=en_IN,https://apps.apple.com/in/app/agoda-cheap-flights-hotels/id440676901
+Thailand,TH,Hotels,Booking.com,https://play.google.com/store/apps/details?id=com.booking&hl=en,https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839
+Thailand,TH,Communication,LINE,https://play.google.com/store/apps/details?id=jp.naver.line.android&hl=en_IN,LINE on the App Store
+Thailand,TH,Communication,Google Translate,https://play.google.com/store/apps/details?id=com.google.android.apps.translate&hl=en_IN,https://apps.apple.com/in/app/google-translate/id414706506
+Thailand,TH,Payments,Wise (formerly TransferWise),https://play.google.com/store/apps/details?id=com.transferwise.android&hl=en_IN,https://apps.apple.com/in/app/wise/id612261027
+Thailand,TH,Payments,XE Currency,https://play.google.com/store/apps/details?id=com.xe.currency&hl=en_IN,https://apps.apple.com/in/app/xe-money-transfer-currency/id315241195
+United States,US,Travel,1.waze(local google map),https://play.google.com/store/apps/details?id=com.waze&hl=en_IN,https://apps.apple.com/in/app/waze-navigation-live-traffic/id323229106
+United States,US,Travel,2.Amtrak app(for rail and transport),https://play.google.com/store/apps/details?id=com.amtrak.rider&hl=en_IN,https://apps.apple.com/in/app/amtrak/id405074003
+United States,US,Travel,Here we GO(local g map),https://play.google.com/store/apps/details?id=com.here.app.maps&hl=en_IN,https://apps.apple.com/in/app/here-wego-maps-navigation/id955837609
+United States,US,Medical,Teladoc Health,https://play.google.com/store/apps/details?id=com.ith.patient&hl=en_IN,https://apps.apple.com/in/app/teladoc-health-patient/id1234068517
+United States,US,Medical,HealthTap,https://play.google.com/store/apps/details?id=com.healthtap.userhtexpress&hl=en_IN,HealthTap Primary Care Doctors on the App Store
+United States,US,Hotels,Booking.com,https://play.google.com/store/apps/details?id=com.booking&hl=en,https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839
+United States,US,Hotels,Hotels.com,https://play.google.com/store/apps/details?id=com.hcom.android&hl=en,https://apps.apple.com/us/app/hotels-com-book-hotels-more/id284971959
+United States,US,Hotels,Expedia,https://play.google.com/store/apps/details?id=com.expedia.bookings&hl=en_IN,https://apps.apple.com/in/app/expedia-travel-hotel-flight/id427916203
+United States,US,Food,DoorDash,https://play.google.com/store/apps/details?id=com.dd.doordash&hl=en_IN,https://apps.apple.com/in/app/doordash-food-delivery/id719972451
+United States,US,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en_IN,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+United States,US,Weather,AccuWeather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en_IN,https://apps.apple.com/in/app/accuweather-weather-forecast/id300048137
+United States,US,Weather,The Weather Channel,https://play.google.com/store/apps/details?id=com.weather.Weather&hl=en_IN,https://apps.apple.com/in/app/weather-the-weather-channel/id295646461
+United States,US,Communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+United States,US,Communication,Messenger (by Meta),https://play.google.com/store/apps/details?id=com.facebook.orca&hl=en_IN,https://apps.apple.com/in/app/messenger/id454638411
+United States,US,Communication,Telegram,https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=en_IN,https://apps.apple.com/in/app/telegram-messenger/id686449807
+United States,US,Payments,PayPal,https://play.google.com/store/apps/details?id=com.paypal.android.p2pmobile&hl=en_IN,https://apps.apple.com/in/app/paypal-send-manage-pay/id283646709
+United States,US,Payments,Google Wallet,https://play.google.com/store/apps/details?id=com.google.android.apps.walletnfcrel&hl=en_IN,https://apps.apple.com/in/app/google-pay-save-pay-manage/id1193357041
+Italy,IT,Travel, CityMapper,https://play.google.com/store/search?q=citymapper%20france&c=apps&hl=en_IN,https://apps.apple.com/in/app/citymapper-your-transport-app/id469463298
+Italy,IT,Travel,Omio,https://play.google.com/store/apps/details?id=com.goeuro.rosie&hl=en_IN,https://apps.apple.com/in/app/omio-train-bus-and-flight/id885372509
+Italy,IT,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en_IN,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Italy,IT,Medical,Doctoralia,https://play.google.com/store/apps/details?id=com.one_mobile&hl=en_IN,Doctoralia - Mexico on the App Store
+Italy,IT,Hotels,Booking.com,https://play.google.com/store/apps/details?id=com.booking&hl=en,https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839
+Italy,IT,Hotels,Expedia,https://play.google.com/store/apps/details?id=com.expedia.bookings&hl=en_IN,https://apps.apple.com/in/app/expedia-travel-hotel-flight/id427916203
+Italy,IT,Weather,AccuWeather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en_IN,https://apps.apple.com/in/app/accuweather-weather-forecast/id300048137
+Italy,IT,Weather,1Weather,https://play.google.com/store/apps/details?id=com.handmark.expressweather&hl=en_IN,https://apps.apple.com/in/app/1weather-forecast-and-radar/id1044809694
+Italy,IT,Communication,WhatsApp Messenger,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Italy,IT,Communication,Telegram,https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=en_IN,https://apps.apple.com/in/app/telegram-messenger/id686449807
+Italy,IT,Food,Just Eat,https://play.google.com/store/apps/details?id=com.justeat.app.uk&hl=en_IN,https://apps.apple.com/in/app/just-eat-food-delivery/id566347057
+Italy,IT,Food,Glovo,https://play.google.com/store/apps/details?id=com.glovo&hl=en_IN,https://apps.apple.com/in/app/glovo-food-grocery-delivery/id951812684
+Italy,IT,Payments,PayPal,https://play.google.com/store/apps/details?id=com.paypal.android.p2pmobile&hl=en_IN,https://apps.apple.com/in/app/paypal-send-manage-pay/id283646709
+Italy,IT,Payments,Revolut,https://play.google.com/store/apps/details?id=com.revolut.revolut&hl=en_IN,https://apps.apple.com/in/app/revolut-mobile-finance/id932493382
+Spain,ES,Travel, Freenow,https://play.google.com/store/apps/details?id=taxi.android.client&hl=en_IN,https://apps.apple.com/in/app/freenow-taxi-and-more/id357852748
+Spain,ES,Travel, CityMapper,https://play.google.com/store/search?q=citymapper%20france&c=apps&hl=en_IN,https://apps.apple.com/in/app/citymapper-your-transport-app/id469463298
+Spain,ES,Medical,med & pill reminder MyTherapy,https://play.google.com/store/apps/details?id=eu.smartpatient.mytherapy&hl=en_IN,https://apps.apple.com/in/app/mytherapy-medication-reminder/id662170995
+Spain,ES,Hotels,Booking.com,https://play.google.com/store/apps/details?id=com.booking&hl=en,https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839
+Spain,ES,Hotels,Hotels.com,https://play.google.com/store/apps/details?id=com.hcom.android&hl=en,https://apps.apple.com/us/app/hotels-com-book-hotels-more/id284971959
+Spain,ES,Hotels,Expedia,https://play.google.com/store/apps/details?id=com.expedia.bookings&hl=en_IN,https://apps.apple.com/in/app/expedia-travel-hotel-flight/id427916203
+Spain,ES,Weather,AEMET – El Tiempo,https://play.google.com/store/apps/details?id=es.aemet&hl=en_IN,https://apps.apple.com/es/app/aemet-el-tiempo/id1031694166
+Spain,ES,Weather,AccuWeather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en_IN,https://apps.apple.com/in/app/accuweather-weather-forecast/id300048137
+Spain,ES,Communication,WhatsApp Messenger,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Spain,ES,Communication,Telegram,https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=en_IN,https://apps.apple.com/in/app/telegram-messenger/id686449807
+Spain,ES,Communication,Signal,https://play.google.com/store/apps/details?id=org.thoughtcrime.securesms&hl=en_IN,https://apps.apple.com/in/app/signal-private-messenger/id874139669
+Spain,ES,Food,Glovo,https://play.google.com/store/apps/details?id=com.glovo&hl=en_IN,https://apps.apple.com/in/app/glovo-food-grocery-delivery/id951812684
+Spain,ES,Food,Just Eat Spain,https://play.google.com/store/apps/details?id=com.justeat.app.uk&hl=en_IN,https://apps.apple.com/in/app/just-eat-food-delivery/id566347057
+Spain,ES,Payments,PayPal,https://play.google.com/store/apps/details?id=com.paypal.android.p2pmobile&hl=en_IN,https://apps.apple.com/in/app/paypal-send-manage-pay/id283646709
+Spain,ES,Payments,Revolut,https://play.google.com/store/search?q=revolut&c=apps&hl=en_IN,https://apps.apple.com/in/app/revolut-mobile-finance/id932493382
+Turkey,TR,Travel,Trafi,https://play.google.com/store/apps/details?id=com.trafi.android.tr&hl=en_IN,https://apps.apple.com/in/app/trafi/id791973944
+Turkey,TR,Travel,BiTaksi,https://play.google.com/store/apps/details?id=com.bitaksi.musteri&hl=en_IN,https://apps.apple.com/in/app/bitaksi-your-closest-taxi/id589500723
+Turkey,TR,Travel,Uber,https://play.google.com/store/apps/details?id=com.ubercab&hl=en_IN,https://apps.apple.com/in/app/uber-request-a-ride/id368677368
+Turkey,TR,Medical,Google Fit / Samsung Health,https://play.google.com/store/apps/details?id=com.google.android.apps.fitness&hl=en_IN,https://apps.apple.com/in/app/google-fit-activity-tracker/id1433864494
+Turkey,TR,Medical,e-Nabız (E-Nabiz),https://play.google.com/store/apps/details?id=tr.gov.saglik.enabiz&hl=en_IN,e-Nabız on the App Store
+Turkey,TR,Medical,Medicana Mobile,https://play.google.com/store/apps/details?id=net.medrics.medicana&hl=en_IN,Medicana Mobil Uygulaması on the App Store
+Turkey,TR,Hotels,Expedia,https://play.google.com/store/apps/details?id=com.expedia.bookings&hl=en_IN,https://apps.apple.com/in/app/expedia-travel-hotel-flight/id427916203
+Turkey,TR,Hotels,Agoda,https://play.google.com/store/apps/details?id=com.agoda.mobile.consumer&hl=en_IN,https://apps.apple.com/in/app/agoda-cheap-flights-hotels/id440676901
+Turkey,TR,Weather,1Weather,https://play.google.com/store/apps/details?id=com.handmark.expressweather&hl=en_IN,https://apps.apple.com/in/app/1weather-forecast-and-radar/id1044809694
+Turkey,TR,Communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Turkey,TR,Communication,Telegram,https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=en_IN,https://apps.apple.com/in/app/telegram-messenger/id686449807
+Turkey,TR,Food,Yemeksepeti,https://play.google.com/store/apps/details?id=com.inovel.app.yemeksepeti&hl=en_IN,https://apps.apple.com/in/app/yemeksepeti-food-grocery/id373034841
+Turkey,TR,Food,GetirYemek,https://play.google.com/store/apps/details?id=com.getir&hl=en_IN,https://apps.apple.com/in/app/getir-groceries-food-beyond/id995280265
+Turkey,TR,Food,Zomato,https://play.google.com/store/apps/details?id=com.application.zomato&hl=en_IN,https://apps.apple.com/in/app/zomato-food-delivery-dining/id434613896
+Turkey,TR,Payments,Papara,https://play.google.com/store/apps/details?id=com.mobillium.papara&hl=en_IN,https://apps.apple.com/in/app/papara/id1146507477
+Germany,DE,Travel,DB Navigator,https://play.google.com/store/apps/details?id=de.hafas.android.db&hl=en_IN,https://apps.apple.com/in/app/db-navigator/id343555245
+Germany,DE,Travel,Citymapper,https://play.google.com/store/search?q=citymapper%20france&c=apps&hl=en_IN,https://apps.apple.com/in/app/citymapper-your-transport-app/id469463298
+Germany,DE,Medical,Doctolib,https://play.google.com/store/search?q=Doctolib&c=apps&hl=en_IN,https://apps.apple.com/in/app/doctolib-your-health-partner/id925339063
+Germany,DE,Medical,TeleClinic,https://play.google.com/store/apps/details?id=com.teleClinic.teleClinic&hl=en_IN,https://apps.apple.com/in/app/teleclinic-online-arzt/id1094776229
+Germany,DE,Hotels,HotelTonight,https://play.google.com/store/apps/details?id=com.hoteltonight.android.prod&hl=en_IN,https://apps.apple.com/in/app/hoteltonight-hotel-deals/id407690035
+Germany,DE,Hotels,Booking.com,https://play.google.com/store/apps/details?id=com.booking&hl=en,https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839
+Germany,DE,Weather,WetterOnline,https://play.google.com/store/apps/details?id=de.wetteronline.wetterapp&hl=en,https://apps.apple.com/us/app/weather-radar-storm-alerts/id545993260
+Germany,DE,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Germany,DE,communication,Threema,https://play.google.com/store/apps/details?id=ch.threema.app&hl=en_IN,https://apps.apple.com/in/app/threema-the-secure-messenger/id578665578
+Germany,DE,Food,Lieferando.de,https://play.google.com/store/apps/details?id=com.yopeso.lieferando&hl=en_IN,https://apps.apple.com/de/app/lieferando-de-food-bestellen/id651284374
+Germany,DE,Food,Wolt,https://play.google.com/store/apps/details?id=com.wolt.android&hl=en_IN,https://apps.apple.com/in/app/wolt-delivery-food-and-more/id943905271
+Germany,DE,Payments,N26,https://play.google.com/store/apps/details?id=de.number26.android&hl=en_IN,https://apps.apple.com/in/app/n26-love-your-bank/id956857223
+Germany,DE,Payments,Revolut,https://play.google.com/store/search?q=revolut&c=apps&hl=en_IN,https://apps.apple.com/in/app/revolut-mobile-finance/id932493382
+Mexico,MX,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en_IN,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Mexico,MX,Travel,Despegar,https://play.google.com/store/apps/details?id=com.gm.despegar&hl=en_IN,https://apps.apple.com/us/app/despegar-vuelos-y-hoteles/id376506660
+Mexico,MX,Medical,Doctoralia México,https://play.google.com/store/apps/details?id=com.one_mobile&hl=en_IN,Doctoralia - Mexico on the App Store
+Mexico,MX,Medical,Teladoc Health México,https://play.google.com/store/apps/details?id=com.ith.patient&hl=en_IN,https://apps.apple.com/in/app/teladoc-health-patient/id1234068517
+Mexico,MX,Hotels,Booking.com,https://play.google.com/store/apps/details?id=com.booking&hl=en,https://apps.apple.com/us/app/booking-com-hotels-travel/id367003839
+Mexico,MX,Hotels,Expedia,https://play.google.com/store/apps/details?id=com.expedia.bookings&hl=en_IN,https://apps.apple.com/in/app/expedia-travel-hotel-flight/id427916203
+Mexico,MX,Weather,Windy.com,https://play.google.com/store/apps/details?id=com.windyty.android&hl=en,https://apps.apple.com/us/app/windy-com-weather-radar/id1161387262
+Mexico,MX,Weather,AccuWeather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en_IN,https://apps.apple.com/in/app/accuweather-weather-forecast/id300048137
+Mexico,MX,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en_IN,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Mexico,MX,communication,Viber,https://play.google.com/store/apps/details?id=com.viber.voip&hl=en_IN,https://apps.apple.com/in/app/rakuten-viber-messenger/id382617920
+Mexico,MX,Food,Rappi,https://play.google.com/store/apps/details?id=com.grability.rappi&hl=en_IN,https://apps.apple.com/in/app/rappi-deliveries-in-minutes/id984044296
+Mexico,MX,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en_IN,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+Mexico,MX,Payments,PayPal,https://play.google.com/store/apps/details?id=com.paypal.android.p2pmobile&hl=en_IN,https://apps.apple.com/in/app/paypal-send-manage-pay/id283646709
+Mexico,MX,Payments,BBVA México,https://play.google.com/store/apps/details?id=com.bancomer.mbanking&hl=en_IN,https://apps.apple.com/in/app/bbva-m%C3%A9xico/id374824226
+Greece,GR,Travel,FREENOW,https://play.google.com/store/apps/details?id=taxi.android.client&hl=en,https://apps.apple.com/us/app/freenow-taxi-and-more/id357852748
+Greece,GR,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Greece,GR,Medical,doctoranytime,https://play.google.com/store/apps/details?id=com.doctoranytime.app&hl=en,https://apps.apple.com/us/app/doctoranytime/id1555253814
+Greece,GR,Medical,Diagnosou,https://play.google.com/store/apps/details?id=com.revotech.diagnosou&hl=en,
+Greece,GR,Hotels,Omio,https://play.google.com/store/apps/details?id=com.goeuro.rosie&hl=en,https://apps.apple.com/in/app/omio-train-bus-and-flight/id885372509
+Greece,GR,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+Greece,GR,Weather,Weather & Radar – Storm Radar,https://play.google.com/store/apps/details?id=de.wetteronline.wetterapp&hl=en,
+Greece,GR,Weather,Greece Weather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en,https://apps.apple.com/us/app/weather/id1069513131
+Greece,GR,communication,WhatsApp,http://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Greece,GR,communication,Viber,https://play.google.com/store/apps/details?id=com.viber.voip&hl=en,https://apps.apple.com/in/app/rakuten-viber-messenger/id382617920
+Greece,GR,Food,efood,https://play.google.com/store/apps/details?id=com.venturegeeks.efood&hl=en,https://apps.apple.com/in/app/efood-delivery-food-grocery/id621353976
+Greece,GR,Food,Wolt,https://play.google.com/store/apps/details?id=com.wolt.android&hl=en,https://apps.apple.com/in/app/wolt-delivery-food-and-more/id943905271
+Greece,GR,Payments,Revolut,https://play.google.com/store/apps/details?id=com.revolut.business&hl=en,https://apps.apple.com/in/app/revolut-mobile-finance/id932493382
+Austria,AT,Travel,Alpha Travel Austria,https://play.google.com/store/apps/details?id=com.stoxline.alphatravel.austria&hl=en,
+Austria,AT,Travel,WienMobil,https://play.google.com/store/apps/details?id=at.wienerlinien.wienmobillab&hl=en,https://apps.apple.com/in/app/wienmobil/id1107918142
+Austria,AT,Medical,Diagnosia,https://play.google.com/store/apps/details?id=com.diagnosia.fachinformation&hl=en,
+Austria,AT,Medical,Redcare: Online Pharmacy,https://play.google.com/store/apps/details?id=shop.shop_apotheke.com.shopapotheke&hl=en,
+Austria,AT,Hotels,B&B Hotels,https://play.google.com/store/apps/details?id=com.bbhotel.android&hl=en,
+Austria,AT,Hotels,IHG One Rewards,https://play.google.com/store/apps/details?id=com.ihg.apps.android&hl=en,https://apps.apple.com/in/app/ihg-hotels-rewards/id368217298
+Austria,AT,Weather,Weather & Radar – Storm Radar,https://play.google.com/store/apps/details?id=de.wetteronline.wetterapp&hl=en,
+Austria,AT,Weather,Austria Weather,https://play.google.com/store/apps/details?id=de.wetteronline.wetterapp&hl=en,
+Austria,AT,communication,WhatsApp Messenger,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Austria,AT,communication,Telegram ,https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=en,https://apps.apple.com/in/app/telegram-messenger/id686449807
+Austria,AT,Food,foodora: Food & Groceries,https://play.google.com/store/apps/details?id=se.onlinepizza&hl=en,
+Austria,AT,Food,Lieferando,https://play.google.com/store/apps/details?id=com.yopeso.lieferando&hl=en,https://apps.apple.com/in/app/lieferando-de/id419724490
+Austria,AT,Payments,Google Wallet,https://play.google.com/store/apps/details?id=com.google.android.apps.walletnfcrel&hl=en,https://apps.apple.com/in/app/lieferando-de/id419724490
+Austria,AT,Payments,Bank Austria MobileBanking,https://play.google.com/store/apps/details?id=com.bankaustria.android.bn&hl=en,
+Portugal,PT,Travel,Comboios de Portugal,https://play.google.com/store/apps/details?id=pt.cp.mobiapp&hl=en,https://apps.apple.com/in/app/comboios-de-portugal/id1105415627
+Portugal,PT,Travel,Bolt,https://play.google.com/store/apps/details?id=ee.mtakso.client&hl=en,https://apps.apple.com/in/app/bolt-request-a-ride/id675033630
+Portugal,PT,Medical,MayDay,https://play.google.com/store/apps/details?id=love.mayday.app&hl=en,https://apps.apple.com/in/app/hay-day/id506627515
+Portugal,PT,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+Portugal,PT,Weather,Weather & Radar – Storm Radar,https://play.google.com/store/apps/details?id=de.wetteronline.wetterapp&hl=en,
+Portugal,PT,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/us/app/whatsapp-messenger/id310633997
+Portugal,PT,communication,Telegram,https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=en,https://apps.apple.com/us/app/telegram-messenger/id686449807
+Portugal,PT,Food,Glovo,https://play.google.com/store/apps/details?id=com.glovo&hl=en,https://apps.apple.com/us/app/glovo-food-delivery-takeaway/id951812684
+Portugal,PT,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en,https://apps.apple.com/us/app/uber-eats-food-groceries/id1058959277
+Portugal,PT,Payments,MB WAY,https://play.google.com/store/apps/details?id=pt.sibs.android.mbway&hl=en,https://apps.apple.com/us/app/mb-way/id918126133
+UAE,AE,Travel,Careem,https://play.google.com/store/apps/details?id=com.careem.acma&hl=en,https://apps.apple.com/us/app/careem-rides-food-more/id592978487
+UAE,AE,Travel,Uber,https://play.google.com/store/apps/details?id=com.ubercab&hl=en,http://apps.apple.com/us/app/uber-request-a-ride/id368677368
+UAE,AE,Medical,MayDay,https://play.google.com/store/apps/details?id=love.mayday.app&hl=en,
+UAE,AE,Hotels,Agoda,https://play.google.com/store/apps/details?id=com.agoda.mobile.consumer&hl=en,https://apps.apple.com/us/app/agoda-cheap-flights-hotels/id440676901
+UAE,AE,Hotels,Trivago,https://play.google.com/store/apps/details?id=com.trivago&hl=en,https://apps.apple.com/us/app/trivago-compare-hotel-prices/id376888389
+UAE,AE,Weather,Weather & Radar – Storm Radar,https://play.google.com/store/apps/details?id=de.wetteronline.wetterapp&hl=en,
+UAE,AE,Payments,Google Wallet,https://play.google.com/store/apps/details?id=com.google.android.apps.walletnfcrel&hl=en,https://apps.apple.com/in/app/google-pay-save-pay-manage/id1193357041
+UAE,AE,Payments,Ziina,https://play.google.com/store/apps/details?id=com.ziina.app&hl=en,https://apps.apple.com/in/app/ziina-pay-get-paid-instantly/id1507246381
+UAE,AE,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+UAE,AE,communication,Google Translate,https://play.google.com/store/apps/details?id=com.google.android.apps.translate&hl=en,https://apps.apple.com/in/app/google-translate/id414706506
+UAE,AE,Food,Talabat,https://play.google.com/store/apps/details?id=com.talabat&hl=en,https://apps.apple.com/in/app/talabat-food-grocery-more/id451001072
+Netherlands,NL,Travel,9292 OV,https://play.google.com/store/apps/details?id=nl.negentwee&hl=en,https://apps.apple.com/us/app/9292-reisplanner-ov-e-ticket/id556557690
+Netherlands,NL,Travel,Citymapper,https://play.google.com/store/apps/details?id=com.citymapper.app.release&hl=en,https://apps.apple.com/in/app/citymapper-your-transport-app/id469463298
+Netherlands,NL,Medical,Mobi Doctor,https://play.google.com/store/apps/details?id=com.doctorondemand.android.patient&hl=en,https://apps.apple.com/us/app/rxdx-doctor-mobihistree/id1669492113
+Netherlands,NL,Medical,Spoedzorg op Reis,https://play.google.com/store/apps/details?id=nl.cz.spoedzorgopreis&hl=en,
+Netherlands,NL,Hotels,Trivago,https://play.google.com/store/apps/details?id=com.trivago&hl=en,https://apps.apple.com/in/app/trivago-compare-hotel-prices/id376888389
+Netherlands,NL,Weather,Windy,https://play.google.com/store/apps/details?id=com.windyty.android&hl=en,https://apps.apple.com/in/app/windy-com-weather-radar/id1161387262
+Netherlands,NL,Weather,WeatherPro,https://play.google.com/store/apps/details?id=com.mg.android&hl=en,https://apps.apple.com/in/app/weatherpro-lite/id997728895
+Netherlands,NL,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Netherlands,NL,Food,Deliveroo,https://play.google.com/store/apps/details?id=com.deliveroo.orderapp&hl=en,https://apps.apple.com/in/app/deliveroo-food-shopping/id1001501844
+Netherlands,NL,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+Netherlands,NL,Payments,Google Pay,https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user&hl=en,
+Croatia,HR,Travel,Uber,https://play.google.com/store/apps/details?id=com.ubercab&hl=en,https://apps.apple.com/us/app/uber-request-a-ride/id368677368
+Croatia,HR,Travel,Explore Croatia,https://play.google.com/store/apps/details?id=co.mediatorium.explorecroatia&hl=en,https://apps.apple.com/us/app/explore-croatia/id1669535822
+Croatia,HR,Medical,Doctolib,https://play.google.com/store/apps/details?id=fr.doctolib.www&hl=en,https://apps.apple.com/us/app/doctolib-your-health-partner/id925339063
+Croatia,HR,Hotels,GetYourGuide,https://play.google.com/store/apps/details?id=com.getyourguide.android&hl=en,https://apps.apple.com/us/app/getyourguide-plan-book/id705079381
+Croatia,HR,Weather,AccuWeather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en,https://apps.apple.com/us/app/accuweather-weather-forecast/id300048137
+Croatia,HR,Weather,Windy,https://play.google.com/store/apps/details?id=com.windyty.android&hl=en,https://apps.apple.com/us/app/windy-com-weather-radar/id1161387262
+Croatia,HR,communication,Google Translate,https://play.google.com/store/apps/details?id=com.google.android.apps.translate&hl=en,https://apps.apple.com/us/app/google-translate/id414706506
+Croatia,HR,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/us/app/whatsapp-messenger/id310633997
+Croatia,HR,Food,"Uber Eats,",https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en,https://apps.apple.com/us/app/uber-eats-food-groceries/id1058959277
+Croatia,HR,Food,Glovo,https://play.google.com/store/apps/details?id=com.glovo&hl=en,https://apps.apple.com/in/app/glovo-food-grocery-delivery/id951812684
+Croatia,HR,Payments,Aircash Croatia,https://play.google.com/store/apps/details?id=com.aircash.aircash&hl=en,
+Switzerland,CH,Travel,Switzerland Travel Guide,https://play.google.com/store/apps/details?id=com.etips.switzerland.travel.guide&hl=en,https://apps.apple.com/in/app/switzerland-travel-guide/id1083913229
+Switzerland,CH,Travel,SwitzerlandMobility,https://play.google.com/store/apps/details?id=ch.schweizmobil&hl=en,https://apps.apple.com/us/app/switzerlandmobility/id527194959
+Switzerland,CH,Medical,Care to Translate,https://play.google.com/store/apps/details?id=com.siv&hl=en,
+Switzerland,CH,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+Switzerland,CH,Hotels,HotelTonight,https://play.google.com/store/apps/details?id=com.hoteltonight.android.prod&hl=en,http://apps.apple.com/us/app/hoteltonight-booking-deals/id407690035
+Switzerland,CH,Weather,AccuWeather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en,https://apps.apple.com/in/app/accuweather-weather-forecast/id300048137
+Switzerland,CH,Weather,Google Weather,https://play.google.com/store/apps/details?id=com.google.android.apps.weather&hl=en,https://apps.apple.com/in/app/google-more-ways-to-search/id284815942
+Switzerland,CH,communication,Google Translate,https://play.google.com/store/apps/details?id=com.google.android.apps.translate&hl=en,https://apps.apple.com/in/app/google-translate/id414706506
+Switzerland,CH,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Switzerland,CH,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+Switzerland,CH,Food,Just Eat,https://play.google.com/store/apps/details?id=com.justeat.app.uk&hl=en,https://apps.apple.com/in/app/just-eat-food-delivery/id566347057
+Switzerland,CH,Payments,TWINT,https://play.google.com/store/apps/details?id=ch.twint.payment&hl=en,https://apps.apple.com/in/app/ubs-twint/id989192632
+Indonesia,ID,Travel,Waze,https://play.google.com/store/apps/details?id=com.waze&hl=en,https://apps.apple.com/in/app/waze-navigation-live-traffic/id323229106
+Indonesia,ID,Travel,OsmAnd,https://play.google.com/store/apps/details?id=net.osmand&hl=en,https://apps.apple.com/in/app/osmand-maps-travel-navigate/id934850257
+Indonesia,ID,Medical,Halodoc,https://play.google.com/store/apps/details?id=com.linkdokter.halodoc.android&hl=en,https://apps.apple.com/us/app/halodoc-doctor-medicine/id1067217981
+Indonesia,ID,Hotels,LINE,https://play.google.com/store/apps/details?id=jp.naver.line.android&hl=en,https://tv.apple.com/in/show/the-line/umc.cmc.4u53f7zokr7g40tjj4gs61xbu
+Indonesia,ID,Weather,AccuWeather,https://play.google.com/store/apps/details?id=com.accuweather.android&hl=en,https://apps.apple.com/in/app/accuweather-weather-forecast/id300048137
+Indonesia,ID,communication,WhatsApp Messenger,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Indonesia,ID,communication,LINE,https://play.google.com/store/apps/details?id=jp.naver.line.android&hl=en,https://tv.apple.com/in/show/the-line/umc.cmc.4u53f7zokr7g40tjj4gs61xbu
+Indonesia,ID,Food,GoFood ,https://play.google.com/store/apps/details?id=com.wlf.gofood&hl=en,https://apps.apple.com/in/app/gofood/id1568078791
+Indonesia,ID,Food,GrabFood,https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=en,https://apps.apple.com/in/app/grab-taxi-ride-food-delivery/id647268330
+Indonesia,ID,Payments,GoPay,https://play.google.com/store/apps/details?id=com.gojek.gopay&hl=en,https://apps.apple.com/in/app/gopay-transfer-pulsa-bills/id6446321594
+Vietnam,VN,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Vietnam,VN,Travel,Grab,https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=en,https://apps.apple.com/in/app/grab-taxi-ride-food-delivery/id647268330
+Vietnam,VN,Medical,Doctor Anywhere,https://play.google.com/store/apps/details?id=com.doctoranywhere&hl=en,https://apps.apple.com/in/app/doctor-anywhere-telehealth/id1273714922
+Vietnam,VN,Hotels,Traveloka,https://play.google.com/store/apps/details?id=com.traveloka.android&hl=en,https://apps.apple.com/in/app/traveloka-book-hotel-flight/id898244857
+Vietnam,VN,Hotels,Klook,https://play.google.com/store/apps/details?id=com.klook&hl=en,https://apps.apple.com/in/app/klook-travel-hotels-leisure/id961850126
+Vietnam,VN,Weather,Vietnam Weather Forecast,https://play.google.com/store/apps/details?id=com.windyty.android&hl=en,
+Vietnam,VN,Weather,Weather,https://play.google.com/store/apps/details?id=com.coloros.weather2&hl=en,https://apps.apple.com/in/app/weather/id1069513131
+Vietnam,VN,communication,Google Translate,https://play.google.com/store/apps/details?id=com.google.android.apps.translate&hl=en,https://apps.apple.com/in/app/google-translate/id414706506
+Vietnam,VN,communication,Zalo,https://play.google.com/store/apps/details?id=com.zing.zalo&hl=en,https://apps.apple.com/in/app/zalo/id579523206
+Vietnam,VN,Food,GrabFood,https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=en,https://apps.apple.com/in/app/grab-taxi-ride-food-delivery/id647268330
+Vietnam,VN,Food,Baemin,https://play.google.com/store/apps/details?id=com.sampleapp&hl=en,https://apps.apple.com/in/app/%EB%B0%B0%EB%8B%AC%EC%9D%98%EB%AF%BC%EC%A1%B1-%EB%AC%B4%EB%A3%8C%EB%B0%B0%EB%8B%AC-%EB%B0%B0%EB%AF%BC%ED%81%B4%EB%9F%BD/id378084485
+Vietnam,VN,Payments,Momo,,https://apps.apple.com/in/app/momo%E9%99%8C%E9%99%8C-%E7%9B%B4%E6%92%AD%E8%AF%AD%E9%9F%B3%E4%BA%A4%E5%8F%8B%E8%A7%86%E9%A2%91%E5%B9%B3%E5%8F%B0/id448165862
+Australia,AU,Travel,"Waze – GPS, Maps & Traffic",https://play.google.com/store/apps/details?id=com.waze&hl=en,
+Australia,AU,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Australia,AU,Medical,Doctors on Demand Australia,https://play.google.com/store/apps/details?id=com.doctorondemand.android.patient&hl=en,
+Australia,AU,Medical,HotDoc,https://play.google.com/store/apps/details?id=au.com.hotdoc.android.hotdoc&hl=en,https://apps.apple.com/in/app/hotdoc/id757696633
+Australia,AU,Hotels,HotelTonight,https://play.google.com/store/apps/details?id=com.hoteltonight.android.prod&hl=en,https://apps.apple.com/us/app/hoteltonight-booking-deals/id407690035
+Australia,AU,Hotels,Australia Travel Hotel Booking,https://play.google.com/store/apps/details?id=com.booking&hl=en,
+Australia,AU,Weather,BOM Weather,https://play.google.com/store/apps/details?id=au.gov.bom.metview&hl=en,https://apps.apple.com/in/app/bom-weather/id1100096880
+Australia,AU,Weather,WillyWeather,https://play.google.com/store/apps/details?id=com.windyty.android&hl=en,https://apps.apple.com/us/app/willyweather/id592978502
+Australia,AU,communication,WhatsApp Messenger,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Australia,AU,Food,DoorDash,https://play.google.com/store/apps/details?id=com.dd.doordash&hl=en,https://apps.apple.com/in/app/doordash-food-delivery/id719972451
+Australia,AU,Payments,PayPal,https://play.google.com/store/apps/details?id=com.paypal.android.p2pmobile&hl=en,https://apps.apple.com/in/app/paypal-send-manage-pay/id283646709
+Malaysia,MY,Travel,Traveloka,https://play.google.com/store/apps/details?id=com.paypal.android.p2pmobile&hl=en,https://apps.apple.com/in/app/traveloka-book-hotel-flight/id898244857
+Malaysia,MY,Travel,Grab,https://play.google.com/store/apps/details?id=com.grabtaxi.passenger&hl=en,https://apps.apple.com/in/app/grab-taxi-ride-food-delivery/id647268330
+Malaysia,MY,Medical,DoctorOnCall,https://play.google.com/store/search?q=DoctorOnCall&c=apps&hl=en,
+Malaysia,MY,Medical,Malaysia Medical Check,https://play.google.com/store/apps/details?id=com.bongshaiit.malaysiamedicalcheck&hl=en,
+Malaysia,MY,Weather,MY Weather,https://play.google.com/store/apps/details?id=com.windyty.android&hl=en,http://apps.apple.com/us/app/myradar-accurate-weather-radar/id322439990
+Malaysia,MY,communication,Google Translate,https://play.google.com/store/apps/details?id=com.google.android.apps.translate&hl=en,https://apps.apple.com/in/app/google-translate/id414706506
+Malaysia,MY,Food,Foodpanda,https://play.google.com/store/apps/details?id=com.global.foodpanda.android&hl=en,https://apps.apple.com/in/app/foodpanda-food-groceries/id758103884
+Malaysia,MY,Food,ShopeeFood,https://play.google.com/store/apps/details?id=com.global.foodpanda.android&hl=en,https://apps.apple.com/in/app/grab-taxi-ride-food-delivery/id647268330
+Malaysia,MY,Payments,Google Pay,https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user&hl=en,https://apps.apple.com/in/app/google-pay-save-pay-manage/id1193357041
+Malaysia,MY,Payments,MyPay Malaysia,https://play.google.com/store/apps/details?id=com.dapat.mypay&hl=en,https://apps.apple.com/us/app/alliance-mypay/id1240428649
+South Korea,KR,Travel,VisitKorea,https://play.google.com/store/apps/details?id=com.visitkorea.eng&hl=en,https://apps.apple.com/in/app/visitkorea/id417340885
+South Korea,KR,Travel,Where We Go,https://play.google.com/store/apps/details?id=com.here.app.maps&hl=en,https://apps.apple.com/in/app/where-we-go/id1526286966
+South Korea,KR,Medical,Medicheck,https://play.google.com/store/apps/details?id=io.medisearch.twa&hl=en,https://apps.apple.com/us/app/medicheck/id1158809592
+South Korea,KR,Medical,UpToDate,https://play.google.com/store/apps/details?id=com.uptodate.android&hl=en,https://apps.apple.com/in/app/uptodate/id334265345
+South Korea,KR,Hotels,Hotelpass,https://play.google.com/store/apps/details?id=com.hotelpass.app&hl=en,https://apps.apple.com/us/app/resortpass/id1557539492
+South Korea,KR,Hotels,Klook,https://play.google.com/store/apps/details?id=com.klook&hl=en,https://apps.apple.com/in/app/klook-travel-hotels-leisure/id961850126
+South Korea,KR,Weather,KMA Weather,https://play.google.com/store/apps/details?id=kr.go.kma.weatherapp&hl=en,
+South Korea,KR,communication,KakaoTalk: Messenger,https://play.google.com/store/apps/details?id=com.kakao.talk&hl=en,https://apps.apple.com/us/app/kakaotalk/id362057947
+South Korea,KR,Food,Shuttle: Food Delivery Korea,https://play.google.com/store/apps/details?id=com.goshuttle&hl=en,
+South Korea,KR,Food,Yogiyo,https://play.google.com/store/apps/details?id=com.fineapp.yogiyo&hl=en,https://apps.apple.com/in/app/yogiyo-food-delivery/id543831532
+South Korea,KR,Payments,WOWPASS: Go Cashless in Korea,https://play.google.com/store/apps/details?id=com.wow.wowpass&hl=en,https://apps.apple.com/us/app/wowpass-go-cashless-in-korea/id1626691440
+India,IN,Travel,MakeMyTrip,https://play.google.com/store/apps/details?id=com.makemytrip&hl=en,https://apps.apple.com/in/app/makemytrip-flight-hotel-bus/id530488359
+India,IN,Travel,SwaRail (IRCTC),https://play.google.com/store/apps/details?id=org.cris.aikyam&hl=en,https://apps.apple.com/in/app/ixigo-trains-ticket-booking/id1148984317
+India,IN,Travel,India Tourism,https://play.google.com/store/apps/details?id=com.stepuptechnosys.indiatourism&hl=en,https://apps.apple.com/in/app/incredible-india-app/id6744102413
+India,IN,Medical,Tata 1mg,https://play.google.com/store/apps/details?id=com.aranoah.healthkart.plus&hl=en,https://apps.apple.com/in/app/tata-1mg-healthcare-app/id554578419
+India,IN,Medical,Practo,https://play.google.com/store/apps/details?id=com.practo.fabric&hl=en,https://apps.apple.com/in/app/practo-consult-doctor-online/id953772015
+India,IN,Hotels,MakeMyTrip,https://play.google.com/store/apps/details?id=com.makemytrip&hl=en,https://apps.apple.com/in/app/makemytrip-flight-hotel-bus/id530488359
+India,IN,Hotels,OYO,https://play.google.com/store/apps/details?id=com.oyo.consumer&hl=en,https://apps.apple.com/in/app/oyo-hotel-booking-app-deals/id988141624
+India,IN,Hotels,Goibibo,https://play.google.com/store/apps/details?id=com.goibibo&hl=en,https://apps.apple.com/in/app/goibibo-hotel-flight-train/id631927169
+India,IN,Weather,Mausam,https://play.google.com/store/apps/details?id=com.imd.masuam&hl=en,https://apps.apple.com/in/app/mausam/id1522893967
+India,IN,communication,WhatsApp Messenger,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+India,IN,communication,Google Translate,https://play.google.com/store/apps/details?id=com.google.android.apps.translate&hl=en,https://apps.apple.com/in/app/google-translate/id414706506
+India,IN,Food,Zomato,https://play.google.com/store/apps/details?id=com.application.zomato&hl=en,https://apps.apple.com/in/app/zomato-food-delivery-dining/id434613896
+India,IN,Food,Swiggy,https://play.google.com/store/apps/details?id=in.swiggy.android&hl=en,https://apps.apple.com/in/app/swiggy-food-instamart-dineout/id989540920
+India,IN,Payments,Paytm,https://play.google.com/store/apps/details?id=net.one97.paytm&hl=en,https://apps.apple.com/in/app/paytm-secure-upi-payments/id473941634
+India,IN,Payments,Google Pay,https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user&hl=en,https://apps.apple.com/in/app/google-pay-save-pay-manage/id1193357041
+Saudi Arabia,SA,Travel,Uber,https://play.google.com/store/apps/details?id=com.ubercab&hl=en,https://apps.apple.com/in/app/uber-request-a-ride/id368677368
+Saudi Arabia,SA,Medical,Altibbi,https://play.google.com/store/apps/details?id=com.altibbi.cds&hl=en,https://apps.apple.com/us/app/altibbi-%D8%A7%D9%84%D8%B7%D8%A8%D9%8A/id1065353019
+Saudi Arabia,SA,Medical,Medisense,https://play.google.com/store/apps/details?id=com.vistas.medisense_pro&hl=en,
+Saudi Arabia,SA,Hotels,Agoda,https://play.google.com/store/apps/details?id=com.agoda.mobile.consumer&hl=en,https://apps.apple.com/in/app/agoda-cheap-flights-hotels/id440676901
+Saudi Arabia,SA,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+Saudi Arabia,SA,Weather,Arab Weather,https://play.google.com/store/apps/details?id=com.arabiaweather.main_app&hl=en,
+Saudi Arabia,SA,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Saudi Arabia,SA,Food,HungerStation,https://play.google.com/store/apps/details?id=com.hungerstation.android.web&hl=en,https://apps.apple.com/in/app/hungerstation/id596011949
+Saudi Arabia,SA,Food,Mrsool,https://play.google.com/store/apps/details?id=com.mrsool&hl=en,https://apps.apple.com/in/app/mrsool-app-%D8%AA%D8%B7%D8%A8%D9%8A%D9%82-%D9%85%D8%B1%D8%B3%D9%88%D9%84/id1040038773
+Saudi Arabia,SA,Payments,Mada Pay,https://play.google.com/store/apps/details?id=com.mada.madapay&hl=en,https://apps.apple.com/in/app/interpay-softpos/id6443543930
+Saudi Arabia,SA,Payments,STC Pay,https://play.google.com/store/apps/details?id=sa.com.stcpay&hl=en,https://apps.apple.com/in/app/stc-pay/id1364197140
+Canada,CA,Travel,Air Canada + Aeroplan,https://play.google.com/store/apps/details?id=com.aircanada&hl=en,
+Canada,CA,Medical,FreeStyle Libre 2,https://play.google.com/store/apps/details?id=com.freestylelibre.app.in&hl=en,https://apps.apple.com/in/app/freestyle-librelink-in/id6448857658
+Canada,CA,Hotels,Trivago,https://play.google.com/store/apps/details?id=com.trivago&hl=en,https://apps.apple.com/in/app/trivago-compare-hotel-prices/id376888389
+Canada,CA,Weather,The Weather Network,https://play.google.com/store/apps/details?id=com.pelmorex.WeatherEyeAndroid&hl=en,https://apps.apple.com/in/app/the-weather-network/id473299958
+Canada,CA,Weather,Weather by Google,https://play.google.com/store/apps/details?id=com.google.android.apps.weather&hl=en,https://apps.apple.com/us/app/weather/id1069513131
+Canada,CA,communication,Facebook Messenger,https://play.google.com/store/apps/details?id=com.facebook.orca&hl=en,https://apps.apple.com/in/app/messenger/id454638411
+Canada,CA,Food,Skip,https://play.google.com/store/apps/details?id=au.com.sensis.skip&hl=en,https://apps.apple.com/in/app/skip/id867304884
+Canada,CA,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+Canada,CA,Payments,Apple Pay,,https://www.apple.com/apple-pay/
+Canada,CA,Payments,Google Pay,https://play.google.com/store/apps/details?id=com.google.android.apps.nbu.paisa.user&hl=en,https://apps.apple.com/in/app/google-pay-save-pay-manage/id1193357041
+Brazil,BR,Travel,Uber,https://play.google.com/store/apps/details?id=com.ubercab&hl=en,https://apps.apple.com/in/app/uber-request-a-ride/id368677368
+Brazil,BR,Travel,Moovit,https://play.google.com/store/apps/details?id=com.tranzmate&hl=en,https://apps.apple.com/in/app/moovit-public-transport-live/id498477945
+Brazil,BR,Medical,Doctoralia,https://play.google.com/store/apps/details?id=com.one_mobile&hl=en,https://apps.apple.com/us/app/doctoralia-mexico/id1471632318
+Brazil,BR,Medical,Meu SUS Digital,https://play.google.com/store/apps/details?id=br.gov.datasus.cnsdigital&hl=en,https://apps.apple.com/us/app/meu-sus-digital/id1045754608
+Brazil,BR,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+Brazil,BR,Hotels,Decolar,http://play.google.com/store/apps/details?id=com.gm.decolar&hl=en,https://apps.apple.com/us/app/despegar-vuelos-y-hoteles/id511479725
+Brazil,BR,Weather,Climatempo,https://play.google.com/store/apps/details?id=com.mobimidia.climaTempo&hl=en,https://apps.apple.com/us/app/climatempo-meteorologia/id407856257
+Brazil,BR,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Brazil,BR,Food,iFood,https://play.google.com/store/apps/details?id=com.ifood.tv&hl=en,https://apps.apple.com/in/app/ifood-shop/id1623372243
+Brazil,BR,Food,Rappi,https://play.google.com/store/apps/details?id=com.grability.rappi&hl=en,https://apps.apple.com/in/app/rappi-deliveries-in-minutes/id984044296
+Brazil,BR,Payments,PicPay,https://play.google.com/store/apps/details?id=com.picpay&hl=en,https://apps.apple.com/in/app/banco-picpay-conta-cart%C3%A3o-e/id561524792
+Egypt,EG,Travel,Visit Egypt,https://play.google.com/store/apps/details?id=com.egypt.visitegypt.app&hl=en,
+Egypt,EG,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+Egypt,EG,Medical,Egypt Health,https://play.google.com/store/apps/details?id=get.pid.egypt.health.passport&hl=en,
+Egypt,EG,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+Egypt,EG,Hotels,Decolar,https://play.google.com/store/apps/details?id=com.gm.decolar&hl=en,https://apps.apple.com/us/app/despegar-vuelos-y-hoteles/id511479725
+Egypt,EG,Weather,Egypt Weather,https://play.google.com/store/apps/details?id=com.coloros.weather2&hl=en,https://apps.apple.com/us/app/accuweather-weather-forecast/id300048137
+Egypt,EG,communication,WhatsApp,https://play.google.com/store/search?q=WhatsApp&c=apps&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Egypt,EG,Food,Menu Egypt,https://play.google.com/store/apps/details?id=com.menuegypt.menuegupt&hl=en,https://apps.apple.com/us/app/menu-egypt/id1630657799
+Egypt,EG,Food,elmenus,https://play.google.com/store/apps/details?id=com.deliveroo.orderapp&hl=en,https://apps.apple.com/us/app/elmenus/id843479108
+Egypt,EG,Payments,InstaPay Egypt,https://play.google.com/store/apps/details?id=com.egyptianbanks.instapay&hl=en,https://apps.apple.com/us/app/instapay-egypt/id1592108795
+Egypt,EG,Payments,OPay Egypt,https://play.google.com/store/apps/details?id=team.opay.pay&hl=en,https://apps.apple.com/us/app/opay-we-are-beyond-banking/id1463776084
+Morocco,MA,Travel,ONCF Voyages,https://play.google.com/store/apps/details?id=ma.oncf.oncftrafic&hl=en,https://apps.apple.com/in/app/oncf-trafic/id1246696539
+Morocco,MA,Travel,Careem,https://play.google.com/store/apps/details?id=com.careem.acma&hl=en,https://apps.apple.com/in/app/careem-rides-food-more/id592978487
+Morocco,MA,Medical,Altibbi,https://play.google.com/store/apps/details?id=com.altibbi.cds&hl=en,https://apps.apple.com/us/app/altibbi-%D8%A7%D9%84%D8%B7%D8%A8%D9%8A/id1065353019
+Morocco,MA,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+Morocco,MA,Hotels,Skyscanner,https://play.google.com/store/apps/details?id=net.skyscanner.android.main&hl=en,https://apps.apple.com/in/app/skyscanner-flights-travel/id415458524
+Morocco,MA,Weather,Météo Maroc,https://play.google.com/store/apps/details?id=aplicacion.tiempo&hl=en,https://apps.apple.com/us/app/weather/id1069513131
+Morocco,MA,Weather,Weather by Google,https://play.google.com/store/apps/details?id=com.google.android.apps.weather&hl=en,https://apps.apple.com/us/app/accuweather-weather-forecast/id300048137
+Morocco,MA,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+Morocco,MA,Food,Glovo,https://play.google.com/store/apps/details?id=com.glovo&hl=en,https://apps.apple.com/in/app/glovo-food-grocery-delivery/id951812684
+Morocco,MA,Food,Talabat,https://play.google.com/store/apps/details?id=com.talabat&hl=en,https://apps.apple.com/in/app/talabat-food-grocery-more/id451001072
+Morocco,MA,Payments,XE Currency Converter,https://play.google.com/store/apps/details?id=com.xe.currency&hl=en,https://apps.apple.com/in/app/xe-money-transfer-currency/id315241195
+United Kingdom,GB,Travel,Citymapper,https://play.google.com/store/apps/details?id=com.citymapper.app.release&hl=en,https://apps.apple.com/in/app/citymapper-your-transport-app/id469463298
+United Kingdom,GB,Travel,Google Maps,https://play.google.com/store/apps/details?id=com.google.android.apps.maps&hl=en,https://apps.apple.com/in/app/google-maps-transit-food/id585027354
+United Kingdom,GB,Medical,MyTherapy – Meds & Pill Reminder,https://play.google.com/store/apps/details?id=eu.smartpatient.mytherapy&hl=en,https://apps.apple.com/us/app/meds-pill-reminder-mytherapy/id662170995
+United Kingdom,GB,Hotels,Expedia,https://play.google.com/store/apps/details?id=com.expedia.bookings&hl=en,https://apps.apple.com/in/app/expedia-travel-hotel-flight/id427916203
+United Kingdom,GB,Hotels,Airbnb,https://play.google.com/store/apps/details?id=com.airbnb.android&hl=en,https://apps.apple.com/in/app/airbnb/id401626263
+United Kingdom,GB,Weather,BBC Weather,https://play.google.com/store/apps/details?id=uk.gov.metoffice.weather.android&hl=en,https://apps.apple.com/in/app/weather/id1069513131
+United Kingdom,GB,communication,WhatsApp,https://play.google.com/store/apps/details?id=com.whatsapp&hl=en,https://apps.apple.com/in/app/whatsapp-messenger/id310633997
+United Kingdom,GB,communication,Telegram,https://play.google.com/store/apps/details?id=org.telegram.messenger&hl=en,https://apps.apple.com/in/app/telegram-messenger/id686449807
+United Kingdom,GB,Food,Uber Eats,https://play.google.com/store/apps/details?id=com.ubercab.eats&hl=en,https://apps.apple.com/in/app/uber-eats-food-groceries/id1058959277
+United Kingdom,GB,Food,Just Eat,https://play.google.com/store/apps/details?id=com.justeat.app.uk&hl=en,https://apps.apple.com/in/app/just-eat-food-delivery/id566347057
+United Kingdom,GB,Payments,Wise,https://play.google.com/store/apps/details?id=com.transferwise.android&hl=en,https://apps.apple.com/in/app/wise/id612261027
+United Kingdom,GB,Payments,Revolut,https://play.google.com/store/apps/details?id=com.revolut.revolut&hl=en,https://apps.apple.com/in/app/revolut-mobile-finance/id932493382

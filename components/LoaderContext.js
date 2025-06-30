@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> 553d9aa (feat: SEO overhaul, bugfixes, and content improvements for all country/app pages)
 "use client";
 
 import React, { createContext, useContext, useState } from 'react';
