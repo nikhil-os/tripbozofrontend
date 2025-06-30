@@ -11,6 +11,7 @@ import RootWrapper from "@/components/RootWrapper";
 import AuthInitializer from "@/components/AuthInitializer";
 import { Analytics } from "@vercel/analytics/next";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -101,12 +102,28 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <link rel="manifest" href="/manifest.json" />
+         
          {/* Google AdSense */}
-         <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8457921153251875"
-          crossOrigin="anonymous"
-        ></script>
+       <Script
+         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8457921153251875"
+         strategy="afterInteractive"
+         crossOrigin="anonymous"
+       />
+
+       {/* Google Analytics */}
+       <Script
+         src="https://www.googletagmanager.com/gtag/js?id=G-YG8W7MQRE5"
+         strategy="afterInteractive"
+       />
+       <Script id="google-analytics" strategy="afterInteractive">
+         {`
+           window.dataLayer = window.dataLayer || [];
+           function gtag(){dataLayer.push(arguments);}
+           gtag('js', new Date());
+           gtag('config', 'G-YG8W7MQRE5');
+         `}
+       </Script>
+
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white`}>
       <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}>
