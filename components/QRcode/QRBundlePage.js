@@ -71,7 +71,17 @@ export default function QRBundlePage() {
 
   // Download handlers
   const handleDownloadList = async () => {
+
+
     try {
+
+// fire qr_download_list
+if (typeof window.gtag === "function") {
+  window.gtag("event", "qr_download_list", {
+    list_id: sessionId,
+  });} 
+
+
       const blob = await downloadAppList(sessionId);
       saveAs(blob, `${sessionId}-app-list.html`);
     } catch {
@@ -80,6 +90,14 @@ export default function QRBundlePage() {
   };
   const handleDownloadQR = async () => {
     try {
+
+ // fire qr_download_qr
+ if (typeof window.gtag === "function") {
+  window.gtag("event", "qr_download_qr", {
+    list_id: sessionId,
+  });
+}
+
       const blob = await downloadQRCode(sessionId);
       saveAs(blob, `${sessionId}-qr.png`);
     } catch {

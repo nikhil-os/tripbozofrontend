@@ -133,6 +133,19 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
     setExpandedId((prev) => (prev === id ? null : id));
 
 
+  const trackAppStoreClick =
+  (store, appId) =>
+  (e) => {
+    // fire analytics, then let the link navigate
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "app_store_click", {
+        store,      // "play_store" or "app_store"
+        app_id: appId,
+      });
+    }
+  };
+
+
   return (
     // clicking outside any card collapses all
     <main
@@ -382,6 +395,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center px-4 py-2 bg-teal-300 border border-teal-400 text-gray-800 rounded-full text-sm font-semibold shadow-sm hover:bg-teal-400 transition"
+                          onClick={trackAppStoreClick("play_store", app.packageName || app.id)}
                         >
                           Play Store
                         </a>
@@ -392,6 +406,7 @@ export default function CountryAppsPage({ countryCode, apps, countryInfo, }) {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center px-4 py-2 bg-gray-700 border border-gray-700 text-white rounded-full text-sm font-semibold shadow-sm hover:bg-gray-800 transition"
+                          onClick={trackAppStoreClick("app_store", app.packageName || app.id)}
                         >
                           App Store
                         </a>
