@@ -34,7 +34,7 @@ export default function AboutPageClient() {
         description="Learn about Trip Bozo, the platform that curates the perfect app bundle for every traveler's needs."
         url="https://tripbozo.com/about"
         image="https://tripbozo.com/logo.png"
-        keywords="Trip Bozo, about, travel apps, app bundle, travel companion"
+        keywords="Trip Bozo, about, travel apps, app bundles, travel companion"
       />
       {/* JSON‑LD */}
       <Script id="about-schema" type="application/ld+json" dangerouslySetInnerHTML={{
