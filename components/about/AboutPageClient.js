@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useLoader } from '@/components/LoaderContext';
 import Script from 'next/script';
+import SEO from '@/components/SEO';
 
 export default function AboutPageClient() {
   const { setShow } = useLoader();
@@ -27,6 +28,14 @@ export default function AboutPageClient() {
 
   return (
     <>
+      <SEO
+        type="AboutPage"
+        title="About Trip Bozo | Your Essential Travel App Companion"
+        description="Learn about Trip Bozo, the platform that curates the perfect app bundle for every traveler's needs."
+        url="https://tripbozo.com/about"
+        image="https://tripbozo.com/logo.png"
+        keywords="Trip Bozo, about, travel apps, app bundle, travel companion"
+      />
       {/* JSON‑LD */}
       <Script id="about-schema" type="application/ld+json" dangerouslySetInnerHTML={{
         __html: JSON.stringify({

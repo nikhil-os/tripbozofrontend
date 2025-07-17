@@ -117,7 +117,7 @@ useEffect(() => {
                 </Link>
                 <Link 
                   href="/Onboarding" 
-                  className="px-5 py-3 text-gray-800 hover:bg-gray-100 hover:text-teal-500"
+                  className="px-5 py-3 text-gray-700 hover:bg-gray-100 hover:text-teal-500"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Onboarding
